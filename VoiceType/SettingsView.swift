@@ -48,6 +48,7 @@ struct SettingsView: View {
                 .onChange(of: languageHint) { new in Settings.shared.languageHint = new }
             }
             Section("Über") {
+                LabeledContent("Version", value: appVersionString)
                 Text("VoiceType nutzt OpenAI Whisper für Transkription und Anthropic Claude für Modi „Nett“ und „Wut→Nett“. Audio wird zur Verarbeitung an OpenAI übertragen.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
@@ -362,6 +363,15 @@ struct SettingsView: View {
 
     private var micGranted: Bool {
         AVCaptureDevice.authorizationStatus(for: .audio) == .authorized
+    }
+
+    /// Liest CFBundleShortVersionString und CFBundleVersion aus dem geladenen
+    /// App-Bundle. Format: "VoiceType 0.2.0 (Build 2)".
+    private var appVersionString: String {
+        let info = Bundle.main.infoDictionary
+        let version = info?["CFBundleShortVersionString"] as? String ?? "?"
+        let build = info?["CFBundleVersion"] as? String ?? "?"
+        return "VoiceType \(version) (Build \(build))"
     }
 
     private var a11yGranted: Bool {
