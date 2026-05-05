@@ -10,14 +10,22 @@ struct SettingsView: View {
     @State private var languageHint: String = Settings.shared.languageHint ?? "de"
     @State private var permissionTrigger = 0  // forcing re-render
 
+    @State private var nicePrompt: String = ProcessingMode.getCurrentPrompt(for: .nice)
+    @State private var calmPrompt: String = ProcessingMode.getCurrentPrompt(for: .calm)
+    @State private var showDefaultNice: Bool = false
+    @State private var showDefaultCalm: Bool = false
+    @FocusState private var niceFocused: Bool
+    @FocusState private var calmFocused: Bool
+
     var body: some View {
         TabView {
             generalTab.tabItem { Label("Allgemein", systemImage: "gear") }
             keysTab.tabItem { Label("API-Keys", systemImage: "key.fill") }
             shortcutsTab.tabItem { Label("Shortcuts", systemImage: "command") }
+            promptsTab.tabItem { Label("Prompts", systemImage: "text.bubble") }
             permissionsTab.tabItem { Label("Berechtigungen", systemImage: "lock.shield") }
         }
-        .frame(width: 540, height: 460)
+        .frame(width: 600, height: 620)
         .padding(20)
     }
 
@@ -105,6 +113,145 @@ struct SettingsView: View {
         .formStyle(.grouped)
     }
 
+    private var promptsTab: some View {
+        Form {
+            Section {
+                Text("Diese Anweisungen sagen Claude, wie er deinen Text formen soll. Sei konkret, was bleiben soll und was sich ändern soll. Bei Problemen kannst du jederzeit auf den Original-Prompt zurücksetzen.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            promptSection(
+                title: "Modus \u{201E}Nett\u{201C}",
+                subtitle: "Whisper → Claude poliert (Grammatik, Füllwörter, Tonalität)",
+                text: $nicePrompt,
+                isFocused: $niceFocused,
+                isCustom: niceIsCustom,
+                onReset: {
+                    ProcessingMode.resetToDefault(for: .nice)
+                    nicePrompt = ProcessingMode.defaultNicePrompt
+                },
+                onShowDefault: { showDefaultNice = true }
+            )
+            .onChange(of: niceFocused) { focused in
+                if !focused { saveNicePrompt() }
+            }
+
+            promptSection(
+                title: "Modus \u{201E}Wut→Nett\u{201C}",
+                subtitle: "Whisper → Claude entschärft (aggressiv → professionell)",
+                text: $calmPrompt,
+                isFocused: $calmFocused,
+                isCustom: calmIsCustom,
+                onReset: {
+                    ProcessingMode.resetToDefault(for: .calm)
+                    calmPrompt = ProcessingMode.defaultCalmPrompt
+                },
+                onShowDefault: { showDefaultCalm = true }
+            )
+            .onChange(of: calmFocused) { focused in
+                if !focused { saveCalmPrompt() }
+            }
+        }
+        .formStyle(.grouped)
+        .onDisappear {
+            saveNicePrompt()
+            saveCalmPrompt()
+        }
+        .sheet(isPresented: $showDefaultNice) {
+            defaultPromptSheet(
+                title: "Original-Prompt: Nett",
+                text: ProcessingMode.defaultNicePrompt,
+                isPresented: $showDefaultNice
+            )
+        }
+        .sheet(isPresented: $showDefaultCalm) {
+            defaultPromptSheet(
+                title: "Original-Prompt: Wut→Nett",
+                text: ProcessingMode.defaultCalmPrompt,
+                isPresented: $showDefaultCalm
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func promptSection(
+        title: String,
+        subtitle: String,
+        text: Binding<String>,
+        isFocused: FocusState<Bool>.Binding,
+        isCustom: Bool,
+        onReset: @escaping () -> Void,
+        onShowDefault: @escaping () -> Void
+    ) -> some View {
+        Section {
+            HStack(spacing: 6) {
+                Text(title).font(.headline)
+                if isCustom {
+                    Image(systemName: "circle.fill")
+                        .font(.system(size: 7))
+                        .foregroundStyle(.blue)
+                    Text("Eigener Prompt aktiv")
+                        .font(.caption)
+                        .foregroundStyle(.blue)
+                }
+                Spacer()
+            }
+            Text(subtitle)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            TextEditor(text: text)
+                .focused(isFocused)
+                .font(.system(.body, design: .monospaced))
+                .frame(minHeight: 180, maxHeight: 220)
+                .scrollContentBackground(.hidden)
+                .padding(6)
+                .background(Color(NSColor.textBackgroundColor))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                )
+            HStack {
+                Button("Auf Default zurücksetzen", action: onReset)
+                    .controlSize(.small)
+                    .disabled(!isCustom)
+                Button("Default anzeigen", action: onShowDefault)
+                    .controlSize(.small)
+                Spacer()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func defaultPromptSheet(title: String, text: String, isPresented: Binding<Bool>) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text(title).font(.headline)
+            ScrollView {
+                Text(text)
+                    .font(.system(.body, design: .monospaced))
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 4)
+            }
+            .background(Color(NSColor.textBackgroundColor))
+            .overlay(
+                RoundedRectangle(cornerRadius: 6)
+                    .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+            )
+            HStack {
+                Button("Kopieren") {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(text, forType: .string)
+                }
+                Spacer()
+                Button("Schließen") { isPresented.wrappedValue = false }
+                    .keyboardShortcut(.defaultAction)
+            }
+        }
+        .padding(20)
+        .frame(width: 600, height: 500)
+    }
+
     private var permissionsTab: some View {
         Form {
             Section("Status der Berechtigungen") {
@@ -149,6 +296,53 @@ struct SettingsView: View {
     private func applyShortcutMode() {
         Settings.shared.useFallbackShortcuts = useFallback
         (NSApp.delegate as? AppDelegate)?.reloadShortcuts()
+    }
+
+    /// True wenn der Editor-Inhalt vom Default abweicht. Trimmt Whitespace,
+    /// damit „nur Leerzeichen" nicht als Custom gewertet wird.
+    private var niceIsCustom: Bool {
+        let trimmed = nicePrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !trimmed.isEmpty && nicePrompt != ProcessingMode.defaultNicePrompt
+    }
+
+    private var calmIsCustom: Bool {
+        let trimmed = calmPrompt.trimmingCharacters(in: .whitespacesAndNewlines)
+        return !trimmed.isEmpty && calmPrompt != ProcessingMode.defaultCalmPrompt
+    }
+
+    /// Wird beim Verlieren des Fokus und beim Tab-/Window-Verlassen aufgerufen.
+    /// Schreibt nur, wenn sich der zu speichernde Wert vom aktuell persistierten
+    /// unterscheidet — sonst Update-Loop-Risiko bei häufigen Tab-Wechseln.
+    private func saveNicePrompt() {
+        let target = normalizedTarget(editor: nicePrompt, default: ProcessingMode.defaultNicePrompt)
+        if target != Settings.shared.customNicePrompt {
+            if target.isEmpty {
+                ProcessingMode.resetToDefault(for: .nice)
+            } else {
+                ProcessingMode.setCustomPrompt(target, for: .nice)
+            }
+        }
+    }
+
+    private func saveCalmPrompt() {
+        let target = normalizedTarget(editor: calmPrompt, default: ProcessingMode.defaultCalmPrompt)
+        if target != Settings.shared.customCalmPrompt {
+            if target.isEmpty {
+                ProcessingMode.resetToDefault(for: .calm)
+            } else {
+                ProcessingMode.setCustomPrompt(target, for: .calm)
+            }
+        }
+    }
+
+    /// Editor-Inhalt → Speicherwert. Leer (auch nur Whitespace) und „identisch
+    /// zum Default" bedeuten beide: keinen Custom hinterlegen.
+    private func normalizedTarget(editor: String, default defaultText: String) -> String {
+        let trimmed = editor.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty || editor == defaultText {
+            return ""
+        }
+        return editor
     }
 
     // MARK: Helpers

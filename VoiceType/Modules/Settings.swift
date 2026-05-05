@@ -7,6 +7,8 @@ final class Settings {
 
     private let useFallbackKey = "useFallbackShortcuts"
     private let languageHintKey = "languageHint"
+    private let customNicePromptKey = "customNicePrompt"
+    private let customCalmPromptKey = "customCalmPrompt"
 
     var useFallbackShortcuts: Bool {
         get { UserDefaults.standard.bool(forKey: useFallbackKey) }
@@ -16,6 +18,32 @@ final class Settings {
     var languageHint: String? {
         get { UserDefaults.standard.string(forKey: languageHintKey) }
         set { UserDefaults.standard.set(newValue, forKey: languageHintKey) }
+    }
+
+    /// Eigener System-Prompt für Modus „Nett". Leerer String beim Setter
+    /// löscht den Eintrag (Reset auf Default).
+    var customNicePrompt: String {
+        get { UserDefaults.standard.string(forKey: customNicePromptKey) ?? "" }
+        set {
+            if newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                UserDefaults.standard.removeObject(forKey: customNicePromptKey)
+            } else {
+                UserDefaults.standard.set(newValue, forKey: customNicePromptKey)
+            }
+        }
+    }
+
+    /// Eigener System-Prompt für Modus „Wut→Nett". Leerer String beim Setter
+    /// löscht den Eintrag (Reset auf Default).
+    var customCalmPrompt: String {
+        get { UserDefaults.standard.string(forKey: customCalmPromptKey) ?? "" }
+        set {
+            if newValue.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                UserDefaults.standard.removeObject(forKey: customCalmPromptKey)
+            } else {
+                UserDefaults.standard.set(newValue, forKey: customCalmPromptKey)
+            }
+        }
     }
 
     var openAIAPIKey: String? {

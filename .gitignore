@@ -11,3 +11,6 @@ xcuserdata/
 
 # SwiftPM working state inside .xcodeproj
 *.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+
+# Xcode legt manchmal Build-/Archive-Ordner mit Datums-Suffix neben das Projekt
+/VoiceType */
