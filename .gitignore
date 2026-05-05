@@ -1,0 +1,13 @@
+.DS_Store
+DerivedData/
+build/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcuserstate
+xcuserdata/
+.idea/
+.vscode/
+
+# SwiftPM working state inside .xcodeproj
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
