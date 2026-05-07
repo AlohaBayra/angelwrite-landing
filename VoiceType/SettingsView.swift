@@ -17,15 +17,19 @@ struct SettingsView: View {
     @FocusState private var niceFocused: Bool
     @FocusState private var calmFocused: Bool
 
+    @State private var transcriptionEngine: TranscriptionEngine = Settings.shared.transcriptionEngine
+    @State private var whisperModelSize: String = Settings.shared.whisperModelSize
+
     var body: some View {
         TabView {
             generalTab.tabItem { Label("Allgemein", systemImage: "gear") }
             keysTab.tabItem { Label("API-Keys", systemImage: "key.fill") }
+            transcriptionTab.tabItem { Label("Transkription", systemImage: "waveform") }
             shortcutsTab.tabItem { Label("Shortcuts", systemImage: "command") }
             promptsTab.tabItem { Label("Prompts", systemImage: "text.bubble") }
             permissionsTab.tabItem { Label("Berechtigungen", systemImage: "lock.shield") }
         }
-        .frame(width: 600, height: 620)
+        .frame(width: 600, height: 680)
         .padding(20)
     }
 
@@ -49,7 +53,9 @@ struct SettingsView: View {
             }
             Section("Über") {
                 LabeledContent("Version", value: appVersionString)
-                Text("VoiceType nutzt OpenAI Whisper für Transkription und Anthropic Claude für Modi „Nett“ und „Wut→Nett“. Audio wird zur Verarbeitung an OpenAI übertragen.")
+                Text(Settings.shared.transcriptionEngine == .local
+                    ? "VoiceType nutzt ein lokales Whisper-Modell für Transkription \u{2013} Audio verlässt deinen Mac nicht. Anthropic Claude wird für Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} genutzt."
+                    : "VoiceType nutzt OpenAI Whisper für Transkription und Anthropic Claude für Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C}. Audio wird zur Verarbeitung an OpenAI übertragen.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -80,6 +86,83 @@ struct SettingsView: View {
         }
         .formStyle(.grouped)
         .onDisappear { saveAPIKeys() }
+    }
+
+    private var transcriptionTab: some View {
+        Form {
+            Section("Engine") {
+                Picker("Transkription", selection: $transcriptionEngine) {
+                    Text("\u{2601}\u{FE0F}  Cloud (OpenAI Whisper)").tag(TranscriptionEngine.cloud)
+                    Text("\u{1F5A5}  Lokal (auf diesem Mac)").tag(TranscriptionEngine.local)
+                }
+                .pickerStyle(.segmented)
+                .onChange(of: transcriptionEngine) { engine in
+                    Settings.shared.transcriptionEngine = engine
+                    coordinator.warmUpLocalIfNeeded()
+                }
+            }
+
+            if transcriptionEngine == .cloud {
+                Section("OpenAI API-Key") {
+                    Text("Den OpenAI API-Key trägst du im Tab \u{201E}API-Keys\u{201C} ein.")
+                        .font(.caption).foregroundStyle(.secondary)
+                    Text("Audio wird zur Verarbeitung an OpenAI übertragen.")
+                        .font(.caption).foregroundStyle(.orange)
+                }
+            }
+
+            if transcriptionEngine == .local {
+                Section("Modell") {
+                    Picker("Größe", selection: $whisperModelSize) {
+                        Text("Winzig \u{2013} 75 MB (schnell, weniger genau)").tag("tiny")
+                        Text("Klein \u{2013} 142 MB (empfohlen)").tag("base")
+                        Text("Mittel \u{2013} 466 MB (langsamer, genauer)").tag("small")
+                    }
+                    .onChange(of: whisperModelSize) { size in
+                        Settings.shared.whisperModelSize = size
+                        coordinator.localTranscriber.unload()
+                    }
+                }
+
+                Section("Modell-Status") {
+                    let state = coordinator.localTranscriber.modelState
+                    HStack {
+                        switch state {
+                        case .idle:
+                            Image(systemName: "arrow.down.circle").foregroundStyle(.secondary)
+                            Text("Nicht geladen").foregroundStyle(.secondary)
+                        case .loading:
+                            ProgressView().scaleEffect(0.7)
+                            Text("Wird geladen \u{2026}").foregroundStyle(.secondary)
+                        case .ready:
+                            Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
+                            Text("Bereit \u{2013} kein API-Key erforderlich").foregroundStyle(.green)
+                        case .error(let msg):
+                            Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.red)
+                            Text(msg).foregroundStyle(.red).font(.caption)
+                        }
+                        Spacer()
+                    }
+                    if case .idle = state {
+                        Button("Modell jetzt laden") {
+                            Task { await coordinator.localTranscriber.prepare() }
+                        }
+                    }
+                    if case .error = state {
+                        Button("Erneut versuchen") {
+                            coordinator.localTranscriber.unload()
+                            Task { await coordinator.localTranscriber.prepare() }
+                        }
+                    }
+                }
+
+                Section {
+                    Text("Audio bleibt vollständig auf deinem Mac. Kein OpenAI-Key benötigt für den Raw-Modus. Für Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} ist weiterhin der Anthropic-Key erforderlich.")
+                        .font(.caption).foregroundStyle(.secondary)
+                }
+            }
+        }
+        .formStyle(.grouped)
     }
 
     private var shortcutsTab: some View {
