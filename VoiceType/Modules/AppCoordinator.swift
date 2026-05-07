@@ -31,9 +31,14 @@ final class AppCoordinator: ObservableObject {
     var onStateChange: ((AppState) -> Void)?
 
     private let audioCapture = AudioCapture()
-    private let whisper = WhisperAPITranscriber()
+    private let cloudTranscriber = WhisperAPITranscriber()
+    let localTranscriber = WhisperLocalTranscriber()   // internal: SettingsView braucht Zugriff
     private let postProcessor = ClaudePostProcessor()
     private let inserter = TextInserter()
+
+    private var activeTranscriber: any Transcriber {
+        Settings.shared.transcriptionEngine == .local ? localTranscriber : cloudTranscriber
+    }
 
     private var currentMode: ProcessingMode = .raw
 
@@ -57,6 +62,13 @@ final class AppCoordinator: ObservableObject {
     func checkPermissionsOnStartup() {
         AVCaptureDevice.requestAccess(for: .audio) { _ in }
         _ = TextInserter.checkAccessibilityPermission(prompt: false)
+        warmUpLocalIfNeeded()
+    }
+
+    /// Wärmt das lokale Modell im Hintergrund vor, wenn local engine gewählt ist.
+    func warmUpLocalIfNeeded() {
+        guard Settings.shared.transcriptionEngine == .local else { return }
+        Task { await localTranscriber.prepare() }
     }
 
     /// Toggle-Modus für Fallback-Shortcuts
@@ -76,9 +88,11 @@ final class AppCoordinator: ObservableObject {
             setState(.error("Bedienungshilfen-Berechtigung fehlt"))
             return
         }
-        guard Settings.shared.openAIAPIKey?.isEmpty == false else {
-            setState(.error("OpenAI API-Key fehlt"))
-            return
+        if Settings.shared.transcriptionEngine == .cloud {
+            guard Settings.shared.openAIAPIKey?.isEmpty == false else {
+                setState(.error("OpenAI API-Key fehlt"))
+                return
+            }
         }
         if mode != .raw, Settings.shared.anthropicAPIKey?.isEmpty == true {
             setState(.error("Anthropic API-Key fehlt"))
@@ -92,9 +106,9 @@ final class AppCoordinator: ObservableObject {
             // dann Aufnahme starten — Tap und AVAudioFile MÜSSEN identisches
             // Format haben, sonst gibt's -10877.
             let micFormat = audioCapture.inputFormat
-            try whisper.startSession(format: micFormat)
+            try activeTranscriber.startSession(format: micFormat)
             try audioCapture.start { [weak self] buffer in
-                self?.whisper.process(buffer: buffer)
+                self?.activeTranscriber.process(buffer: buffer)
             }
             setState(.recording(mode: mode))
             playSound("Tink")
@@ -112,7 +126,7 @@ final class AppCoordinator: ObservableObject {
 
         Task {
             do {
-                let rawText = try await whisper.finishSession()
+                let rawText = try await activeTranscriber.finishSession()
                 guard !rawText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
                     await MainActor.run { self.setState(.error("Keine Sprache erkannt")) }
                     return
