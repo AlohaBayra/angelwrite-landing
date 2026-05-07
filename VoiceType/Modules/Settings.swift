@@ -9,6 +9,7 @@ final class Settings {
     private let languageHintKey = "languageHint"
     private let customNicePromptKey = "customNicePrompt"
     private let customCalmPromptKey = "customCalmPrompt"
+    private let whisperModelSizeKey = "whisperModelSize"
 
     var useFallbackShortcuts: Bool {
         get { UserDefaults.standard.bool(forKey: useFallbackKey) }
@@ -18,6 +19,14 @@ final class Settings {
     var languageHint: String? {
         get { UserDefaults.standard.string(forKey: languageHintKey) }
         set { UserDefaults.standard.set(newValue, forKey: languageHintKey) }
+    }
+
+    /// WhisperKit-Modell-Identifier für lokale Transkription.
+    /// Default „tiny" (~75 MB) ist klein und schnell für Erst-Tests; weitere
+    /// Werte z.B. „base", „small", „medium", „large-v3".
+    var whisperModelSize: String {
+        get { UserDefaults.standard.string(forKey: whisperModelSizeKey) ?? "tiny" }
+        set { UserDefaults.standard.set(newValue, forKey: whisperModelSizeKey) }
     }
 
     /// Eigener System-Prompt für Modus „Nett". Leerer String beim Setter

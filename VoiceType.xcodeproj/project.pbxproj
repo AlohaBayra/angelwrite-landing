@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		CE11E4F22FAA280F00BEA204 /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = CE11E4F12FAA280F00BEA204 /* KeyboardShortcuts */; };
+		CEB5DC762FAD1041005A7E11 /* ArgmaxOSS in Frameworks */ = {isa = PBXBuildFile; productRef = CEB5DC752FAD1041005A7E11 /* ArgmaxOSS */; };
+		CEB5DC7E2FAD1041005A7E11 /* WhisperKit in Frameworks */ = {isa = PBXBuildFile; productRef = CEB5DC7D2FAD1041005A7E11 /* WhisperKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +42,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEB5DC7E2FAD1041005A7E11 /* WhisperKit in Frameworks */,
+				CEB5DC762FAD1041005A7E11 /* ArgmaxOSS in Frameworks */,
 				CE11E4F22FAA280F00BEA204 /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -84,6 +88,8 @@
 			name = VoiceType;
 			packageProductDependencies = (
 				CE11E4F12FAA280F00BEA204 /* KeyboardShortcuts */,
+				CEB5DC752FAD1041005A7E11 /* ArgmaxOSS */,
+				CEB5DC7D2FAD1041005A7E11 /* WhisperKit */,
 			);
 			productName = VoiceType;
 			productReference = CE11E4682FAA280E00BEA204 /* VoiceType.app */;
@@ -115,6 +121,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CE11E4F02FAA280F00BEA204 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
+				CEB5DC742FAD1041005A7E11 /* XCRemoteSwiftPackageReference "WhisperKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = CE11E4692FAA280E00BEA204 /* Products */;
@@ -363,6 +370,14 @@
 				version = 1.10.0;
 			};
 		};
+		CEB5DC742FAD1041005A7E11 /* XCRemoteSwiftPackageReference "WhisperKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/argmaxinc/WhisperKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -370,6 +385,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CE11E4F02FAA280F00BEA204 /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
 			productName = KeyboardShortcuts;
+		};
+		CEB5DC752FAD1041005A7E11 /* ArgmaxOSS */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEB5DC742FAD1041005A7E11 /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = ArgmaxOSS;
+		};
+		CEB5DC7D2FAD1041005A7E11 /* WhisperKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CEB5DC742FAD1041005A7E11 /* XCRemoteSwiftPackageReference "WhisperKit" */;
+			productName = WhisperKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

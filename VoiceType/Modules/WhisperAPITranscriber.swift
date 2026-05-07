@@ -111,3 +111,5 @@ final class WhisperAPITranscriber {
         return decoded.text
     }
 }
+
+extension WhisperAPITranscriber: Transcriber {}
