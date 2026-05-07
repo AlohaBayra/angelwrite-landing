@@ -1,6 +1,11 @@
 import Foundation
 import Security
 
+enum TranscriptionEngine: String {
+    case cloud = "cloud"
+    case local = "local"
+}
+
 final class Settings {
     static let shared = Settings()
     private init() {}
@@ -9,6 +14,7 @@ final class Settings {
     private let languageHintKey = "languageHint"
     private let customNicePromptKey = "customNicePrompt"
     private let customCalmPromptKey = "customCalmPrompt"
+    private let transcriptionEngineKey = "transcriptionEngine"
     private let whisperModelSizeKey = "whisperModelSize"
 
     var useFallbackShortcuts: Bool {
@@ -21,11 +27,16 @@ final class Settings {
         set { UserDefaults.standard.set(newValue, forKey: languageHintKey) }
     }
 
-    /// WhisperKit-Modell-Identifier für lokale Transkription.
-    /// Default „tiny" (~75 MB) ist klein und schnell für Erst-Tests; weitere
-    /// Werte z.B. „base", „small", „medium", „large-v3".
+    var transcriptionEngine: TranscriptionEngine {
+        get {
+            let raw = UserDefaults.standard.string(forKey: transcriptionEngineKey) ?? "cloud"
+            return TranscriptionEngine(rawValue: raw) ?? .cloud
+        }
+        set { UserDefaults.standard.set(newValue.rawValue, forKey: transcriptionEngineKey) }
+    }
+
     var whisperModelSize: String {
-        get { UserDefaults.standard.string(forKey: whisperModelSizeKey) ?? "tiny" }
+        get { UserDefaults.standard.string(forKey: whisperModelSizeKey) ?? "base" }
         set { UserDefaults.standard.set(newValue, forKey: whisperModelSizeKey) }
     }
 
