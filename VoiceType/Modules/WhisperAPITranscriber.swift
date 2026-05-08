@@ -13,27 +13,34 @@ final class WhisperAPITranscriber {
         return URL(string: base + "/transcribe") ?? URL(string: "https://invalid.local/transcribe")!
     }
 
-    /// Legt die Aufnahme-Datei in EXAKT dem übergebenen Mikrofon-Format an.
-    /// Damit ist `audioFile.write(from: buffer)` ein direkter Schreibvorgang
-    /// ohne interne Format-Konvertierung — kein -10877 mehr möglich, weil
-    /// die AudioUnit nichts umrechnen muss.
+    /// Legt die Aufnahme-Datei mit fixen 16 kHz Mono PCM-Settings an — dem
+    /// von OpenAI Whisper bevorzugten Format. AVAudioFile resampelt die
+    /// Mic-Buffer (typisch 48 kHz Float32 stereo) intern beim Schreiben, das
+    /// Resultat ist eine direkt Whisper-kompatible WAV ohne Server-Konvertierung.
+    /// Das `format`-Argument wird ignoriert (Protokoll-Kontrakt mit dem
+    /// lokalen Transcriber).
     func startSession(format: AVAudioFormat) throws {
         let url = FileManager.default.temporaryDirectory
             .appendingPathComponent("voicetype-\(UUID().uuidString).wav")
         self.fileURL = url
 
+        let settings: [String: Any] = [
+            AVFormatIDKey: kAudioFormatLinearPCM,
+            AVSampleRateKey: 16000,
+            AVNumberOfChannelsKey: 1,
+            AVLinearPCMBitDepthKey: 16,
+            AVLinearPCMIsFloatKey: false,
+            AVLinearPCMIsBigEndianKey: false,
+            AVLinearPCMIsNonInterleaved: false
+        ]
+
         do {
-            self.audioFile = try AVAudioFile(
-                forWriting: url,
-                settings: format.settings,
-                commonFormat: format.commonFormat,
-                interleaved: format.isInterleaved
-            )
+            self.audioFile = try AVAudioFile(forWriting: url, settings: settings)
         } catch {
             self.fileURL = nil
             throw NSError(domain: "VoiceType", code: 8, userInfo: [
                 NSLocalizedDescriptionKey:
-                    "AVAudioFile(forWriting:) fehlgeschlagen für Format \(format): \(error.localizedDescription)"
+                    "AVAudioFile(forWriting:) fehlgeschlagen: \(error.localizedDescription)"
             ])
         }
     }
