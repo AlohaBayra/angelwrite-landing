@@ -16,6 +16,13 @@ final class Settings {
     private let customCalmPromptKey = "customCalmPrompt"
     private let transcriptionEngineKey = "transcriptionEngine"
     private let whisperModelSizeKey = "whisperModelSize"
+    private let serverURLKey = "serverURL"
+    private let defaultServerURL = "https://voicetype-server-production.up.railway.app"
+    private let firstLaunchDateKey = "firstLaunchDate"
+
+    /// Länge des Probezeitraums in Tagen, in dem lokale+Raw-Aufnahme ohne
+    /// Lizenzkey erlaubt ist.
+    static let graceDays = 14
 
     var useFallbackShortcuts: Bool {
         get { UserDefaults.standard.bool(forKey: useFallbackKey) }
@@ -66,14 +73,62 @@ final class Settings {
         }
     }
 
-    var openAIAPIKey: String? {
-        get { Keychain.load(account: "openai") }
-        set { Keychain.save(account: "openai", value: newValue ?? "") }
+    /// Lizenzkey, mit dem der VoiceType-Server Anfragen autorisiert.
+    /// Liegt im Keychain (Service: de.valuelift.voicetype, Account: license).
+    var licenseKey: String? {
+        get { Keychain.load(account: "license") }
+        set { Keychain.save(account: "license", value: newValue ?? "") }
     }
 
-    var anthropicAPIKey: String? {
-        get { Keychain.load(account: "anthropic") }
-        set { Keychain.save(account: "anthropic", value: newValue ?? "") }
+    /// Datum des ersten App-Starts. Wird einmalig gesetzt durch
+    /// recordFirstLaunchIfNeeded() und nicht mehr verändert. Basis für die
+    /// Grace-Period-Berechnung.
+    var firstLaunchDate: Date? {
+        UserDefaults.standard.object(forKey: firstLaunchDateKey) as? Date
+    }
+
+    /// Setzt firstLaunchDate auf jetzt, falls noch nicht vorhanden.
+    /// Idempotent — sollte einmal beim App-Start aufgerufen werden.
+    func recordFirstLaunchIfNeeded() {
+        if UserDefaults.standard.object(forKey: firstLaunchDateKey) == nil {
+            UserDefaults.standard.set(Date(), forKey: firstLaunchDateKey)
+        }
+    }
+
+    /// Tag/Uhrzeit, an dem der Probezeitraum endet (= firstLaunchDate + graceDays).
+    /// Nil wenn firstLaunchDate noch nicht gesetzt ist.
+    var graceEndDate: Date? {
+        guard let start = firstLaunchDate else { return nil }
+        return Calendar.current.date(byAdding: .day, value: Self.graceDays, to: start)
+    }
+
+    /// Verbleibende Tage im Probezeitraum (aufgerundet auf ganze Tage).
+    /// Nil wenn firstLaunchDate noch nicht gesetzt ist; 0 wenn abgelaufen.
+    var graceDaysRemaining: Int? {
+        guard let end = graceEndDate else { return nil }
+        let secondsRemaining = end.timeIntervalSinceNow
+        if secondsRemaining <= 0 { return 0 }
+        return Int(ceil(secondsRemaining / 86400))
+    }
+
+    /// True wenn firstLaunchDate gesetzt ist UND graceEndDate noch in der Zukunft liegt.
+    var isInGracePeriod: Bool {
+        guard let end = graceEndDate else { return false }
+        return Date() < end
+    }
+
+    /// Basis-URL des VoiceType-Servers. Wird für /transcribe, /process und
+    /// /validate verwendet. Trailing Slash wird beim Komponieren geschluckt.
+    var serverURL: String {
+        get { UserDefaults.standard.string(forKey: serverURLKey) ?? defaultServerURL }
+        set {
+            let trimmed = newValue.trimmingCharacters(in: .whitespacesAndNewlines)
+            if trimmed.isEmpty {
+                UserDefaults.standard.removeObject(forKey: serverURLKey)
+            } else {
+                UserDefaults.standard.set(trimmed, forKey: serverURLKey)
+            }
+        }
     }
 }
 

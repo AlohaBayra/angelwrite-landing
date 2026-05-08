@@ -4,8 +4,8 @@ import AVFoundation
 
 struct SettingsView: View {
     @EnvironmentObject var coordinator: AppCoordinator
-    @State private var openAIKey: String = Settings.shared.openAIAPIKey ?? ""
-    @State private var anthropicKey: String = Settings.shared.anthropicAPIKey ?? ""
+    @State private var licenseKey: String = Settings.shared.licenseKey ?? ""
+    @State private var serverURL: String = Settings.shared.serverURL
     @State private var useFallback: Bool = Settings.shared.useFallbackShortcuts
     @State private var languageHint: String = Settings.shared.languageHint ?? "de"
     @State private var permissionTrigger = 0  // forcing re-render
@@ -23,7 +23,7 @@ struct SettingsView: View {
     var body: some View {
         TabView {
             generalTab.tabItem { Label("Allgemein", systemImage: "gear") }
-            keysTab.tabItem { Label("API-Keys", systemImage: "key.fill") }
+            licenseTab.tabItem { Label("Lizenz", systemImage: "key.fill") }
             transcriptionTab.tabItem { Label("Transkription", systemImage: "waveform") }
             shortcutsTab.tabItem { Label("Shortcuts", systemImage: "command") }
             promptsTab.tabItem { Label("Prompts", systemImage: "text.bubble") }
@@ -54,8 +54,8 @@ struct SettingsView: View {
             Section("Über") {
                 LabeledContent("Version", value: appVersionString)
                 Text(Settings.shared.transcriptionEngine == .local
-                    ? "VoiceType nutzt ein lokales Whisper-Modell für Transkription \u{2013} Audio verlässt deinen Mac nicht. Anthropic Claude wird für Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} genutzt."
-                    : "VoiceType nutzt OpenAI Whisper für Transkription und Anthropic Claude für Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C}. Audio wird zur Verarbeitung an OpenAI übertragen.")
+                    ? "Transkription läuft lokal auf deinem Mac \u{2013} Audio verlässt den Mac nicht. Die Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} werden über den VoiceType-Server verarbeitet."
+                    : "Transkription und die Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} werden über den VoiceType-Server verarbeitet.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -63,36 +63,41 @@ struct SettingsView: View {
         .formStyle(.grouped)
     }
 
-    private var keysTab: some View {
+    private var licenseTab: some View {
         Form {
-            Section("OpenAI (Whisper)") {
-                SecureField("sk-…", text: $openAIKey)
-                Text("Wird benötigt für alle drei Modi. Key liegt sicher im Keychain.")
+            Section("Status") {
+                licenseStatusRow
+            }
+            Section("Lizenzkey") {
+                SecureField("xxxx-xxxx-xxxx", text: $licenseKey)
+                Text("Wird benötigt für Transkription über den Server und für die Modi „Nett“ und „Wut→Nett“. Key liegt sicher im Keychain.")
                     .font(.caption).foregroundStyle(.secondary)
             }
-            Section("Anthropic (Claude)") {
-                SecureField("sk-ant-…", text: $anthropicKey)
-                Text("Nur für Modi „Nett“ und „Wut→Nett“ benötigt.")
+            Section("Erweitert") {
+                TextField("Server-URL", text: $serverURL)
+                    .textFieldStyle(.roundedBorder)
+                    .autocorrectionDisabled(true)
+                Text("Standard: https://voicetype-server-production.up.railway.app")
                     .font(.caption).foregroundStyle(.secondary)
             }
             Section {
                 HStack {
                     Spacer()
-                    Button("Speichern") { saveAPIKeys() }
+                    Button("Speichern") { saveLicense() }
                         .keyboardShortcut(.defaultAction)
-                        .disabled(!apiKeysDirty)
+                        .disabled(!licenseDirty)
                 }
             }
         }
         .formStyle(.grouped)
-        .onDisappear { saveAPIKeys() }
+        .onDisappear { saveLicense() }
     }
 
     private var transcriptionTab: some View {
         Form {
             Section("Engine") {
                 Picker("Transkription", selection: $transcriptionEngine) {
-                    Text("\u{2601}\u{FE0F}  Cloud (OpenAI Whisper)").tag(TranscriptionEngine.cloud)
+                    Text("\u{2601}\u{FE0F}  Cloud (über Server)").tag(TranscriptionEngine.cloud)
                     Text("\u{1F5A5}  Lokal (auf diesem Mac)").tag(TranscriptionEngine.local)
                 }
                 .pickerStyle(.segmented)
@@ -103,11 +108,9 @@ struct SettingsView: View {
             }
 
             if transcriptionEngine == .cloud {
-                Section("OpenAI API-Key") {
-                    Text("Den OpenAI API-Key trägst du im Tab \u{201E}API-Keys\u{201C} ein.")
+                Section("Server-Transkription") {
+                    Text("Audio wird über den VoiceType-Server transkribiert. Der Lizenzkey wird im Tab \u{201E}Lizenz\u{201C} eingetragen.")
                         .font(.caption).foregroundStyle(.secondary)
-                    Text("Audio wird zur Verarbeitung an OpenAI übertragen.")
-                        .font(.caption).foregroundStyle(.orange)
                 }
             }
 
@@ -136,7 +139,7 @@ struct SettingsView: View {
                             Text("Wird geladen \u{2026}").foregroundStyle(.secondary)
                         case .ready:
                             Image(systemName: "checkmark.circle.fill").foregroundStyle(.green)
-                            Text("Bereit \u{2013} kein API-Key erforderlich").foregroundStyle(.green)
+                            Text("Bereit \u{2013} läuft lokal auf deinem Mac").foregroundStyle(.green)
                         case .error(let msg):
                             Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.red)
                             Text(msg).foregroundStyle(.red).font(.caption)
@@ -157,7 +160,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Text("Audio bleibt vollständig auf deinem Mac. Kein OpenAI-Key benötigt für den Raw-Modus. Für Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} ist weiterhin der Anthropic-Key erforderlich.")
+                    Text("Audio bleibt für die Transkription vollständig auf deinem Mac. Die Modi \u{201E}Nett\u{201C} und \u{201E}Wut\u{2192}Nett\u{201C} werden weiterhin über den VoiceType-Server verarbeitet.")
                         .font(.caption).foregroundStyle(.secondary)
                 }
             }
@@ -360,26 +363,55 @@ struct SettingsView: View {
 
     // MARK: Persistenz
 
-    /// Schreibt die State-Werte explizit in den Keychain. Wird durch den
-    /// Speichern-Button und onDisappear getriggert — NICHT pro Tastendruck,
-    /// sonst entstehen SwiftUI-Update-Loops (Keychain-Writes sind synchron).
-    private func saveAPIKeys() {
-        if (Settings.shared.openAIAPIKey ?? "") != openAIKey {
-            Settings.shared.openAIAPIKey = openAIKey
+    /// Schreibt License-Key (Keychain) und Server-URL (UserDefaults) zurück
+    /// in die Settings. Wird durch den Speichern-Button und onDisappear
+    /// getriggert — NICHT pro Tastendruck, sonst SwiftUI-Update-Loops.
+    private func saveLicense() {
+        if (Settings.shared.licenseKey ?? "") != licenseKey {
+            Settings.shared.licenseKey = licenseKey
         }
-        if (Settings.shared.anthropicAPIKey ?? "") != anthropicKey {
-            Settings.shared.anthropicAPIKey = anthropicKey
+        if Settings.shared.serverURL != serverURL {
+            Settings.shared.serverURL = serverURL
         }
     }
 
-    private var apiKeysDirty: Bool {
-        (Settings.shared.openAIAPIKey ?? "") != openAIKey
-            || (Settings.shared.anthropicAPIKey ?? "") != anthropicKey
+    private var licenseDirty: Bool {
+        (Settings.shared.licenseKey ?? "") != licenseKey
+            || Settings.shared.serverURL != serverURL
     }
 
     private func applyShortcutMode() {
         Settings.shared.useFallbackShortcuts = useFallback
         (NSApp.delegate as? AppDelegate)?.reloadShortcuts()
+    }
+
+    /// Visualisiert den Lizenz-Zustand: aktive Lizenz, laufender Probezeitraum
+    /// oder abgelaufen. Tied an @State `licenseKey`, damit Tippen im SecureField
+    /// sofort visuelles Feedback gibt; gespeichert wird beim Save/onDisappear.
+    @ViewBuilder
+    private var licenseStatusRow: some View {
+        let trimmedLicense = licenseKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmedLicense.isEmpty {
+            HStack {
+                Image(systemName: "checkmark.seal.fill").foregroundStyle(.green)
+                Text("Lizenz aktiv").foregroundStyle(.green)
+                Spacer()
+            }
+        } else if let days = Settings.shared.graceDaysRemaining, days > 0 {
+            HStack {
+                Image(systemName: "hourglass").foregroundStyle(.orange)
+                Text("Probezeitraum: noch \(days) \(days == 1 ? "Tag" : "Tage")")
+                    .foregroundStyle(.orange)
+                Spacer()
+            }
+        } else {
+            HStack {
+                Image(systemName: "exclamationmark.triangle.fill").foregroundStyle(.red)
+                Text("Probezeitraum abgelaufen \u{2014} bitte Lizenzkey eintragen")
+                    .foregroundStyle(.red)
+                Spacer()
+            }
+        }
     }
 
     /// True wenn der Editor-Inhalt vom Default abweicht. Trimmt Whitespace,

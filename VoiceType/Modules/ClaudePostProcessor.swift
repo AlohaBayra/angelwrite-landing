@@ -1,31 +1,29 @@
 import Foundation
 
 final class ClaudePostProcessor {
-    private let endpoint = URL(string: "https://api.anthropic.com/v1/messages")!
-    private let model = "claude-sonnet-4-5"
-    private let apiVersion = "2023-06-01"
+    /// Endpoint wird zur Laufzeit aus Settings.shared.serverURL gebaut.
+    /// Trailing-Slashes der Basis-URL werden geschluckt.
+    private var endpoint: URL {
+        let base = Settings.shared.serverURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        return URL(string: base + "/process") ?? URL(string: "https://invalid.local/process")!
+    }
 
     func process(text: String, mode: ProcessingMode) async throws -> String {
         guard mode != .raw else { return text }
-        guard let apiKey = Settings.shared.anthropicAPIKey, !apiKey.isEmpty else {
+        guard let licenseKey = Settings.shared.licenseKey, !licenseKey.isEmpty else {
             throw NSError(domain: "VoiceType", code: 10,
-                          userInfo: [NSLocalizedDescriptionKey: "Anthropic API-Key fehlt"])
+                          userInfo: [NSLocalizedDescriptionKey: "Lizenzkey fehlt"])
         }
 
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-        request.setValue(apiKey, forHTTPHeaderField: "x-api-key")
-        request.setValue(apiVersion, forHTTPHeaderField: "anthropic-version")
+        request.setValue(licenseKey, forHTTPHeaderField: "x-license-key")
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 60
 
         let body: [String: Any] = [
-            "model": model,
-            "max_tokens": 2048,
-            "system": mode.systemPrompt,
-            "messages": [
-                ["role": "user", "content": text]
-            ]
+            "text": text,
+            "systemPrompt": mode.systemPrompt
         ]
 
         request.httpBody = try JSONSerialization.data(withJSONObject: body)
@@ -39,18 +37,11 @@ final class ClaudePostProcessor {
         guard (200..<300).contains(http.statusCode) else {
             let msg = String(data: data, encoding: .utf8) ?? "HTTP \(http.statusCode)"
             throw NSError(domain: "VoiceType", code: http.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "Claude API: \(msg)"])
+                          userInfo: [NSLocalizedDescriptionKey: "Server (process): \(msg)"])
         }
 
-        // Response: { "content": [ { "type": "text", "text": "..." } ], ... }
-        guard let json = try JSONSerialization.jsonObject(with: data) as? [String: Any],
-              let contentArray = json["content"] as? [[String: Any]],
-              let firstText = contentArray.first(where: { ($0["type"] as? String) == "text" }),
-              let resultText = firstText["text"] as? String else {
-            throw NSError(domain: "VoiceType", code: 12,
-                          userInfo: [NSLocalizedDescriptionKey: "Unerwartete Claude-Antwort"])
-        }
-
-        return resultText.trimmingCharacters(in: .whitespacesAndNewlines)
+        struct Response: Decodable { let text: String }
+        let decoded = try JSONDecoder().decode(Response.self, from: data)
+        return decoded.text.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }

@@ -4,7 +4,14 @@ import AVFoundation
 final class WhisperAPITranscriber {
     private var audioFile: AVAudioFile?
     private var fileURL: URL?
-    private let endpoint = URL(string: "https://api.openai.com/v1/audio/transcriptions")!
+
+    /// Endpoint wird zur Laufzeit aus Settings.shared.serverURL gebaut, damit
+    /// User die Server-URL in den Settings ändern können ohne Neustart.
+    /// Trailing-Slashes der Basis-URL werden geschluckt.
+    private var endpoint: URL {
+        let base = Settings.shared.serverURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        return URL(string: base + "/transcribe") ?? URL(string: "https://invalid.local/transcribe")!
+    }
 
     /// Legt die Aufnahme-Datei in EXAKT dem übergebenen Mikrofon-Format an.
     /// Damit ist `audioFile.write(from: buffer)` ein direkter Schreibvorgang
@@ -45,25 +52,21 @@ final class WhisperAPITranscriber {
         }
         defer { try? FileManager.default.removeItem(at: url) }
 
-        guard let apiKey = Settings.shared.openAIAPIKey, !apiKey.isEmpty else {
+        guard let licenseKey = Settings.shared.licenseKey, !licenseKey.isEmpty else {
             throw NSError(domain: "VoiceType", code: 2, userInfo: [
-                NSLocalizedDescriptionKey: "OpenAI API-Key fehlt"
+                NSLocalizedDescriptionKey: "Lizenzkey fehlt"
             ])
         }
 
-        // Whisper akzeptiert WAV in verschiedenen Sample-Rates und Bit-Tiefen
-        // und resampled serverseitig. Bei Push-to-Talk-Aufnahmen unter wenigen
-        // Sekunden bleibt die Datei deutlich unter dem Whisper-Limit von 25 MB
-        // (z. B. 48 kHz Float32 stereo ≈ 384 KB/s → ~5 MB für 13 s).
         let audioData = try Data(contentsOf: url)
-        return try await sendToWhisper(audioData: audioData, apiKey: apiKey)
+        return try await sendToServer(audioData: audioData, licenseKey: licenseKey)
     }
 
-    private func sendToWhisper(audioData: Data, apiKey: String) async throws -> String {
+    private func sendToServer(audioData: Data, licenseKey: String) async throws -> String {
         let boundary = "Boundary-\(UUID().uuidString)"
         var request = URLRequest(url: endpoint)
         request.httpMethod = "POST"
-        request.setValue("Bearer \(apiKey)", forHTTPHeaderField: "Authorization")
+        request.setValue(licenseKey, forHTTPHeaderField: "x-license-key")
         request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
         request.timeoutInterval = 60
 
@@ -76,10 +79,11 @@ final class WhisperAPITranscriber {
         body.append(audioData)
         body.append("\r\n".data(using: .utf8)!)
 
-        // model
+        // durationSeconds — vorerst hartkodiert "0", Server kann das lesen ohne
+        // dass wir die Aufnahmedauer hier durchschleifen müssen.
         body.append("--\(boundary)\r\n".data(using: .utf8)!)
-        body.append("Content-Disposition: form-data; name=\"model\"\r\n\r\n".data(using: .utf8)!)
-        body.append("whisper-1".data(using: .utf8)!)
+        body.append("Content-Disposition: form-data; name=\"durationSeconds\"\r\n\r\n".data(using: .utf8)!)
+        body.append("0".data(using: .utf8)!)
         body.append("\r\n".data(using: .utf8)!)
 
         // language hint (optional, Whisper auto-detected sonst)
@@ -103,7 +107,7 @@ final class WhisperAPITranscriber {
         guard (200..<300).contains(http.statusCode) else {
             let msg = String(data: data, encoding: .utf8) ?? "HTTP \(http.statusCode)"
             throw NSError(domain: "VoiceType", code: http.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "Whisper API: \(msg)"])
+                          userInfo: [NSLocalizedDescriptionKey: "Server (transcribe): \(msg)"])
         }
 
         struct Response: Decodable { let text: String }

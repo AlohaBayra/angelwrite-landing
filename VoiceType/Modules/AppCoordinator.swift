@@ -71,6 +71,7 @@ final class AppCoordinator: ObservableObject {
     // MARK: Public API
 
     func checkPermissionsOnStartup() {
+        Settings.shared.recordFirstLaunchIfNeeded()
         AVCaptureDevice.requestAccess(for: .audio) { _ in }
         _ = TextInserter.checkAccessibilityPermission(prompt: false)
         // Modell-Warmup erst nach 3 Sekunden — gibt der App Zeit vollständig
@@ -78,6 +79,39 @@ final class AppCoordinator: ObservableObject {
         // mit dem LLDB-Debugger beim Entwickeln.
         DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
             self?.warmUpLocalIfNeeded()
+        }
+        Task { await validateLicenseOnStartup() }
+    }
+
+    /// Ruft GET /validate mit dem aktuellen Lizenzkey im x-license-key-Header.
+    /// Setzt bei HTTP- oder Netzwerkfehlern setState(.error(...)). Bei leerem
+    /// Key wird kein Request abgesetzt — der reguläre license-Check beim
+    /// startRecording fängt das ab.
+    func validateLicenseOnStartup() async {
+        guard let key = Settings.shared.licenseKey, !key.isEmpty else { return }
+        let base = Settings.shared.serverURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
+        guard let url = URL(string: base + "/validate") else {
+            await MainActor.run { self.setState(.error("Server-URL ungültig")) }
+            return
+        }
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(key, forHTTPHeaderField: "x-license-key")
+        request.timeoutInterval = 15
+
+        do {
+            let (data, response) = try await URLSession.shared.data(for: request)
+            guard let http = response as? HTTPURLResponse else {
+                await MainActor.run { self.setState(.error("Lizenz-Check: keine HTTP-Antwort")) }
+                return
+            }
+            guard (200..<300).contains(http.statusCode) else {
+                let msg = String(data: data, encoding: .utf8) ?? "HTTP \(http.statusCode)"
+                await MainActor.run { self.setState(.error("Lizenz ungültig: \(msg)")) }
+                return
+            }
+        } catch {
+            await MainActor.run { self.setState(.error("Lizenz-Check fehlgeschlagen: \(error.localizedDescription)")) }
         }
     }
 
@@ -104,15 +138,22 @@ final class AppCoordinator: ObservableObject {
             setState(.error("Bedienungshilfen-Berechtigung fehlt"))
             return
         }
-        if Settings.shared.transcriptionEngine == .cloud {
-            guard Settings.shared.openAIAPIKey?.isEmpty == false else {
-                setState(.error("OpenAI API-Key fehlt"))
+
+        // Lizenz-/Grace-Logik:
+        // - Mit gültigem Lizenzkey: alles erlaubt.
+        // - Ohne Key: nur lokale Engine + Raw-Modus, und nur solange der
+        //   14-Tage-Probezeitraum läuft (kein Server-Kontakt in dem Pfad).
+        let hasLicense = (Settings.shared.licenseKey?.isEmpty == false)
+        if !hasLicense {
+            let isLocalRaw = (Settings.shared.transcriptionEngine == .local && mode == .raw)
+            if !isLocalRaw {
+                setState(.error("Lizenzkey erforderlich für Cloud-Transkription oder Modi „Nett“/„Wut→Nett“"))
                 return
             }
-        }
-        if mode != .raw, Settings.shared.anthropicAPIKey?.isEmpty == true {
-            setState(.error("Anthropic API-Key fehlt"))
-            return
+            if !Settings.shared.isInGracePeriod {
+                setState(.error("Probezeitraum abgelaufen — bitte Lizenzkey eintragen"))
+                return
+            }
         }
 
         currentMode = mode
