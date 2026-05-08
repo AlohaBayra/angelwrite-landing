@@ -2,6 +2,20 @@
 
 Alle relevanten Änderungen an VoiceType werden hier dokumentiert.
 
+## [1.0.0] - 2026-05-08
+
+### Behoben
+- Stereo-Mikrofone produzierten bei lokaler Transkription doppelten Text — Aufnahme-Buffer werden jetzt zu Mono gemischt
+- Sehr kurze Aufnahmen (<1s, typische Fn-Tasten-Bounces) werden verworfen statt als Geistertranskript verarbeitet
+- Spezial-Tokens (z.B. [BLANK_AUDIO]) erscheinen nicht mehr gelegentlich im eingefügten Text
+
+### Geändert
+- Stille am Aufnahme-Anfang wird automatisch getrimmt für stabileren Modell-Start
+- Lokale Engine: Default-Sprache ist Deutsch, wenn in den Settings kein Sprachhinweis gesetzt
+- App-Anzeige-Name in macOS Spotlight/Dock explizit "VoiceType" (CFBundleDisplayName)
+- Aufnahme-Abbruch (cancelSession) im Transcriber-Protokoll für saubere State-Übergänge
+- Versionsnummer 1.0.0 markiert die erste stabile Version mit lokaler und Cloud-Engine
+
 ## [0.3.0] - 2026-05-07
 
 ### Hinzugefügt
