@@ -19,6 +19,8 @@ final class Settings {
     private let serverURLKey = "serverURL"
     private let defaultServerURL = "https://voicetype-server-production.up.railway.app"
     private let firstLaunchDateKey = "firstLaunchDate"
+    private let licenseValidatedKey = "licenseValidated"
+    private let lastValidatedAtKey = "lastValidatedAt"
 
     /// Länge des Probezeitraums in Tagen, in dem lokale+Raw-Aufnahme ohne
     /// Lizenzkey erlaubt ist.
@@ -78,6 +80,20 @@ final class Settings {
     var licenseKey: String? {
         get { Keychain.load(account: "license") }
         set { Keychain.save(account: "license", value: newValue ?? "") }
+    }
+
+    /// True wenn der Lizenzkey zuletzt erfolgreich vom Server bestätigt wurde.
+    /// Wird bei Netzwerkfehler NICHT zurückgesetzt — ermöglicht Offline-Nutzung.
+    /// Wird nur bei expliziter Server-Ablehnung (4xx) auf false gesetzt.
+    var licenseValidated: Bool {
+        get { UserDefaults.standard.bool(forKey: licenseValidatedKey) }
+        set { UserDefaults.standard.set(newValue, forKey: licenseValidatedKey) }
+    }
+
+    /// Zeitpunkt der letzten erfolgreichen Server-Validierung.
+    var lastValidatedAt: Date? {
+        get { UserDefaults.standard.object(forKey: lastValidatedAtKey) as? Date }
+        set { UserDefaults.standard.set(newValue, forKey: lastValidatedAtKey) }
     }
 
     /// Datum des ersten App-Starts. Wird einmalig gesetzt durch

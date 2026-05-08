@@ -83,10 +83,13 @@ final class AppCoordinator: ObservableObject {
         Task { await validateLicenseOnStartup() }
     }
 
-    /// Ruft GET /validate mit dem aktuellen Lizenzkey im x-license-key-Header.
-    /// Setzt bei HTTP- oder Netzwerkfehlern setState(.error(...)). Bei leerem
-    /// Key wird kein Request abgesetzt — der reguläre license-Check beim
-    /// startRecording fängt das ab.
+    /// Validiert den Lizenzkey beim App-Start gegen den Server.
+    ///
+    /// Drei Fälle:
+    ///   - Server antwortet 2xx → licenseValidated = true, lastValidatedAt aktualisieren
+    ///   - Server antwortet 4xx → licenseValidated = false, Fehler anzeigen (Key gesperrt)
+    ///   - Netzwerkfehler (offline) → licenseValidated unverändert, kein Fehler
+    ///     (vorherige Validierung gilt weiter → Offline-Nutzung möglich)
     func validateLicenseOnStartup() async {
         guard let key = Settings.shared.licenseKey, !key.isEmpty else { return }
         let base = Settings.shared.serverURL.trimmingCharacters(in: CharacterSet(charactersIn: "/"))
@@ -101,17 +104,22 @@ final class AppCoordinator: ObservableObject {
 
         do {
             let (data, response) = try await URLSession.shared.data(for: request)
-            guard let http = response as? HTTPURLResponse else {
-                await MainActor.run { self.setState(.error("Lizenz-Check: keine HTTP-Antwort")) }
-                return
-            }
-            guard (200..<300).contains(http.statusCode) else {
-                let msg = String(data: data, encoding: .utf8) ?? "HTTP \(http.statusCode)"
-                await MainActor.run { self.setState(.error("Lizenz ungültig: \(msg)")) }
-                return
+            guard let http = response as? HTTPURLResponse else { return }
+
+            if (200..<300).contains(http.statusCode) {
+                // Erfolg: Validierung bestätigt
+                Settings.shared.licenseValidated = true
+                Settings.shared.lastValidatedAt = Date()
+            } else {
+                // Server hat Key explizit abgelehnt → sofort sperren
+                Settings.shared.licenseValidated = false
+                let msg = (try? JSONDecoder().decode([String: String].self, from: data))?["error"]
+                    ?? "HTTP \(http.statusCode)"
+                await MainActor.run { self.setState(.error("Lizenz gesperrt: \(msg)")) }
             }
         } catch {
-            await MainActor.run { self.setState(.error("Lizenz-Check fehlgeschlagen: \(error.localizedDescription)")) }
+            // Netzwerkfehler: kein setState, kein Zurücksetzen von licenseValidated.
+            // Nutzer mit zuletzt gültigem Key können offline weiterarbeiten.
         }
     }
 
@@ -140,11 +148,11 @@ final class AppCoordinator: ObservableObject {
         }
 
         // Lizenz-/Grace-Logik:
-        // - Mit gültigem Lizenzkey: alles erlaubt.
-        // - Ohne Key: nur lokale Engine + Raw-Modus, und nur solange der
-        //   14-Tage-Probezeitraum läuft (kein Server-Kontakt in dem Pfad).
-        let hasLicense = (Settings.shared.licenseKey?.isEmpty == false)
-        if !hasLicense {
+        // - licenseValidated = true (Key wurde mind. einmal vom Server bestätigt):
+        //     → alles erlaubt, auch offline (Netzwerkfehler setzt Flag nicht zurück)
+        // - licenseValidated = false (kein Key oder Key gesperrt):
+        //     → nur lokale Engine + Raw-Modus innerhalb der 14-tägigen Grace Period
+        if !Settings.shared.licenseValidated {
             let isLocalRaw = (Settings.shared.transcriptionEngine == .local && mode == .raw)
             if !isLocalRaw {
                 setState(.error("Lizenzkey erforderlich für Cloud-Transkription oder Modi „Nett“/„Wut→Nett“"))
