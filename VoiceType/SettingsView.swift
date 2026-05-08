@@ -6,6 +6,8 @@ struct SettingsView: View {
     @EnvironmentObject var coordinator: AppCoordinator
     @State private var licenseKey: String = Settings.shared.licenseKey ?? ""
     @State private var serverURL: String = Settings.shared.serverURL
+    @State private var licenseValidated: Bool = false
+    @State private var isValidating: Bool = false
     @State private var useFallback: Bool = Settings.shared.useFallbackShortcuts
     @State private var languageHint: String = Settings.shared.languageHint ?? "de"
     @State private var permissionTrigger = 0  // forcing re-render
@@ -69,7 +71,16 @@ struct SettingsView: View {
                 licenseStatusRow
             }
             Section("Lizenzkey") {
-                SecureField("xxxx-xxxx-xxxx", text: $licenseKey)
+                HStack {
+                    SecureField("xxxx-xxxx-xxxx", text: $licenseKey)
+                    if isValidating {
+                        ProgressView().controlSize(.small)
+                    } else {
+                        Button("Aktivieren") { activateLicense() }
+                            .disabled(licenseKey.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+                    }
+                }
+                validationStatusView
                 Text("Wird benötigt für Transkription über den Server und für die Modi „Nett“ und „Wut→Nett“. Key liegt sicher im Keychain.")
                     .font(.caption).foregroundStyle(.secondary)
             }
@@ -90,6 +101,7 @@ struct SettingsView: View {
             }
         }
         .formStyle(.grouped)
+        .onAppear { licenseValidated = Settings.shared.licenseValidated }
         .onDisappear { saveLicense() }
     }
 
@@ -378,6 +390,36 @@ struct SettingsView: View {
     private var licenseDirty: Bool {
         (Settings.shared.licenseKey ?? "") != licenseKey
             || Settings.shared.serverURL != serverURL
+    }
+
+    /// Speichert Key+URL und triggert die Server-Validierung. Liest danach
+    /// licenseValidated aus Settings nach (Coordinator schreibt das Flag),
+    /// damit der Validierungs-Status im UI sofort aktualisiert.
+    private func activateLicense() {
+        saveLicense()
+        isValidating = true
+        Task {
+            await coordinator.validateLicenseOnStartup()
+            await MainActor.run {
+                licenseValidated = Settings.shared.licenseValidated
+                isValidating = false
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var validationStatusView: some View {
+        let trimmed = licenseKey.trimmingCharacters(in: .whitespacesAndNewlines)
+        if trimmed.isEmpty {
+            Text("Kein Lizenzkey eingetragen")
+                .font(.caption).foregroundStyle(.secondary)
+        } else if licenseValidated {
+            Text("Lizenz aktiv")
+                .font(.caption).foregroundStyle(.green)
+        } else {
+            Text("Nicht validiert \u{2013} bitte aktivieren")
+                .font(.caption).foregroundStyle(.red)
+        }
     }
 
     private func applyShortcutMode() {
