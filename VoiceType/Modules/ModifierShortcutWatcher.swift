@@ -8,20 +8,26 @@ import CoreGraphics
 ///   - Fn + Control → .nice
 ///   - Fn + Option  → .calm
 ///
-/// onModifierChange wird mit dem Modus aufgerufen, wenn die Kombination gedrückt wird,
-/// und mit nil, wenn sie wieder losgelassen wird.
+/// Debounce: Wurde die Kombination kürzer als `minHoldSeconds` gehalten,
+/// wird `onCancelled` ausgelöst statt `onModifierChange?(nil)`.
+/// Das verhindert Rauschen durch Fn-Key-Bounce (→ sofortige Noise-Aufnahmen).
 final class ModifierShortcutWatcher {
     var onModifierChange: ((ProcessingMode?) -> Void)?
+    /// Wird ausgelöst wenn eine Aufnahme wegen zu kurzer Haltezeit verworfen werden soll.
+    var onCancelled: (() -> Void)?
 
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     private var currentMode: ProcessingMode?
+    private var pressedAt: Date?
+
+    /// Mindest-Haltezeit (in Sekunden) damit eine Aufnahme als gültig gilt.
+    private let minHoldSeconds: TimeInterval = 0.3
 
     func start() {
         guard eventTap == nil else { return }
 
         let mask: CGEventMask = 1 << CGEventType.flagsChanged.rawValue
-
         let userInfo = Unmanaged.passUnretained(self).toOpaque()
 
         guard let tap = CGEvent.tapCreate(
@@ -49,9 +55,7 @@ final class ModifierShortcutWatcher {
     }
 
     func stop() {
-        if let tap = eventTap {
-            CGEvent.tapEnable(tap: tap, enable: false)
-        }
+        if let tap = eventTap { CGEvent.tapEnable(tap: tap, enable: false) }
         if let source = runLoopSource {
             CFRunLoopRemoveSource(CFRunLoopGetMain(), source, .commonModes)
         }
@@ -59,9 +63,8 @@ final class ModifierShortcutWatcher {
         runLoopSource = nil
         if currentMode != nil {
             currentMode = nil
-            DispatchQueue.main.async { [weak self] in
-                self?.onModifierChange?(nil)
-            }
+            pressedAt = nil
+            DispatchQueue.main.async { [weak self] in self?.onModifierChange?(nil) }
         }
     }
 
@@ -69,43 +72,45 @@ final class ModifierShortcutWatcher {
         guard type == .flagsChanged else { return }
 
         let flags = event.flags
-
-        let fnDown = flags.contains(.maskSecondaryFn)
-        let shiftDown = flags.contains(.maskShift)
+        let fnDown      = flags.contains(.maskSecondaryFn)
+        let shiftDown   = flags.contains(.maskShift)
         let controlDown = flags.contains(.maskControl)
-        let optionDown = flags.contains(.maskAlternate)
-        let cmdDown = flags.contains(.maskCommand)
+        let optionDown  = flags.contains(.maskAlternate)
+        let cmdDown     = flags.contains(.maskCommand)
 
-        // Cmd darf nicht zusätzlich gedrückt sein (vermeidet Konflikte mit System-Shortcuts)
-        guard !cmdDown else {
-            releaseIfActive()
-            return
-        }
+        guard !cmdDown else { releaseIfActive(tooShort: false); return }
 
         var detectedMode: ProcessingMode? = nil
-        if fnDown && shiftDown && !controlDown && !optionDown {
-            detectedMode = .raw
-        } else if fnDown && controlDown && !shiftDown && !optionDown {
-            detectedMode = .nice
-        } else if fnDown && optionDown && !shiftDown && !controlDown {
-            detectedMode = .calm
-        }
+        if      fnDown && shiftDown   && !controlDown && !optionDown { detectedMode = .raw  }
+        else if fnDown && controlDown && !shiftDown   && !optionDown { detectedMode = .nice }
+        else if fnDown && optionDown  && !shiftDown   && !controlDown { detectedMode = .calm }
 
-        if detectedMode != currentMode {
-            let new = detectedMode
-            currentMode = detectedMode
-            DispatchQueue.main.async { [weak self] in
-                self?.onModifierChange?(new)
-            }
+        guard detectedMode != currentMode else { return }
+
+        if let mode = detectedMode {
+            // Neue Kombination gedrückt
+            currentMode = mode
+            pressedAt = Date()
+            DispatchQueue.main.async { [weak self] in self?.onModifierChange?(mode) }
+        } else {
+            // Loslassen
+            releaseIfActive(tooShort: true)
         }
     }
 
-    private func releaseIfActive() {
-        if currentMode != nil {
-            currentMode = nil
-            DispatchQueue.main.async { [weak self] in
-                self?.onModifierChange?(nil)
-            }
+    private func releaseIfActive(tooShort: Bool) {
+        guard currentMode != nil else { return }
+
+        let holdTime = pressedAt.map { Date().timeIntervalSince($0) } ?? 1.0
+        let wasTooShort = tooShort && holdTime < minHoldSeconds
+
+        currentMode = nil
+        pressedAt = nil
+
+        if wasTooShort {
+            DispatchQueue.main.async { [weak self] in self?.onCancelled?() }
+        } else {
+            DispatchQueue.main.async { [weak self] in self?.onModifierChange?(nil) }
         }
     }
 }

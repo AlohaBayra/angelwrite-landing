@@ -5,4 +5,5 @@ protocol Transcriber: AnyObject {
     func startSession(format: AVAudioFormat) throws
     func process(buffer: AVAudioPCMBuffer)
     func finishSession() async throws -> String
+    func cancelSession()
 }

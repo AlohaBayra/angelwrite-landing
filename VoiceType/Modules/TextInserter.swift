@@ -9,40 +9,23 @@ final class TextInserter {
         return AXIsProcessTrustedWithOptions(options)
     }
 
+    /// Clipboard vor Aufnahmestart leeren — verhindert Altlasten aus früheren Läufen.
+    static func clearClipboard() {
+        NSPasteboard.general.clearContents()
+    }
+
     func insert(text: String) {
-        let pasteboard = NSPasteboard.general
-
-        // Alten Inhalt sichern
-        let savedItems: [[NSPasteboard.PasteboardType: Data]] = (pasteboard.pasteboardItems ?? []).compactMap { item in
-            var dict = [NSPasteboard.PasteboardType: Data]()
-            for type in item.types {
-                if let data = item.data(forType: type) {
-                    dict[type] = data
-                }
-            }
-            return dict.isEmpty ? nil : dict
-        }
-
-        pasteboard.clearContents()
-        pasteboard.setString(text, forType: .string)
-
-        simulatePaste()
-
-        // Restore nach kurzem Delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            pasteboard.clearContents()
-            for itemDict in savedItems {
-                let item = NSPasteboardItem()
-                for (type, data) in itemDict {
-                    item.setData(data, forType: type)
-                }
-                pasteboard.writeObjects([item])
-            }
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.setString(text, forType: .string)
+        // 150ms Delay: stellt sicher dass kein queued Cmd+V aus früherem Lauf
+        // noch den Clipboard-Inhalt abgreift bevor wir ihn setzen.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+            self?.simulatePaste()
         }
     }
 
     private func simulatePaste() {
-        let source = CGEventSource(stateID: .combinedSessionState)
+        let source = CGEventSource(stateID: .hidSystemState)
         let vKeyCode: CGKeyCode = 9 // V
 
         let down = CGEvent(keyboardEventSource: source, virtualKey: vKeyCode, keyDown: true)

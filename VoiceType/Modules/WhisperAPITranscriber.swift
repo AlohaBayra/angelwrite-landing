@@ -112,4 +112,12 @@ final class WhisperAPITranscriber {
     }
 }
 
-extension WhisperAPITranscriber: Transcriber {}
+extension WhisperAPITranscriber: Transcriber {
+    func cancelSession() {
+        audioFile = nil
+        if let url = fileURL {
+            try? FileManager.default.removeItem(at: url)
+            fileURL = nil
+        }
+    }
+}

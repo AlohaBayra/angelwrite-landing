@@ -36,6 +36,17 @@ final class AppCoordinator: ObservableObject {
     private let postProcessor = ClaudePostProcessor()
     private let inserter = TextInserter()
 
+    // Leitet objectWillChange von localTranscriber weiter, damit SwiftUI-Views
+    // die coordinator als @EnvironmentObject beobachten auch auf modelState-
+    // Änderungen im localTranscriber re-rendern.
+    private var cancellables = Set<AnyCancellable>()
+
+    init() {
+        localTranscriber.objectWillChange
+            .sink { [weak self] in self?.objectWillChange.send() }
+            .store(in: &cancellables)
+    }
+
     private var activeTranscriber: any Transcriber {
         Settings.shared.transcriptionEngine == .local ? localTranscriber : cloudTranscriber
     }
@@ -62,7 +73,12 @@ final class AppCoordinator: ObservableObject {
     func checkPermissionsOnStartup() {
         AVCaptureDevice.requestAccess(for: .audio) { _ in }
         _ = TextInserter.checkAccessibilityPermission(prompt: false)
-        warmUpLocalIfNeeded()
+        // Modell-Warmup erst nach 3 Sekunden — gibt der App Zeit vollständig
+        // zu starten bevor Core ML Speicher allokiert. Verhindert Konflikte
+        // mit dem LLDB-Debugger beim Entwickeln.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) { [weak self] in
+            self?.warmUpLocalIfNeeded()
+        }
     }
 
     /// Wärmt das lokale Modell im Hintergrund vor, wenn local engine gewählt ist.
@@ -101,6 +117,9 @@ final class AppCoordinator: ObservableObject {
 
         currentMode = mode
 
+        // Clipboard bereinigen damit keine Altlasten aus früheren Läufen eingefügt werden
+        TextInserter.clearClipboard()
+
         do {
             // Mikrofon-Format VOR allem anderen ermitteln, an Whisper durchreichen,
             // dann Aufnahme starten — Tap und AVAudioFile MÜSSEN identisches
@@ -115,6 +134,14 @@ final class AppCoordinator: ObservableObject {
         } catch {
             setState(.error("Aufnahme fehlgeschlagen: \(error.localizedDescription)"))
         }
+    }
+
+    /// Bricht eine laufende Aufnahme ab ohne Transkription (z.B. bei zu kurzem Tastendruck).
+    func cancelRecording() {
+        guard isRecording else { return }
+        audioCapture.stop()
+        activeTranscriber.cancelSession()
+        setState(.idle)
     }
 
     /// Push-to-Talk: Stop beim Loslassen des Modifiers

@@ -2,6 +2,14 @@
 
 Alle relevanten Änderungen an VoiceType werden hier dokumentiert.
 
+## [0.3.0] - 2026-05-07
+
+### Hinzugefügt
+- Lokale Transkription via WhisperKit (kein OpenAI-Key im Raw-Modus)
+- Modellgrößen: tiny / base / small, wählbar in Settings
+- Neuer Settings-Tab "Transkription"
+- Automatisches Vorwärmen beim App-Start wenn lokale Engine aktiv
+
 ## [0.2.0] - 2026-05-05
 
 ### Hinzugefügt

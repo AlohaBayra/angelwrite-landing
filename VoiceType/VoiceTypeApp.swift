@@ -27,7 +27,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var settingsWindow: NSWindow?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        // LSUIElement = true im Info.plist setzt die Policy bereits korrekt.
+        // setActivationPolicy(.accessory) zusätzlich im Code aufzurufen verhindert
+        // dass das Icon sofort in der Menüleiste erscheint — daher weggelassen.
 
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
         rebuildMenu()
@@ -39,6 +41,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
         setupShortcuts()
         coordinator.checkPermissionsOnStartup()
+
+        // Einmalig aktivieren damit macOS das Menüleisten-Icon sofort rendert,
+        // ohne auf einen Fensterwechsel zu warten.
+        NSApp.activate(ignoringOtherApps: true)
     }
 
     private func setupShortcuts() {
@@ -54,16 +60,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         modifierWatcher.onModifierChange = { [weak self] mode in
             guard let self = self else { return }
             if let mode = mode {
-                // Modifier wurde gedrückt
                 if !self.coordinator.isRecording {
                     self.coordinator.startRecording(mode: mode)
                 }
             } else {
-                // Modifier wurde losgelassen
                 if self.coordinator.isRecording {
                     self.coordinator.stopRecording()
                 }
             }
+        }
+        modifierWatcher.onCancelled = { [weak self] in
+            // Zu kurzer Tastendruck (Fn-Key-Bounce) — Aufnahme verwerfen
+            self?.coordinator.cancelRecording()
         }
         modifierWatcher.start()
     }

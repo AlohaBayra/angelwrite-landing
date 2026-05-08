@@ -56,6 +56,7 @@ VoiceType/                              ← Repo-Root
 ### Dependency
 
 - `KeyboardShortcuts` (https://github.com/sindresorhus/KeyboardShortcuts), exakt **1.10.0** gepinnt. Höhere Versionen verlangen den `#Preview`-Macro-Plugin und brechen außerhalb voller Xcode-Umgebungen.
+- `WhisperKit` (https://github.com/argmaxinc/WhisperKit), `.upToNextMajor(from: "0.9.0")`. Für lokale Transkription auf Apple Silicon (Core ML). Nur auf macOS verfügbar.
 
 ## Wichtige Design-Entscheidungen
 
@@ -67,6 +68,9 @@ Wenn der User in Settings „Fallback verwenden" aktiviert, werden stattdessen k
 
 ### Whisper API statt Apple Speech
 Bessere Qualität bei Fachbegriffen, Eigennamen und gemischten Sprachen. Trade-off: Audio geht zu OpenAI (im Settings-Tab transparent kommuniziert). Latenz typisch 1–3s pro Aufnahme.
+
+### Lokale Transkription (WhisperKit)
+Wenn Settings.shared.transcriptionEngine == .local, übernimmt WhisperLocalTranscriber die Transkription komplett auf dem Gerät. WhisperKit nutzt Core ML und ist auf Apple Silicon (M1+) erheblich schneller als auf Intel. Das lokale Modell wird lazy geladen – beim ersten Aufnahme-Versuch oder per "Modell jetzt laden"-Button in den Settings. Die Instanz bleibt im Speicher, solange die App läuft (kein Reload nötig). Modell-Dateien liegen im HuggingFace-Cache (~/.cache/huggingface/) und überleben App-Neustarts. Beim Wechsel der Modellgröße wird die Instanz via unload() verworfen.
 
 ### Audio-Format
 16 kHz mono WAV — Whisper-optimal, ~32 KB/s. Dateien landen in `FileManager.default.temporaryDirectory` und werden nach Upload gelöscht.
@@ -107,10 +111,13 @@ Aus (`com.apple.security.app-sandbox = false`). Grund: CGEventTap und globales C
 - **Cmd+V wird simuliert, aber nichts wird eingefügt** → Bedienungshilfen-Permission fehlt, oder die Ziel-App hat fokus verloren während Processing.
 - **Nach Permission-Erteilung passiert nichts** → manche Permission-Änderungen brauchen App-Neustart. Beim ersten Setup ist Beenden-und-Neustart oft die schnellste Lösung.
 - **„Cannot find type X in scope" beim Editieren in Xcode** → Xcode-Index ist hinter dem Filesystem hinterher, weil Sync-Group neu indexiert. `Product → Clean Build Folder` und kurz warten.
+- **Lokales Modell lädt nicht** → Internetzugang beim ersten Download erforderlich (einmalig ~75–466 MB je nach Größe). Danach offline nutzbar.
+- **Transkriptions-Qualität lokal schlechter** → Modell "base" oder "small" wählen statt "tiny". Small ist auf Apple Silicon M1+ in Echtzeit nutzbar.
+- **WhisperKit-Build-Fehler** → Paket noch nicht in Xcode hinzugefügt. File → Add Package Dependencies → https://github.com/argmaxinc/WhisperKit
 
 ## Erweiterungen (nicht für V1)
 
-- Whisper.cpp lokal als Offline-Engine
+- ✅ Lokale Transkription via WhisperKit (ab v0.3.0)
 - Diktat-Verlauf mit Suche
 - Custom Modi mit eigenen System-Prompts
 - Auto-Detection welche App fokussiert ist und kontextuelles Mode-Switching
