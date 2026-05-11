@@ -224,7 +224,12 @@ final class AppCoordinator: ObservableObject {
                 }
             } catch {
                 await MainActor.run {
-                    self.setState(.error(error.localizedDescription))
+                    let ns = error as NSError
+                    if ns.code == 429 {
+                        self.setState(.error("Monatliches Limit erreicht – bitte nächsten Monat oder Lizenz upgraden"))
+                    } else {
+                        self.setState(.error(error.localizedDescription))
+                    }
                 }
             }
         }
