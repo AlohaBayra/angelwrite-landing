@@ -14,3 +14,4 @@ xcuserdata/
 
 # Xcode legt manchmal Build-/Archive-Ordner mit Datums-Suffix neben das Projekt
 /VoiceType */
+node_modules/
