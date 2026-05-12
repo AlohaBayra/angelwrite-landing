@@ -188,6 +188,13 @@
     .mode.raw { background: #F8FAFF; }
     .mode.nett { background: #F0FDF4; border-color: #BBF7D0; }
     .mode.wut { background: #FFF7ED; border-color: #FED7AA; }
+    .mode.translate { background: #EFF6FF; border-color: #BFDBFE; }
+    .mode.format { background: #F0FDFA; border-color: #99F6E4; }
+    .mode-soon {
+      display: inline-block; margin-top: 14px;
+      background: var(--brand-light); color: var(--brand);
+      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 100px;
+    }
     .mode h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
     .mode p { font-size: 15px; color: var(--text-muted); }
     .mode .example {
@@ -229,58 +236,92 @@
     .benefit h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
     .benefit p { font-size: 14px; color: var(--text-muted); }
 
-    /* PRICING */
-    .pricing-card {
-      max-width: 480px; margin: 0 auto;
-      background: white;
-      border: 2px solid var(--brand);
-      border-radius: 24px;
-      padding: 48px 40px;
-      text-align: center;
-      box-shadow: 0 8px 48px rgba(107,79,224,0.15);
-      position: relative;
+    /* PRICING GRID — 3 TIER */
+    .trial-banner {
+      background: var(--brand-light); border: 1px solid #C4B5FD;
+      border-radius: 16px; padding: 20px 28px;
+      text-align: center; max-width: 680px;
+      margin: 0 auto 40px;
     }
-    .pricing-ribbon {
+    .trial-banner .trial-title {
+      font-size: 18px; font-weight: 700; color: var(--brand); margin-bottom: 6px;
+    }
+    .trial-banner p { font-size: 14px; color: #5B21B6; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      align-items: start;
+    }
+    .pricing-tier {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 32px;
+      position: relative;
+      transition: box-shadow 0.2s;
+    }
+    .pricing-tier:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
+    .pricing-tier.featured {
+      border-color: var(--brand);
+      box-shadow: 0 8px 48px rgba(107,79,224,0.18);
+    }
+    .tier-badge {
       position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
       background: var(--gold); color: white;
       padding: 6px 20px; border-radius: 100px;
       font-size: 13px; font-weight: 700;
       white-space: nowrap;
     }
-    .pricing-name { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
-    .pricing-price {
-      font-size: 64px; font-weight: 800;
-      color: var(--brand); line-height: 1;
-      margin-bottom: 4px;
+    .tier-name {
+      font-size: 12px; font-weight: 700; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.1em;
+      margin-bottom: 10px;
     }
-    .pricing-price sup { font-size: 28px; vertical-align: top; padding-top: 12px; }
-    .pricing-later {
-      font-size: 13px; color: var(--text-muted); margin-bottom: 32px;
+    .tier-price {
+      font-size: 52px; font-weight: 800; color: var(--text);
+      line-height: 1; margin-bottom: 4px;
     }
-    .pricing-later strong { color: var(--text); }
-    .pricing-features {
-      list-style: none; text-align: left;
-      margin-bottom: 36px;
+    .tier-price sup { font-size: 22px; vertical-align: top; padding-top: 10px; color: var(--text-muted); font-weight: 600; }
+    .pricing-tier.featured .tier-price { color: var(--brand); }
+    .tier-period { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
+    .tier-monthly { font-size: 13px; color: var(--brand); font-weight: 600; margin-bottom: 24px; min-height: 20px; }
+    .tier-tagline { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
+    .tier-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.55; }
+    .tier-features {
+      list-style: none; margin-bottom: 32px;
     }
-    .pricing-features li {
+    .tier-features li {
       display: flex; gap: 10px; align-items: flex-start;
-      padding: 8px 0; border-bottom: 1px solid var(--border);
-      font-size: 15px;
+      padding: 7px 0; border-bottom: 1px solid var(--border);
+      font-size: 14px;
     }
-    .pricing-features li:last-child { border-bottom: none; }
-    .pricing-features .check { color: var(--brand); font-weight: 700; flex-shrink: 0; }
-    .pricing-btn {
+    .tier-features li:last-child { border-bottom: none; }
+    .tier-features .check { color: #10B981; font-weight: 700; flex-shrink: 0; }
+    .tier-features .minus { color: #D1D5DB; flex-shrink: 0; }
+    .tier-cta {
       display: block; width: 100%;
-      background: var(--brand); color: white;
-      padding: 18px; border-radius: 12px;
-      font-weight: 700; font-size: 18px;
-      text-decoration: none;
+      background: var(--bg-soft); color: var(--text);
+      border: 2px solid var(--border);
+      padding: 15px; border-radius: 12px;
+      font-weight: 700; font-size: 15px;
+      text-decoration: none; text-align: center;
       transition: all 0.2s;
-      box-shadow: 0 4px 20px rgba(107,79,224,0.3);
     }
-    .pricing-btn:hover { background: var(--brand-dark); transform: translateY(-1px); }
-    .pricing-guarantee {
-      margin-top: 16px; font-size: 13px; color: var(--text-muted);
+    .tier-cta:hover { background: var(--border); }
+    .pricing-tier.featured .tier-cta {
+      background: var(--brand); color: white;
+      border-color: var(--brand);
+      box-shadow: 0 4px 20px rgba(107,79,224,0.3);
+      font-size: 16px; padding: 17px;
+    }
+    .pricing-tier.featured .tier-cta:hover { background: var(--brand-dark); transform: translateY(-1px); }
+    .tier-note {
+      text-align: center; font-size: 12px; color: var(--text-muted);
+      margin-top: 12px;
+    }
+    @media (max-width: 960px) {
+      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
     }
 
     /* FAQ */
@@ -351,8 +392,8 @@
 
     @media (max-width: 600px) {
       .hero { padding: 120px 16px 60px; }
-      .pricing-card { padding: 40px 24px; }
-      .pricing-price { font-size: 52px; }
+      .pricing-tier { padding: 32px 24px; }
+      .tier-price { font-size: 44px; }
     }
   </style>
 </head>
@@ -361,28 +402,28 @@
 <!-- NAV -->
 <nav>
   <a class="nav-logo" href="#">✦ <span>Angel</span>Write</a>
-  <a class="nav-cta" href="#kaufen">Jetzt kaufen – 29 €</a>
+  <a class="nav-cta" href="#kaufen">7 Tage kostenlos testen</a>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
   <div class="hero-badge">✦ Neu für macOS · Version 1.0</div>
   <h1>Sprich auf Deutsch.<br/><em>Schreib auf Englisch.</em></h1>
-  <p>AngelWrite verwandelt deine Sprache in professionellen Text — auf Wunsch direkt auf Englisch. Push-to-Talk. Kein Abo. Einmal 29 €.</p>
+  <p>AngelWrite verwandelt deine Sprache in professionellen Text — auf Wunsch direkt auf Englisch. Push-to-Talk. 7 Tage gratis testen.</p>
 
   <div class="price-badge">
-    <span class="intro">Einführungspreis</span>
-    <span class="amount">29 €</span>
-    <span class="period">einmalig</span>
+    <span class="intro">Trial</span>
+    <span class="amount">7 Tage</span>
+    <span class="period">kostenlos</span>
     &nbsp;·&nbsp;
-    <span class="later">danach 49 €</span>
+    <span style="font-size:12px; color:var(--text-muted);">dann ab 19 €</span>
   </div>
 
   <div class="hero-cta-group">
-    <a class="btn-primary" href="#kaufen">Jetzt kaufen</a>
+    <a class="btn-primary" href="#kaufen">Kostenlos testen</a>
     <a class="btn-secondary" href="#wie-es-funktioniert">Wie es funktioniert</a>
   </div>
-  <p class="hero-meta">Für macOS 13+ · <strong>Einmalige Zahlung</strong> · Kein Abo</p>
+  <p class="hero-meta">Für macOS 13+ · <strong>7 Tage kostenlos</strong> · Keine Kreditkarte nötig</p>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -414,28 +455,40 @@
 
 <!-- MODES -->
 <section class="section" id="modi">
-  <p class="section-label">Drei Modi</p>
+  <p class="section-label">Fünf Modi</p>
   <h2 class="section-title">Für jeden Moment die richtige Stimme</h2>
   <p class="section-sub">Wähle wie deine Worte ankommen sollen — AngelWrite passt sich dir an.</p>
 
   <div class="modes">
-    <div class="mode raw">
+    <div class="mode translate">
       <div class="mode-key">Fn + ⇧ Shift</div>
-      <h3>📝 Raw — Wörtlich</h3>
-      <p>Deine Worte exakt so, wie du sie gesprochen hast. Perfekt für Notizen, Rohentwürfe und schnelle Gedanken.</p>
-      <div class="example">"Ruf morgen früh Lisa an wegen dem Projekt"</div>
-    </div>
-    <div class="mode nett">
-      <div class="mode-key">Fn + ⌃ Control</div>
-      <h3>✨ Klar — Veredelt</h3>
-      <p>Deine Worte, auf den Punkt gebracht. Füllwörter weg, Grammatik sauber — deine Stimme, nur klarer.</p>
-      <div class="example">"Bitte ruf morgen Früh Lisa an, um den Projektstatus zu besprechen."</div>
+      <h3>🌍 Übersetzen — Englisch</h3>
+      <p>Sprich auf Deutsch — der Text erscheint auf Englisch. Professionell, fertig, sofort einsatzbereit für internationale E-Mails und Slack.</p>
+      <div class="example">"Please find attached the revised proposal for your review."</div>
     </div>
     <div class="mode wut">
       <div class="mode-key">Fn + ⌥ Option</div>
       <h3>🕊️ Professionell — Entschärft</h3>
       <p>Sprich deinen Frust raus — AngelWrite macht daraus eine professionelle Nachricht. Deine Intention bleibt, der Ton wird sachlich.</p>
       <div class="example">"Ich möchte kurz auf die Verzögerung ansprechen und gemeinsam eine Lösung finden."</div>
+    </div>
+    <div class="mode format">
+      <div class="mode-key">Fn + ⌃ Control</div>
+      <h3>📋 Formatieren — Strukturiert</h3>
+      <p>Diktat rein, fertige E-Mail raus. AngelWrite erkennt den Kontext und liefert direkt die richtige Struktur — Liste, Absatz oder E-Mail.</p>
+      <div class="example">"Betreff: Projektstatus · Hallo Lisa, anbei die aktuellen Punkte: ..."</div>
+    </div>
+    <div class="mode nett">
+      <div class="mode-key">Fn + ⌘ Command</div>
+      <h3>✨ Klar — Veredelt</h3>
+      <p>Deine Worte, auf den Punkt gebracht. Füllwörter weg, Grammatik sauber — deine Stimme, nur klarer.</p>
+      <div class="example">"Bitte ruf morgen früh Lisa an, um den Projektstatus zu besprechen."</div>
+    </div>
+    <div class="mode raw">
+      <div class="mode-key">Fn + ⇧ Shift</div>
+      <h3>📡 Lokal — Offline & Privat</h3>
+      <p>Kein Internet. Kein API. Kein Server. Transkription direkt auf deinem Mac — ideal für vertrauliche Bereiche, Compliance-Anforderungen und überall wo Daten das Gerät nicht verlassen dürfen.</p>
+      <div class="example">Funktioniert im Flugzeug, in Hochsicherheitsbereichen, im Homeoffice ohne VPN — überall.</div>
     </div>
   </div>
 </section>
@@ -458,35 +511,6 @@
     </div>
   </div>
 </section>
-
-<!-- FEATURE TILES: Was AngelWrite kann -->
-<section class="section" id="funktionen">
-  <p class="section-label">Einzigartige Funktionen</p>
-  <h2 class="section-title">Dein Gedanke. Dein Format. Deine Sprache.</h2>
-  <p class="section-sub">Was andere Tools nicht können — AngelWrite schon.</p>
-  <div class="feature-tiles">
-    <div class="feature-tile">
-      <span class="tile-icon">🌍</span>
-      <h3>Deutsch denken. Englisch schreiben.</h3>
-      <p>Sprich in deiner Muttersprache — AngelWrite übersetzt und verfeinert gleichzeitig. Perfekt für internationale E-Mails, Slack-Nachrichten und Reports.</p>
-      <span class="tile-badge">Bald verfügbar</span>
-    </div>
-    <div class="feature-tile">
-      <span class="tile-icon">📋</span>
-      <h3>Fertig formatiert, nicht nur transkribiert.</h3>
-      <p>Statt rohem Diktat bekommst du eine saubere Liste, eine strukturierte E-Mail oder einen zusammengefassten Absatz — genau so, wie du ihn brauchst.</p>
-      <span class="tile-badge">Bald verfügbar</span>
-    </div>
-    <div class="feature-tile">
-      <span class="tile-icon">⚙️</span>
-      <h3>Dein persönlicher Schreibstil. Gespeichert.</h3>
-      <p>Hinterlege eigene Anweisungen — "immer formell", "immer auf Englisch", "immer als Stichpunkte". AngelWrite denkt sich deinen Stil.</p>
-      <span class="tile-badge">Bald verfügbar</span>
-    </div>
-  </div>
-</section>
-
-<hr class="divider" />
 
 <!-- BENEFITS -->
 <section class="section">
@@ -532,8 +556,8 @@
     <div class="benefit">
       <div class="benefit-icon">🔑</div>
       <div>
-        <h4>Einmalig kaufen</h4>
-        <p>Kein Abo. Keine monatlichen Kosten. Einmal kaufen, dauerhaft nutzen.</p>
+        <h4>Dein Modell, deine Wahl</h4>
+        <p>Einmalig kaufen oder jährlich — kein Lock-in, keine versteckten Kosten. 7 Tage gratis testen.</p>
       </div>
     </div>
   </div>
@@ -543,7 +567,7 @@
 <section class="for-who-bg" style="padding: 80px 24px;" id="vergleich">
   <div style="max-width: 1100px; margin: 0 auto;">
     <p class="section-label">Warum AngelWrite?</p>
-    <h2 class="section-title">Kein Abo. Kein Setup. Kein Kompromiss.</h2>
+    <h2 class="section-title">Kein Lock-in. Kein Setup. Kein Kompromiss.</h2>
     <p class="section-sub" style="margin-bottom: 48px;">Du kennst die Alternativen. Hier ist der Unterschied.</p>
 
     <div class="compare-wrap">
@@ -560,7 +584,7 @@
         <tbody>
           <tr>
             <td class="row-label">💶 Preis</td>
-            <td class="col-angel">29 € einmalig</td>
+            <td class="col-angel">ab 19 € · Pro 99 € / Jahr</td>
             <td>$144 / Jahr</td>
             <td>$250 Lifetime</td>
             <td>Abo</td>
@@ -600,32 +624,85 @@
 </section>
 
 <!-- PRICING -->
-<section class="for-who-bg" style="padding: 80px 24px; background: white;" id="kaufen">
+<section style="padding: 80px 24px; background: white;" id="kaufen">
   <div style="max-width: 1100px; margin: 0 auto;">
-    <p class="section-label">Preis</p>
-    <h2 class="section-title">Einmal kaufen. Für immer nutzen.</h2>
-    <p class="section-sub" style="margin-bottom: 48px;">Kein Abo, keine versteckten Kosten. Nur ein fairer Preis für ein Tool, das täglich Stunden spart.</p>
+    <p class="section-label">Preise</p>
+    <h2 class="section-title">Starte kostenlos. Wächst mit dir.</h2>
+    <p class="section-sub" style="margin-bottom: 40px;">7 Tage testen, keine Kreditkarte nötig — dann das Modell, das zu dir passt.</p>
 
-    <div class="pricing-card">
-      <div class="pricing-ribbon">🎉 Einführungspreis</div>
-      <div class="pricing-name">AngelWrite für macOS</div>
-      <div class="pricing-price"><sup>€</sup>29</div>
-      <div class="pricing-later">Einmalig · <strong>danach 49 €</strong> · Du zahlst jetzt nur 29 €</div>
-
-      <ul class="pricing-features">
-        <li><span class="check">✓</span> Unbegrenzte Diktat-Sessions</li>
-        <li><span class="check">✓</span> Alle drei Modi (Raw, Klar, Professionell)</li>
-        <li><span class="check">✓</span> Lokale Transkription (Apple Silicon, offline)</li>
-        <li><span class="check">✓</span> Cloud-Transkription via Whisper API</li>
-        <li><span class="check">✓</span> Funktioniert in jeder macOS-App</li>
-        <li><span class="check">✓</span> Automatische Updates</li>
-        <li><span class="check">✓</span> Für macOS 13 Ventura oder neuer</li>
-      </ul>
-
-      <a class="pricing-btn" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Jetzt kaufen für 29 €</a>
-      <p class="pricing-guarantee">🔒 Sichere Zahlung via Stripe · Sofort-Download nach Kauf</p>
-      <p style="margin-top: 12px; font-size: 13px; color: var(--text-muted);">Einmal bezahlen. Für immer nutzen. Keine Überraschungen.</p>
+    <div class="trial-banner">
+      <div class="trial-title">✦ 7 Tage kostenlos testen</div>
+      <p>Voller Pro-Funktionsumfang. Keine Kreditkarte. Kein Risiko. Einfach starten.</p>
     </div>
+
+    <div class="pricing-grid">
+
+      <!-- LOKAL -->
+      <div class="pricing-tier">
+        <div class="tier-name">Lokal</div>
+        <div class="tier-price"><sup>€</sup>19</div>
+        <div class="tier-period">einmalig · keine Updates</div>
+        <div class="tier-monthly">&nbsp;</div>
+        <div class="tier-tagline">Offline. Privat. Kein Abo.</div>
+        <div class="tier-desc">Für alle, die ihre Daten auf dem Gerät behalten wollen — ohne Cloud, ohne laufende Kosten.</div>
+        <ul class="tier-features">
+          <li><span class="check">✓</span> Lokale Transkription (Apple Silicon)</li>
+          <li><span class="check">✓</span> Kein Internet erforderlich</li>
+          <li><span class="check">✓</span> Modus: Klar — Veredelt</li>
+          <li><span class="check">✓</span> DSGVO: Daten verlassen nie das Gerät</li>
+          <li><span class="check">✓</span> Einmalige Zahlung</li>
+          <li><span class="minus">–</span> Keine Cloud-Modi</li>
+          <li><span class="minus">–</span> Keine automatischen Updates</li>
+        </ul>
+        <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Lokal kaufen – 19 €</a>
+        <p class="tier-note">Einmalig. Für immer.</p>
+      </div>
+
+      <!-- PRO (featured) -->
+      <div class="pricing-tier featured">
+        <div class="tier-badge">⭐ Am beliebtesten</div>
+        <div class="tier-name">Pro</div>
+        <div class="tier-price"><sup>€</sup>99</div>
+        <div class="tier-period">pro Jahr · jederzeit kündbar</div>
+        <div class="tier-monthly">entspricht 8,25 € / Monat</div>
+        <div class="tier-tagline">Alle Modi. Volle Power.</div>
+        <div class="tier-desc">Für alle, die täglich diktieren und alle Möglichkeiten von AngelWrite ausschöpfen wollen.</div>
+        <ul class="tier-features">
+          <li><span class="check">✓</span> Alle 5 Modi (inkl. Übersetzen & Formatieren)</li>
+          <li><span class="check">✓</span> Cloud-Transkription via Whisper API</li>
+          <li><span class="check">✓</span> KI-Veredelung inklusive</li>
+          <li><span class="check">✓</span> Fair Use: 250 Anfragen / Woche</li>
+          <li><span class="check">✓</span> Automatische Updates & neue Modi</li>
+          <li><span class="check">✓</span> macOS-Kompatibilität garantiert</li>
+          <li><span class="check">✓</span> E-Mail-Support</li>
+        </ul>
+        <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Pro starten – 99 € / Jahr</a>
+        <p class="tier-note">🔒 Sichere Zahlung via Stripe</p>
+      </div>
+
+      <!-- ADVANCED -->
+      <div class="pricing-tier">
+        <div class="tier-name">Advanced</div>
+        <div class="tier-price"><sup>€</sup>149</div>
+        <div class="tier-period">einmalig</div>
+        <div class="tier-monthly">&nbsp;</div>
+        <div class="tier-tagline">Unbegrenzt. Mit eigenem API-Key.</div>
+        <div class="tier-desc">Für Power-User, die ihre eigenen API-Keys mitbringen und keine Nutzungsgrenzen wollen.</div>
+        <ul class="tier-features">
+          <li><span class="check">✓</span> Alle Pro-Funktionen</li>
+          <li><span class="check">✓</span> Eigener API-Key (BYOK)</li>
+          <li><span class="check">✓</span> Keine Fair-Use-Grenzen</li>
+          <li><span class="check">✓</span> Benutzerdefinierte Modi (demnächst)</li>
+          <li><span class="check">✓</span> Prioritäts-Support</li>
+          <li><span class="check">✓</span> Einmalige Zahlung</li>
+        </ul>
+        <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Advanced kaufen – 149 €</a>
+        <p class="tier-note">Eigener API-Key erforderlich</p>
+      </div>
+
+    </div>
+
+    <p style="text-align: center; margin-top: 32px; font-size: 13px; color: var(--text-muted);">Alle Preise inkl. MwSt. · Keine automatische Verlängerung ohne Zustimmung · Sofort-Download nach Kauf</p>
   </div>
 </section>
 
@@ -636,23 +713,28 @@
   <div class="faq" style="margin-top: 48px;">
 
     <div class="faq-item">
+      <div class="faq-q">Was beinhaltet die 7-Tage-Testphase?</div>
+      <div class="faq-a">Du erhältst vollen Zugang zum Pro-Tier — alle 5 Modi, Cloud-Transkription, KI-Veredelung. Keine Kreditkarte nötig, keine automatische Verlängerung. Nach 7 Tagen wählst du, ob und welches Modell du nutzen möchtest.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-q">Was ist der Unterschied zwischen Lokal, Pro und Advanced?</div>
+      <div class="faq-a">Lokal (19 € einmalig) funktioniert offline auf Apple Silicon — ideal für maximale Privatsphäre, ohne laufende Kosten. Pro (99 € / Jahr) schaltet alle 5 Modi, Cloud-Transkription und automatische Updates frei. Advanced (149 € einmalig) ist für Power-User mit eigenem API-Key — keine Nutzungsgrenzen, keine laufenden Kosten.</div>
+    </div>
+
+    <div class="faq-item">
       <div class="faq-q">Brauche ich einen API-Key?</div>
-      <div class="faq-a">Für den lokalen Modus (Apple Silicon) nicht. Für die Cloud-Transkription via OpenAI Whisper brauchst du einen eigenen OpenAI-Key — das sind nur wenige Cent pro Aufnahme (ca. 0,006 $ pro Minute).</div>
+      <div class="faq-a">Für den Lokal-Tier und den Lokal-Modus im Pro-Tier nicht. Für Cloud-Transkription und KI-Veredelung im Pro-Tier ist kein eigener Key nötig — das ist inklusive. Im Advanced-Tier bringst du deinen eigenen OpenAI- oder Claude-Key mit, um ohne Limits zu arbeiten.</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">Funktioniert AngelWrite auch auf Intel-Macs?</div>
-      <div class="faq-a">Ja — die Cloud-Transkription läuft auf allen Macs mit macOS 13+. Die lokale Transkription (ohne API-Key) funktioniert besonders gut auf Apple Silicon (M1 und neuer).</div>
+      <div class="faq-a">Ja — die Cloud-Transkription (Pro & Advanced) läuft auf allen Macs mit macOS 13+. Die lokale Transkription ohne Internet funktioniert besonders gut auf Apple Silicon (M1 und neuer).</div>
     </div>
 
     <div class="faq-item">
       <div class="faq-q">Werden meine Sprachaufnahmen gespeichert?</div>
       <div class="faq-a">Nein. Audiodateien werden ausschließlich temporär verarbeitet und nach der Transkription sofort automatisch gelöscht. Weder AngelWrite noch wir speichern deine Aufnahmen. Details in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Kann ich den Preis nach dem Kauf noch nutzen?</div>
-      <div class="faq-a">Ja. Du kaufst einmalig und erhältst dauerhaften Zugang zur App — inklusive aller zukünftigen Updates. Der Preis steigt für neue Käufer, nicht für Bestandskunden.</div>
     </div>
 
     <div class="faq-item">
@@ -668,7 +750,7 @@
   <div class="footer-links">
     <a href="datenschutz.html">Datenschutzerklärung</a>
     <a href="mailto:marcus.eichler65@googlemail.com">Kontakt</a>
-    <a href="#kaufen">Kaufen</a>
+    <a href="#kaufen">Preise</a>
   </div>
   <p>© 2026 AngelWrite · ValueLift · Alle Rechte vorbehalten</p>
   <p style="margin-top: 8px; font-size: 12px;">AngelWrite ist ein Produkt von Marcus Eichler / ValueLift · macOS ist ein Markenzeichen von Apple Inc.</p>

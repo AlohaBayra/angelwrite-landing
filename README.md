@@ -1,5 +1,23 @@
 # VoiceType
 
+Native macOS-Menüleisten-App für Push-to-Talk-Diktat mit KI-Verarbeitung.
+
+## Projektstruktur
+
+```
+VoiceType/
+├── VoiceType.xcodeproj     ← Xcode-Projekt
+├── VoiceType/              ← Swift-Quelldateien
+├── VoiceType-Server/       ← Server-Konfiguration (Node.js)
+└── Docs/                   ← Alle Projektdokumente
+    ├── Datenschutzerklaerung.md
+    ├── VoiceType-backlog-strategisch.md
+    ├── VoiceType-whisperkit-prompts.md
+    └── voicetype_claude_code_prompt.md
+```
+
+---
+
 macOS-Menüleisten-App für Push-to-Talk-Diktat mit drei Modi:
 
 | Halten | Modus | Was passiert |
