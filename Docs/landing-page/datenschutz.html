@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Datenschutzerklärung – AngelWrite</title>
+  <meta name="description" content="Datenschutzerklärung der AngelWrite macOS-App gemäß DSGVO." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #6B4FE0;
+      --brand-dark: #5038C0;
+      --brand-light: #EDE9FF;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --bg: #FFFFFF;
+      --bg-soft: #F9F7FF;
+      --border: #E5E7EB;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--brand); }
+    .nav-back {
+      color: var(--brand); font-weight: 600; font-size: 14px;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-back:hover { color: var(--brand-dark); }
+
+    /* CONTENT */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .page-header h1 span { color: var(--brand); }
+    .page-meta {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 40px 0 16px;
+      color: var(--text);
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 28px 0 10px;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 16px; color: #374151; }
+
+    ul, ol {
+      margin: 0 0 16px 24px;
+      color: #374151;
+    }
+    li { margin-bottom: 6px; }
+
+    .address-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    th {
+      background: var(--bg-soft);
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      color: #374151;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #FAFAFA; }
+
+    .highlight-box {
+      background: var(--brand-light);
+      border-left: 4px solid var(--brand);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 40px 24px;
+      background: var(--bg-soft);
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .footer-links {
+      display: flex; justify-content: center; gap: 24px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none; font-weight: 500;
+    }
+    .footer-links a:hover { color: var(--brand); }
+
+    @media (max-width: 600px) {
+      .page-wrap { padding: 90px 16px 60px; }
+      table { font-size: 13px; }
+      td, th { padding: 8px 10px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">✦ <span>Angel</span>Write</a>
+  <a class="nav-back" href="index.html">← Zurück zur Startseite</a>
+</nav>
+
+<!-- CONTENT -->
+<div class="page-wrap">
+
+  <div class="page-header">
+    <h1>Datenschutz&shy;erklärung – <span>Angel</span>Write</h1>
+    <p class="page-meta">Stand: Mai 2026 · Anwendung: AngelWrite für macOS</p>
+  </div>
+
+  <div class="highlight-box">
+    AngelWrite verarbeitet so wenig Daten wie möglich und löscht temporäre Dateien automatisch. Ohne Ihre ausdrückliche Einwilligung wird die App nicht gestartet und es werden keinerlei Daten erhoben.
+  </div>
+
+  <h2>1. Verantwortlicher im Sinne der DSGVO</h2>
+  <div class="address-box">
+    Marcus Eichler / ValueLift<br>
+    E-Mail: marcus.eichler65@googlemail.com
+  </div>
+
+  <h2>2. Welche Daten werden verarbeitet?</h2>
+
+  <h3>2.1 Audioaufnahmen (temporär, lokal)</h3>
+  <ul>
+    <li><strong>Was:</strong> Kurze Audioschnipsel, die während einer Sprachaufnahme entstehen.</li>
+    <li><strong>Wo:</strong> Ausschließlich im temporären Systemverzeichnis des Geräts (<code>/tmp</code> bzw. <code>NSTemporaryDirectory()</code>). Nicht in iCloud, nicht in App-Dokumenten, nicht auf externen Servern – außer für die Transkription (siehe 2.2).</li>
+    <li><strong>Wie lange:</strong> Die Datei wird <strong>unmittelbar nach Abschluss der Transkription</strong> automatisch gelöscht – unabhängig davon, ob die Transkription erfolgreich war. Beim Beenden der App werden alle verbleibenden temporären Dateien bereinigt.</li>
+    <li><strong>Rechtsgrundlage:</strong> Einwilligung des Nutzers (Art. 6 Abs. 1 lit. a DSGVO).</li>
+  </ul>
+
+  <h3>2.2 Übertragung an externe Transkriptions-API</h3>
+  <p>Audiodaten werden verschlüsselt (TLS) an den Transkriptionsdienst übertragen:</p>
+  <table>
+    <thead>
+      <tr><th>Anbieter</th><th>Zweck</th><th>Datenschutzerklärung</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>OpenAI, Inc. (Whisper API)</td>
+        <td>Sprachtranskription</td>
+        <td><a href="https://openai.com/privacy" target="_blank" rel="noopener">openai.com/privacy</a></td>
+      </tr>
+    </tbody>
+  </table>
+  <p>Die Übertragung erfolgt <strong>nur nach ausdrücklicher Einwilligung</strong>. Ohne Einwilligung findet keine Übertragung statt.</p>
+
+  <h3>2.3 Transkriptionsergebnisse (Zwischenablage)</h3>
+  <p>Der erkannte Text wird in die Zwischenablage (Clipboard) des Betriebssystems geschrieben, um ihn in die aktive App einzufügen. Der zuvor dort befindliche Inhalt wird unmittelbar nach dem Einfügevorgang automatisch wiederhergestellt. AngelWrite liest den Clipboard-Inhalt ausschließlich zum Zweck der Wiederherstellung aus – keine Analyse, keine Speicherung, keine Weitergabe.</p>
+
+  <h3>2.4 Einwilligungsstatus</h3>
+  <p>Ein einzelner boolescher Wert (ja/nein), ob der Nutzer der Datenschutzerklärung zugestimmt hat, wird lokal in den App-Einstellungen gespeichert (macOS UserDefaults / <code>~/Library/Preferences</code>). Keine Weitergabe an Dritte.</p>
+
+  <h3>2.5 Was wir NICHT erheben</h3>
+  <ul>
+    <li>Keine Nutzungsstatistiken oder Analytics</li>
+    <li>Keine Absturz-Berichte an externe Dienste</li>
+    <li>Keine Gerätekennungen, IP-Adressen oder Standortdaten</li>
+    <li>Kein dauerhaftes Speichern von Transkripten oder Audiodateien</li>
+  </ul>
+
+  <h2>3. Zwecke der Datenverarbeitung</h2>
+  <table>
+    <thead>
+      <tr><th>Datenart</th><th>Zweck</th><th>Rechtsgrundlage</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Audioaufnahme</td><td>Spracherkennung / Transkription</td><td>Einwilligung (Art. 6 I a DSGVO)</td></tr>
+      <tr><td>API-Übertragung</td><td>Transkription durch Drittanbieter</td><td>Einwilligung (Art. 6 I a DSGVO)</td></tr>
+      <tr><td>Clipboard (temporär)</td><td>Einsetzen des Transkripts in aktive App</td><td>Berechtigtes Interesse (Art. 6 I f DSGVO)</td></tr>
+      <tr><td>Einwilligungsstatus</td><td>Nachweis der erteilten Einwilligung</td><td>Rechtliche Verpflichtung (Art. 6 I c DSGVO)</td></tr>
+    </tbody>
+  </table>
+
+  <h2>4. Einwilligung und Widerruf</h2>
+
+  <h3>4.1 Einwilligung beim ersten Start</h3>
+  <p>Beim ersten Start der App wird ein Einwilligungsdialog angezeigt. Der Nutzer muss aktiv zustimmen, bevor das Mikrofon aktiviert wird oder Audiodaten verarbeitet werden. Eine Ablehnung beendet die App.</p>
+
+  <h3>4.2 Widerruf der Einwilligung</h3>
+  <p>Die Einwilligung kann jederzeit widerrufen werden durch:</p>
+  <ul>
+    <li><strong>Deinstallation der App</strong> (löscht alle lokalen App-Daten einschließlich des Einwilligungsstatus)</li>
+    <li><strong>Zurücksetzen der App-Einstellungen</strong> über die macOS-Systemeinstellungen → Datenschutz &amp; Sicherheit → Mikrofon</li>
+    <li><strong>Schreiben an:</strong> marcus.eichler65@googlemail.com</li>
+  </ul>
+  <p>Nach dem Widerruf werden keine weiteren Daten erhoben. Bereits bei Drittanbietern verarbeitete Daten unterliegen deren jeweiliger Datenschutzerklärung.</p>
+
+  <h2>5. Datensicherheit</h2>
+  <ul>
+    <li>Audiodateien werden ausschließlich im geschützten temporären Systemverzeichnis abgelegt.</li>
+    <li>Übertragungen an externe APIs erfolgen ausschließlich via HTTPS/TLS.</li>
+    <li>Die App speichert keine Schlüssel oder Zugangsdaten im Klartext.</li>
+    <li>Mikrofonzugriff erfolgt ausschließlich während einer aktiven Aufnahme.</li>
+  </ul>
+
+  <h2>6. Ihre Rechte (DSGVO Art. 15–22)</h2>
+  <ul>
+    <li><strong>Auskunft</strong> (Art. 15): Welche Daten von Ihnen verarbeitet werden.</li>
+    <li><strong>Berichtigung</strong> (Art. 16): Korrektur unrichtiger Daten.</li>
+    <li><strong>Löschung</strong> (Art. 17): Da AngelWrite keine personenbezogenen Daten dauerhaft speichert, ist eine separate Löschanfrage in der Regel nicht erforderlich.</li>
+    <li><strong>Einschränkung</strong> (Art. 18): Einschränkung der Verarbeitung auf Anfrage.</li>
+    <li><strong>Widerspruch</strong> (Art. 21): Widerspruch gegen die Verarbeitung auf Basis berechtigter Interessen.</li>
+    <li><strong>Beschwerde</strong> (Art. 77): Bei der zuständigen Datenschutzaufsichtsbehörde (z. B. dem Datenschutzbeauftragten Ihres Bundeslandes oder dem BfDI).</li>
+  </ul>
+  <p>Anfragen richten Sie bitte an: <a href="mailto:marcus.eichler65@googlemail.com">marcus.eichler65@googlemail.com</a></p>
+
+  <h2>7. Datenweitergabe und Drittländer</h2>
+  <p>Audiodaten können bei Nutzung der Whisper API in Länder außerhalb der EU/EWR (USA) übertragen werden. In diesem Fall stützen wir uns auf die Standardvertragsklauseln (SCC) der EU-Kommission bzw. die Datenschutzzertifizierungen des Anbieters (EU-U.S. Data Privacy Framework). Details entnehmen Sie der Datenschutzerklärung von OpenAI.</p>
+
+  <h2>8. Kinder</h2>
+  <p>AngelWrite richtet sich nicht an Personen unter 16 Jahren. Wir erheben wissentlich keine Daten von Kindern.</p>
+
+  <h2>9. Änderungen dieser Datenschutzerklärung</h2>
+  <p>Wesentliche Änderungen werden dem Nutzer beim nächsten App-Start mitgeteilt und erfordern ggf. eine erneute Einwilligung. Das Datum der letzten Aktualisierung ist oben vermerkt.</p>
+
+  <h2>10. Kontakt</h2>
+  <p>
+    <strong>Marcus Eichler / ValueLift</strong><br>
+    E-Mail: <a href="mailto:marcus.eichler65@googlemail.com">marcus.eichler65@googlemail.com</a>
+  </p>
+
+  <p style="margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 13px;">
+    Diese Datenschutzerklärung wurde für AngelWrite (macOS) erstellt und entspricht den Anforderungen der EU-Datenschutz-Grundverordnung (DSGVO) sowie dem deutschen Bundesdatenschutzgesetz (BDSG).
+  </p>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-links">
+    <a href="datenschutz.html">Datenschutzerklärung</a>
+    <a href="mailto:marcus.eichler65@googlemail.com">Kontakt</a>
+    <a href="index.html#kaufen">Kaufen</a>
+  </div>
+  <p>© 2026 AngelWrite · ValueLift · Alle Rechte vorbehalten</p>
+  <p style="margin-top: 8px; font-size: 12px;">AngelWrite ist ein Produkt von Marcus Eichler / ValueLift · macOS ist ein Markenzeichen von Apple Inc.</p>
+</footer>
+
+</body>
+</html>
