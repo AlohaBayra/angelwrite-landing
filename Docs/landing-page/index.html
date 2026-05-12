@@ -205,6 +205,24 @@
       font-style: italic;
     }
 
+    /* MODE GROUP HEADERS */
+    .mode-group-header {
+      display: flex; align-items: center; gap: 10px;
+      margin: 40px 0 20px;
+      padding: 12px 18px;
+      background: var(--bg-soft);
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 14px; font-weight: 600; color: var(--text-muted);
+    }
+    .mode-group-header.offline {
+      background: #F0FDF4; border-color: #BBF7D0; color: #166534;
+    }
+    .modes-offline {
+      grid-template-columns: 1fr;
+      max-width: 460px;
+    }
+
     /* FOR WHO */
     .for-who-bg { background: var(--bg-soft); }
     .personas {
@@ -407,9 +425,9 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">✦ Neu für macOS · Version 1.0</div>
-  <h1>Sprich auf Deutsch.<br/><em>Schreib auf Englisch.</em></h1>
-  <p>AngelWrite verwandelt deine Sprache in professionellen Text — auf Wunsch direkt auf Englisch. Push-to-Talk. 7 Tage gratis testen.</p>
+  <div class="hero-badge">✦ Für macOS</div>
+  <h1>Du sprichst.<br/><em>AngelWrite schreibt.</em></h1>
+  <p>Professioneller Text auf Knopfdruck — auf Deutsch oder direkt auf Englisch. Push-to-Talk. 7 Tage gratis testen.</p>
 
   <div class="price-badge">
     <span class="intro">Trial</span>
@@ -455,14 +473,16 @@
 
 <!-- MODES -->
 <section class="section" id="modi">
-  <p class="section-label">Fünf Modi</p>
+  <p class="section-label">Modi</p>
   <h2 class="section-title">Für jeden Moment die richtige Stimme</h2>
-  <p class="section-sub">Wähle wie deine Worte ankommen sollen — AngelWrite passt sich dir an.</p>
+  <p class="section-sub">Cloud-Modi mit KI-Veredelung — oder offline, direkt auf deinem Mac. Du wählst.</p>
+
+  <div class="mode-group-header">☁️ Cloud-Modi · mit Internet & KI-Verarbeitung</div>
 
   <div class="modes">
     <div class="mode translate">
-      <div class="mode-key">Fn + ⇧ Shift</div>
-      <h3>🌍 Übersetzen — Englisch</h3>
+      <div class="mode-key">🌍 Übersetzen</div>
+      <h3>Übersetzen — Englisch</h3>
       <p>Sprich auf Deutsch — der Text erscheint auf Englisch. Professionell, fertig, sofort einsatzbereit für internationale E-Mails und Slack.</p>
       <div class="example">"Please find attached the revised proposal for your review."</div>
     </div>
@@ -484,10 +504,15 @@
       <p>Deine Worte, auf den Punkt gebracht. Füllwörter weg, Grammatik sauber — deine Stimme, nur klarer.</p>
       <div class="example">"Bitte ruf morgen früh Lisa an, um den Projektstatus zu besprechen."</div>
     </div>
+  </div>
+
+  <div class="mode-group-header offline">📡 Offline-Modus · kein Internet, kein API, kein Server</div>
+
+  <div class="modes modes-offline">
     <div class="mode raw">
       <div class="mode-key">Fn + ⇧ Shift</div>
-      <h3>📡 Lokal — Offline & Privat</h3>
-      <p>Kein Internet. Kein API. Kein Server. Transkription direkt auf deinem Mac — ideal für vertrauliche Bereiche, Compliance-Anforderungen und überall wo Daten das Gerät nicht verlassen dürfen.</p>
+      <h3>🎙️ Direkt — Wörtlich</h3>
+      <p>Was du sprichst, erscheint genau so als Text — ohne KI, ohne Umformulierung. Transkription direkt auf deinem Mac. Ideal für Notizen, Diktate und überall wo Daten das Gerät nicht verlassen dürfen.</p>
       <div class="example">Funktioniert im Flugzeug, in Hochsicherheitsbereichen, im Homeoffice ohne VPN — überall.</div>
     </div>
   </div>
@@ -598,7 +623,7 @@
           </tr>
           <tr>
             <td class="row-label">🕊️ Wut→Professionell Modus</td>
-            <td class="col-angel">✅ Einzigartig</td>
+            <td class="col-angel">✅ Einzigartig (Fn + ⌥)</td>
             <td>❌</td>
             <td>❌</td>
             <td>❌</td>
