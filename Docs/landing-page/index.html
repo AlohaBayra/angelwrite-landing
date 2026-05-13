@@ -409,6 +409,106 @@
       font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 100px;
     }
 
+    /* MODES BANNER */
+    .modes-banner {
+      display: grid;
+      grid-template-columns: 180px 1fr 1fr;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      max-width: 960px;
+      margin: 0 auto 40px;
+      text-align: left;
+      box-shadow: 0 4px 32px rgba(107,79,224,0.10);
+    }
+    .mb-panel {
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .mb-left {
+      background: var(--bg-soft);
+      border-right: 1px solid var(--border);
+      align-items: center;
+      text-align: center;
+    }
+    .mb-mid {
+      background: #F4F3F8;
+      border-right: 1px solid var(--border);
+    }
+    .mb-right {
+      background: white;
+      position: relative;
+      overflow: hidden;
+    }
+    .mb-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+    .mb-shortcut {
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      transition: color 0.3s;
+    }
+    .mb-mode-name {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 100px;
+      display: inline-block;
+      transition: background 0.3s, color 0.3s;
+    }
+    .mb-spoken {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      font-style: italic;
+      border-left: 2px solid var(--border);
+      padding-left: 14px;
+    }
+    .mb-output {
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--text);
+      min-height: 88px;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      white-space: pre-line;
+    }
+    .mb-dots {
+      display: flex;
+      gap: 6px;
+      margin-top: 20px;
+      justify-content: center;
+    }
+    .mb-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--border);
+      cursor: pointer;
+      transition: background 0.2s, transform 0.2s;
+      border: none;
+    }
+    .mb-dot.active { transform: scale(1.5); }
+    .mb-progress {
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      transition: width 0.08s linear;
+      border-radius: 0 2px 0 0;
+    }
+    @media (max-width: 720px) {
+      .modes-banner { grid-template-columns: 1fr; }
+      .mb-left { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; gap: 12px; padding: 16px 20px; }
+      .mb-mid { display: none; }
+    }
+
     @media (max-width: 600px) {
       .hero { padding: 120px 16px 60px; }
       .pricing-tier { padding: 32px 24px; }
@@ -429,6 +529,112 @@
   <div class="hero-badge">✦ Für macOS</div>
   <h1>Du sprichst.<br/><em>AngelWrite schreibt.</em></h1>
   <p>Professioneller Text auf Knopfdruck — auf Deutsch oder direkt auf Englisch. Push-to-Talk. 7 Tage gratis testen.</p>
+
+  <!-- ROTATING MODES BANNER -->
+  <div class="modes-banner">
+    <div class="mb-panel mb-left">
+      <div class="mb-label">Shortcut</div>
+      <div class="mb-shortcut" id="mb-shortcut">Fn+⇧</div>
+      <div class="mb-mode-name" id="mb-mode-name"></div>
+      <div class="mb-dots" id="mb-dots"></div>
+    </div>
+    <div class="mb-panel mb-mid">
+      <div class="mb-label">Du sprichst</div>
+      <div class="mb-spoken">„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend."</div>
+    </div>
+    <div class="mb-panel mb-right">
+      <div class="mb-label">AngelWrite schreibt</div>
+      <div class="mb-output" id="mb-output"></div>
+      <div class="mb-progress" id="mb-progress"></div>
+    </div>
+  </div>
+
+  <script>
+  (function() {
+    var modes = [
+      {
+        name: "Direkt", shortcut: "Fn+⇧",
+        color: "#5F5E5A", bg: "#D3D1C7",
+        output: "„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.""
+      },
+      {
+        name: "Englisch", shortcut: "Fn+⌃",
+        color: "#1D4ED8", bg: "#BFDBFE",
+        output: "\"I wanted to briefly mention that yesterday's meeting didn't go particularly well and we should discuss it again. Honestly, I found it quite frustrating.\""
+      },
+      {
+        name: "Klar", shortcut: "Fn+⌘",
+        color: "#166534", bg: "#BBF7D0",
+        output: "„Ich möchte ansprechen, dass das gestrige Meeting nicht wie erwartet verlaufen ist und wir darüber sprechen sollten. Ich fand es frustrierend.""
+      },
+      {
+        name: "Immer Freundlich", shortcut: "Fn+⌥",
+        color: "#92400E", bg: "#FDE68A",
+        output: "„Ich würde gerne das gestrige Meeting kurz reflektieren — ich sehe Verbesserungspotenzial und freue mich, gemeinsam Lösungen zu finden.""
+      },
+      {
+        name: "Kundenindividuell", shortcut: "Fn+x",
+        color: "#5038C0", bg: "#C4B5FD",
+        output: "Betreff: Nachbesprechung Meeting gestern\n\nHallo zusammen,\n\nbitte findet einen Termin für ein kurzes Gespräch. Ich möchte offene Punkte klären.\n\nViele Grüße"
+      }
+    ];
+    var current = 0, progress = 0;
+    var INTERVAL = 4000, TICK = 60;
+    var shortcutEl = document.getElementById('mb-shortcut');
+    var modeEl = document.getElementById('mb-mode-name');
+    var outputEl = document.getElementById('mb-output');
+    var progressEl = document.getElementById('mb-progress');
+    var dotsContainer = document.getElementById('mb-dots');
+    var dotEls = modes.map(function(m, i) {
+      var d = document.createElement('button');
+      d.className = 'mb-dot';
+      d.setAttribute('aria-label', m.name);
+      d.onclick = function() { goTo(i); resetTimer(); };
+      dotsContainer.appendChild(d);
+      return d;
+    });
+    function goTo(i) {
+      current = i;
+      var m = modes[i];
+      outputEl.style.opacity = '0';
+      outputEl.style.transform = 'translateY(5px)';
+      shortcutEl.style.color = m.color;
+      shortcutEl.textContent = m.shortcut;
+      modeEl.style.background = m.bg;
+      modeEl.style.color = m.color;
+      modeEl.textContent = m.name;
+      progressEl.style.background = m.color;
+      dotEls.forEach(function(d, idx) {
+        d.style.background = idx === i ? m.color : '#E5E7EB';
+        d.className = 'mb-dot' + (idx === i ? ' active' : '');
+      });
+      setTimeout(function() {
+        outputEl.textContent = m.output;
+        outputEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        outputEl.style.opacity = '1';
+        outputEl.style.transform = 'translateY(0)';
+      }, 220);
+      progress = 0;
+      progressEl.style.width = '0%';
+    }
+    var timer;
+    function resetTimer() {
+      clearInterval(timer);
+      progress = 0;
+      timer = setInterval(function() {
+        progress += TICK;
+        progressEl.style.width = Math.min((progress / INTERVAL) * 100, 100) + '%';
+        if (progress >= INTERVAL) {
+          current = (current + 1) % modes.length;
+          goTo(current);
+          progress = 0;
+        }
+      }, TICK);
+    }
+    goTo(0);
+    resetTimer();
+  })();
+  </script>
 
   <div class="price-badge">
     <span class="intro">Trial</span>
