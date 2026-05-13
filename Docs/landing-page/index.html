@@ -523,10 +523,118 @@
       .mb-mid { display: none; }
     }
 
+    /* MODES TIER LAYOUT */
+    .mtl {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    }
+    .mtl-tier {
+      padding: 14px 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    .mtl-tier-lokal {
+      grid-column: 1;
+      background: #F3F4F6;
+      border-right: 2px solid var(--border);
+    }
+    .mtl-tier-pro {
+      grid-column: 2 / 5;
+      background: var(--brand-light);
+      border-right: 2px solid var(--border);
+    }
+    .mtl-tier-adv {
+      grid-column: 5;
+      background: #FEF3C7;
+    }
+    .mtl-tier-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+    .mtl-tier-lokal .mtl-tier-name { color: #374151; }
+    .mtl-tier-pro .mtl-tier-name { color: var(--brand); }
+    .mtl-tier-adv .mtl-tier-name { color: #92400E; }
+    .mtl-tier-price {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+    .mtl-tier-pro .mtl-tier-price { color: var(--brand); opacity: 0.8; }
+    .mtl-tier-adv .mtl-tier-price { color: #92400E; opacity: 0.8; }
+    .mcard {
+      padding: 24px 18px;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .mcard:last-child { border-right: none; }
+    .mcard-2 { border-left: 2px solid var(--border); }
+    .mcard-5 { border-left: 2px solid var(--border); }
+    .mcard-key {
+      display: inline-block;
+      background: var(--text);
+      color: white;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 5px;
+      width: fit-content;
+    }
+    .mcard-1 .mcard-key { background: #374151; }
+    .mcard-2 .mcard-key { background: #1D4ED8; }
+    .mcard-3 .mcard-key { background: #166534; }
+    .mcard-4 .mcard-key { background: #92400E; }
+    .mcard-5 .mcard-key { background: var(--brand); }
+    .mcard-icon { font-size: 22px; line-height: 1; }
+    .mcard-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .mcard-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      flex: 1;
+    }
+    .mcard-example {
+      font-size: 12px;
+      font-style: italic;
+      color: var(--text-muted);
+      background: var(--bg-soft);
+      border-radius: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--border);
+      line-height: 1.5;
+    }
+    .mcard-1 { background: #FAFAFA; }
+    .mcard-2 { background: #EFF6FF; }
+    .mcard-3 { background: #F0FDF4; }
+    .mcard-4 { background: #FFFBEB; }
+    .mcard-5 { background: #F5F3FF; }
+    @media (max-width: 860px) {
+      .mtl { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
+      .mtl-tier { display: none; }
+      .mcard { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+      .mcard-2 { border-left: 1px solid var(--border); }
+      .mcard-5 { border-left: 1px solid var(--border); }
+    }
+
     @media (max-width: 600px) {
       .hero { padding: 120px 16px 60px; }
       .pricing-tier { padding: 32px 24px; }
       .tier-price { font-size: 44px; }
+      .mtl { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -615,46 +723,61 @@
 <section class="section" id="modi">
   <p class="section-label">Modi</p>
   <h2 class="section-title">Für jeden Moment die richtige Stimme</h2>
-  <p class="section-sub">Cloud-Modi mit KI-Veredelung — oder offline, direkt auf deinem Mac. Du wählst.</p>
+  <p class="section-sub">Fünf Modi — von wörtlicher Transkription bis zum vollständig individuellen Workflow. Je weiter rechts, desto mächtiger.</p>
 
-  <div class="mode-group-header">☁️ Cloud-Modi · mit Internet & KI-Verarbeitung</div>
+  <div class="mtl">
 
-  <div class="modes">
-    <div class="mode translate">
-      <div class="mode-key">Fn + ⌃ Control</div>
-      <h3>🌍 Englisch</h3>
-      <p>Sprich auf Deutsch — der Text erscheint auf Englisch. Professionell, fertig, sofort einsatzbereit für internationale E-Mails und Slack.</p>
-      <div class="example">"Please find attached the revised proposal for your review."</div>
+    <!-- Tier-Banner Zeile -->
+    <div class="mtl-tier mtl-tier-lokal">
+      <div class="mtl-tier-name">Lokal</div>
+      <div class="mtl-tier-price">€ 19 einmalig</div>
     </div>
-    <div class="mode wut">
-      <div class="mode-key">Fn + ⌘ Command</div>
-      <h3>✨ Klar</h3>
-      <p>Sprich deinen Frust raus — AngelWrite macht daraus eine professionelle Nachricht. Deine Intention bleibt, der Ton wird sachlich.</p>
-      <div class="example">"Ich möchte kurz auf die Verzögerung ansprechen und gemeinsam eine Lösung finden."</div>
+    <div class="mtl-tier mtl-tier-pro">
+      <div class="mtl-tier-name">Pro</div>
+      <div class="mtl-tier-price">€ 99 / Jahr</div>
     </div>
-    <div class="mode format">
-      <div class="mode-key">Fn + ⌥ Option</div>
-      <h3>😊 Immer Freundlich</h3>
-      <p>Diktat rein, freundliche Nachricht raus. Grammatik sauber, Füllwörter weg — Tonalität bleibt warm und persönlich. Professionell, aber nie steif.</p>
-      <div class="example">"Hallo Lisa, danke für deine Nachricht — ich melde mich morgen früh mit den finalen Punkten."</div>
+    <div class="mtl-tier mtl-tier-adv">
+      <div class="mtl-tier-name">Advanced</div>
+      <div class="mtl-tier-price">€ 149 einmalig</div>
     </div>
-    <div class="mode nett">
-      <div class="mode-key">Fn + x</div>
-      <h3>🔧 Kundenindividuell <span style="display:inline-block;padding:2px 10px;background:#fbbf24;color:#1a1a1a;border-radius:4px;font-size:11px;font-weight:700;vertical-align:middle;margin-left:8px;letter-spacing:0.5px;">ADVANCED</span></h3>
-      <p>Dein eigener System-Prompt, dein eigener API-Key. Du definierst exakt, wie AngelWrite deinen Text formt — pro Workflow, pro Kunde, pro Stil. Nur im Advanced-Tier.</p>
-      <div class="example">Eigene Regeln. Eigene Stimme. Eigene Modi.</div>
-    </div>
-  </div>
 
-  <div class="mode-group-header offline">📡 Offline-Modus · kein Internet, kein API, kein Server</div>
-
-  <div class="modes modes-offline">
-    <div class="mode raw">
-      <div class="mode-key">Fn + ⇧ Shift</div>
-      <h3>🎙️ Direkt — Wörtlich</h3>
-      <p>Was du sprichst, erscheint genau so als Text — ohne KI, ohne Umformulierung. Transkription direkt auf deinem Mac. Ideal für Notizen, Diktate und überall wo Daten das Gerät nicht verlassen dürfen.</p>
-      <div class="example">Funktioniert im Flugzeug, in Hochsicherheitsbereichen, im Homeoffice ohne VPN — überall.</div>
+    <!-- Modus-Karten Zeile -->
+    <div class="mcard mcard-1">
+      <div class="mcard-key">Fn+⇧</div>
+      <div class="mcard-icon">🎙️</div>
+      <div class="mcard-title">Direkt</div>
+      <div class="mcard-desc">Wortgetreue Transkription — keine KI, kein Internet. Läuft vollständig auf deinem Mac.</div>
+      <div class="mcard-example">„Meeting morgen 10 Uhr nicht vergessen."</div>
     </div>
+    <div class="mcard mcard-2">
+      <div class="mcard-key">Fn+⌃</div>
+      <div class="mcard-icon">🌍</div>
+      <div class="mcard-title">Englisch</div>
+      <div class="mcard-desc">Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Sofort einsatzbereit.</div>
+      <div class="mcard-example">"Please find the revised proposal attached."</div>
+    </div>
+    <div class="mcard mcard-3">
+      <div class="mcard-key">Fn+⌘</div>
+      <div class="mcard-icon">✨</div>
+      <div class="mcard-title">Klar</div>
+      <div class="mcard-desc">Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben erhalten.</div>
+      <div class="mcard-example">„Ich möchte das Thema gerne morgen besprechen."</div>
+    </div>
+    <div class="mcard mcard-4">
+      <div class="mcard-key">Fn+⌥</div>
+      <div class="mcard-icon">😊</div>
+      <div class="mcard-title">Immer Freundlich</div>
+      <div class="mcard-desc">Aus Frust wird eine sachliche, professionelle Nachricht. Deine Botschaft bleibt, der Ton ändert sich.</div>
+      <div class="mcard-example">„Ich würde gerne gemeinsam eine Lösung finden."</div>
+    </div>
+    <div class="mcard mcard-5">
+      <div class="mcard-key">Fn+x</div>
+      <div class="mcard-icon">🔧</div>
+      <div class="mcard-title">Kundenindividuell</div>
+      <div class="mcard-desc">Dein Prompt, dein API-Key, deine Regeln. Vollständige Kontrolle über jeden Aspekt der Ausgabe.</div>
+      <div class="mcard-example">Eigene Stimme. Eigene Regeln. Eigene Modi.</div>
+    </div>
+
   </div>
 </section>
 
