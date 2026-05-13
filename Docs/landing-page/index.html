@@ -146,15 +146,18 @@
     }
     .marquee-wrap {
       overflow: hidden;
+      width: 100%;
       padding: 4px 0 48px;
       -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
       mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
     }
     .marquee-track {
       display: flex;
+      flex-wrap: nowrap;
       gap: 16px;
       animation: marquee 55s linear infinite;
       width: max-content;
+      will-change: transform;
     }
     .marquee-track:hover { animation-play-state: paused; }
     @keyframes marquee {
@@ -860,14 +863,6 @@
     </div>
   </div>
 
-  <div class="price-badge">
-    <span class="intro">Trial</span>
-    <span class="amount">7 Tage</span>
-    <span class="period">kostenlos</span>
-    &nbsp;·&nbsp;
-    <span style="font-size:12px; color:var(--text-muted);">dann ab 19 €</span>
-  </div>
-
   <div class="hero-cta-group">
     <a class="btn-primary" href="#kaufen">Kostenlos testen</a>
     <a class="btn-secondary" href="#wie-es-funktioniert">Wie es funktioniert</a>
@@ -1560,16 +1555,10 @@ document.addEventListener('DOMContentLoaded', function() {
       d.className = 'mb-dot' + (idx === i ? ' active' : '');
     });
 
-    kbdEl.style.transition = 'none';
-    kbdEl.style.opacity = '0';
-    kbdEl.style.transform = 'translateY(10px)';
     kbdEl.innerHTML = buildKbd(m.keys, m.color);
-    var kT = setTimeout(function() {
-      kbdEl.style.transition = 'opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1)';
-      kbdEl.style.opacity = '1';
-      kbdEl.style.transform = 'translateY(0)';
-    }, 20);
-    timers.push(kT);
+    kbdEl.style.opacity = '1';
+    kbdEl.style.transform = 'none';
+    kbdEl.style.transition = 'none';
 
     // "Du sprichst" bleibt immer fest stehen
 
