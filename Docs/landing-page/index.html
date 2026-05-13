@@ -657,7 +657,7 @@
     <div class="mb-panel mb-left">
       <div class="mb-label">Shortcut</div>
       <div class="mb-content mb-content-center">
-        <div class="mb-shortcut" id="mb-shortcut"></div>
+        <div id="mb-keyboard" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
         <div class="mb-mode-name" id="mb-mode-name"></div>
         <div class="mb-dots" id="mb-dots"></div>
       </div>
@@ -1067,30 +1067,75 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var INTERVAL = 4000, TICK = 50;
-  var TW_SHORT = 35, TW_OUTPUT = 14;
+  var INTERVAL = 4000, TICK = 50, TW_OUTPUT = 15;
+
+  /* ── Keyboard SVG Generator ── */
+  function dk(hex, p) {
+    var n = parseInt(hex.replace('#',''),16);
+    var r = Math.max(0,((n>>16)&255)-Math.round(((n>>16)&255)*p));
+    var g = Math.max(0,((n>>8 )&255)-Math.round(((n>>8 )&255)*p));
+    var b = Math.max(0,((n    )&255)-Math.round(((n    )&255)*p));
+    return '#'+(r<16?'0':'')+r.toString(16)+(g<16?'0':'')+g.toString(16)+(b<16?'0':'')+b.toString(16);
+  }
+  function kKey(x, y, w, h, label, active, color) {
+    var ty = active ? y+1 : y;
+    var fill   = active ? color     : '#F5F5F7';
+    var stroke = active ? dk(color,0.25) : '#BBBEC4';
+    var shadow = active ? dk(color,0.40) : '#C0C2C7';
+    var tFill  = active ? '#ffffff' : '#3D3D3D';
+    var fs     = label.length > 4 ? 9 : label.length > 2 ? 11 : 14;
+    return '<rect x=”'+x+'” y=”'+(ty+h-4)+'” width=”'+w+'” height=”4” rx=”2” fill=”'+shadow+'”/>'
+         + '<rect x=”'+x+'” y=”'+ty+'” width=”'+w+'” height=”'+(h-4)+'” rx=”5”'
+         + ' fill=”'+fill+'” stroke=”'+stroke+'” stroke-width=”1”/>'
+         + '<text x=”'+(x+w/2)+'” y=”'+(ty+h/2-2)+'” text-anchor=”middle”'
+         + ' dominant-baseline=”middle” font-size=”'+fs+'”'
+         + ' font-family=”-apple-system,BlinkMacSystemFont,sans-serif”'
+         + ' font-weight=”700” fill=”'+tFill+'”>'+label+'</text>';
+  }
+  function buildKbd(keys, color) {
+    var s = '<svg viewBox=”0 0 182 102” xmlns=”http://www.w3.org/2000/svg” style=”width:154px;height:86px”>';
+    s += '<rect x=”1” y=”1” width=”180” height=”100” rx=”9” fill=”#E0E1E5” stroke=”#C5C7CC” stroke-width=”1”/>';
+    // Row 1: Shift (full width) — or x-key highlighted for mode 5
+    if (keys.x) {
+      s += kKey(8, 8, 166, 36, 'x', true, color);
+    } else {
+      s += kKey(8, 8, 166, 36, '⇧  shift', keys.shift, color);
+    }
+    // Row 2: fn | ⌃ | ⌥ | ⌘
+    s += kKey(8,  56, 38, 36, 'fn', keys.fn,   color);
+    s += kKey(52, 56, 30, 36, '⌃',  keys.ctrl, color);
+    s += kKey(88, 56, 36, 36, '⌥',  keys.opt,  color);
+    s += kKey(130,56, 44, 36, '⌘',  keys.cmd,  color);
+    s += '</svg>';
+    return s;
+  }
 
   var spoken = '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”';
 
   var modes = [
     {
-      name: 'Direkt', shortcut: 'Fn+⇧', color: '#1A1A2E', bg: '#D3D1C7',
+      name: 'Direkt', color: '#374151', bg: '#D3D1C7',
+      keys: {fn:true, shift:true, ctrl:false, opt:false, cmd:false, x:false},
       output: '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”'
     },
     {
-      name: 'Englisch', shortcut: 'Fn+⌃', color: '#1D4ED8', bg: '#BFDBFE',
+      name: 'Englisch', color: '#1D4ED8', bg: '#BFDBFE',
+      keys: {fn:true, shift:false, ctrl:true, opt:false, cmd:false, x:false},
       output: '”I wanted to briefly mention that yesterday\'s meeting didn\'t go as well as expected. We should find time to discuss it — I found it quite frustrating, to be honest.”'
     },
     {
-      name: 'Klar', shortcut: 'Fn+⌘', color: '#166534', bg: '#BBF7D0',
+      name: 'Klar', color: '#166534', bg: '#BBF7D0',
+      keys: {fn:true, shift:false, ctrl:false, opt:false, cmd:true, x:false},
       output: '„Ich möchte ansprechen, dass das gestrige Meeting nicht gut verlaufen ist. Ich schlage vor, wir sprechen darüber und finden gemeinsam eine Lösung.”'
     },
     {
-      name: 'Immer Freundlich', shortcut: 'Fn+⌥', color: '#92400E', bg: '#FDE68A',
+      name: 'Immer Freundlich', color: '#92400E', bg: '#FDE68A',
+      keys: {fn:true, shift:false, ctrl:false, opt:true, cmd:false, x:false},
       output: '„Ich würde gerne das gestrige Meeting kurz nachbesprechen. Ich sehe Potenzial, unsere Zusammenarbeit noch effektiver zu gestalten, und freue mich auf einen offenen Austausch.”'
     },
     {
-      name: 'Kundenindividuell', shortcut: 'Fn+x', color: '#5038C0', bg: '#C4B5FD',
+      name: 'Kundenindividuell', color: '#5038C0', bg: '#C4B5FD',
+      keys: {fn:true, shift:false, ctrl:false, opt:false, cmd:false, x:true},
       output: 'Betreff: Nachbesprechung Meeting\n\nHallo zusammen,\n\nkurze Bitte um einen Termin zur Nachbesprechung. Ich möchte offene Punkte klären.\n\nViele Grüße\nMarcus'
     }
   ];
@@ -1098,13 +1143,15 @@ document.addEventListener('DOMContentLoaded', function() {
   var current = 0, progress = 0;
   var timers = [];
 
-  var shortcutEl = document.getElementById('mb-shortcut');
-  var modeEl     = document.getElementById('mb-mode-name');
-  var spokenEl   = document.getElementById('mb-spoken');
-  var outputEl   = document.getElementById('mb-output');
+  var kbdEl    = document.getElementById('mb-keyboard');
+  var modeEl   = document.getElementById('mb-mode-name');
+  var spokenEl = document.getElementById('mb-spoken');
+  var outputEl = document.getElementById('mb-output');
   var progressEl = document.getElementById('mb-progress');
-  var dotsEl     = document.getElementById('mb-dots');
-  if (!shortcutEl) return;
+  var dotsEl   = document.getElementById('mb-dots');
+  if (!kbdEl) return;
+
+  spokenEl.textContent = spoken;
 
   var dotEls = modes.map(function(m, i) {
     var d = document.createElement('button');
@@ -1159,14 +1206,10 @@ document.addEventListener('DOMContentLoaded', function() {
       d.className = 'mb-dot' + (idx === i ? ' active' : '');
     });
 
-    shortcutEl.style.color = m.color;
-    shortcutEl.textContent = '';
-    slideUp(shortcutEl);
-    typeEl(shortcutEl, m.shortcut, TW_SHORT, 80);
+    slideUp(kbdEl);
+    kbdEl.innerHTML = buildKbd(m.keys, m.color);
 
-    spokenEl.textContent = '';
-    slideUp(spokenEl);
-    typeEl(spokenEl, spoken, TW_OUTPUT, 80);
+    // "Du sprichst" bleibt immer fest stehen
 
     outputEl.textContent = '';
     slideUp(outputEl);
