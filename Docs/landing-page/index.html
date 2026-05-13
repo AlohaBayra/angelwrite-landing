@@ -843,7 +843,7 @@
     <div class="mb-panel mb-left">
       <div class="mb-label">Shortcut</div>
       <div class="mb-content mb-content-center">
-        <div id="mb-keyboard" style="display:flex;justify-content:center;margin-bottom:10px;"></div>
+        <div id="mb-keyboard" style="width:160px;margin:0 auto 10px;"></div>
         <div class="mb-mode-name" id="mb-mode-name"></div>
         <div class="mb-dots" id="mb-dots"></div>
       </div>
@@ -1441,7 +1441,7 @@ document.addEventListener('DOMContentLoaded', function() {
          + ' font-weight=”700” fill=”'+tFill+'”>'+label+'</text>';
   }
   function buildKbd(keys, color) {
-    var s = '<svg viewBox=”0 0 182 102” xmlns=”http://www.w3.org/2000/svg” style=”width:100%;max-width:160px;height:auto”>';
+    var s = '<svg viewBox=”0 0 182 102” xmlns=”http://www.w3.org/2000/svg” width=”160” height=”90”>';
     s += '<rect x=”1” y=”1” width=”180” height=”100” rx=”9” fill=”#E0E1E5” stroke=”#C5C7CC” stroke-width=”1”/>';
     // Row 1: Shift (full width) — or x-key highlighted for mode 5
     if (keys.x) {
