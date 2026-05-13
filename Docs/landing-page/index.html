@@ -723,7 +723,7 @@
 <section class="hero">
   <div class="hero-badge">✦ Für macOS</div>
   <h1>Du sprichst.<br/><em>AngelWrite schreibt.</em></h1>
-  <p>Diktiere deinen Gedanken — AngelWrite formuliert ihn fertig. Kein Tippen, kein Nachbearbeiten. Auf Deutsch oder direkt auf Englisch.</p>
+  <p>Diktiere deinen Gedanken — AngelWrite formuliert ihn fertig und setzt ihn <strong>direkt an deinen Cursor</strong>. In jeder App, ohne Einrichtung. Kein Tippen, kein Nachbearbeiten.</p>
 
   <!-- ROTATING MODES BANNER -->
   <div class="modes-banner">
@@ -957,8 +957,8 @@
     <div class="benefit">
       <div class="benefit-icon">🎯</div>
       <div>
-        <h4>Funktioniert überall</h4>
-        <p>E-Mail, Slack, Notion, Word, Browser — AngelWrite arbeitet in jeder App auf deinem Mac.</p>
+        <h4>Text erscheint direkt am Cursor</h4>
+        <p>E-Mail, Slack, Notion, Word, Browser — der Text landet sofort dort, wo du gerade arbeitest. Keine App muss freigegeben werden. Maximale Produktivität.</p>
       </div>
     </div>
     <div class="benefit">
@@ -1347,8 +1347,16 @@ document.addEventListener('DOMContentLoaded', function() {
       d.className = 'mb-dot' + (idx === i ? ' active' : '');
     });
 
-    slideUp(kbdEl);
+    kbdEl.style.transition = 'none';
+    kbdEl.style.opacity = '0';
+    kbdEl.style.transform = 'translateY(10px)';
     kbdEl.innerHTML = buildKbd(m.keys, m.color);
+    var kT = setTimeout(function() {
+      kbdEl.style.transition = 'opacity 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1)';
+      kbdEl.style.opacity = '1';
+      kbdEl.style.transform = 'translateY(0)';
+    }, 20);
+    timers.push(kT);
 
     // "Du sprichst" bleibt immer fest stehen
 
