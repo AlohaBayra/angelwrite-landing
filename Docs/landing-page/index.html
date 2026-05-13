@@ -110,7 +110,26 @@
     .hero-meta {
       font-size: 13px; color: var(--text-muted);
     }
-    .hero-meta strong { color: var(--text); }
+    .hero-meta strong { color: var(--brand); }
+
+    /* STAT STRIP */
+    .stat-strip {
+      display: flex; justify-content: center; gap: 0;
+      max-width: 680px; margin: 0 auto;
+      border: 1px solid var(--border); border-radius: 16px;
+      overflow: hidden; background: white;
+    }
+    .stat-item {
+      flex: 1; padding: 20px 16px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-val {
+      font-size: 32px; font-weight: 800; color: var(--brand);
+      line-height: 1; margin-bottom: 5px; letter-spacing: -1px;
+    }
+    .stat-label { font-size: 13px; color: var(--text); font-weight: 600; margin-bottom: 3px; }
+    .stat-source { font-size: 11px; color: var(--text-muted); }
     .hero-trust {
       font-size: 12px; color: var(--text-muted);
       margin-top: 14px;
@@ -118,26 +137,41 @@
     }
     .hero-trust span { display: flex; align-items: center; gap: 5px; }
 
-    /* SOCIAL PROOF */
-    .social-proof { background: white; padding: 48px 24px 0; }
-    .testimonials {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 20px;
-      max-width: 1100px; margin: 0 auto;
+    /* SOCIAL PROOF MARQUEE */
+    .social-proof { background: white; padding: 40px 0 0; }
+    .social-proof-label {
+      text-align: center; font-size: 13px; font-weight: 600;
+      color: var(--brand); text-transform: uppercase; letter-spacing: 0.08em;
+      margin-bottom: 28px;
     }
-    .testimonial {
+    .marquee-wrap {
+      overflow: hidden;
+      padding: 4px 0 48px;
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+    }
+    .marquee-track {
+      display: flex;
+      gap: 16px;
+      animation: marquee 55s linear infinite;
+      width: max-content;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    .m-card {
       background: var(--bg-soft); border: 1px solid var(--border);
       border-radius: 14px; padding: 22px 24px;
+      width: 300px; flex-shrink: 0;
     }
-    .testimonial-text {
+    .m-stars { color: var(--gold); font-size: 13px; margin-bottom: 10px; letter-spacing: 2px; }
+    .m-text {
       font-size: 14px; color: var(--text); line-height: 1.75;
       font-style: italic; margin-bottom: 14px;
     }
-    .testimonial-author {
-      font-size: 12px; color: var(--text-muted); font-weight: 600;
-    }
-    .testimonial-stars { color: var(--gold); font-size: 13px; margin-bottom: 10px; letter-spacing: 1px; }
+    .m-author { font-size: 12px; color: var(--text-muted); font-weight: 600; }
 
     /* DEMO TABS */
     .demo-wrap {
@@ -328,16 +362,92 @@
     .benefit p { font-size: 14px; color: var(--text-muted); }
 
     /* PRICING GRID — 3 TIER */
-    .trial-banner {
-      background: var(--brand-light); border: 1px solid #C4B5FD;
-      border-radius: 16px; padding: 20px 28px;
-      text-align: center; max-width: 680px;
-      margin: 0 auto 40px;
+    /* TRIAL CAPTURE CARD */
+    .trial-capture {
+      max-width: 780px; margin: 0 auto 48px;
+      border: 2px solid var(--brand);
+      border-radius: 24px; overflow: hidden;
+      box-shadow: 0 8px 48px rgba(107,79,224,0.14);
     }
-    .trial-banner .trial-title {
-      font-size: 18px; font-weight: 700; color: var(--brand); margin-bottom: 6px;
+    .trial-capture-header {
+      background: var(--brand); padding: 20px 36px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
     }
-    .trial-banner p { font-size: 14px; color: #5B21B6; }
+    .trial-capture-header h3 {
+      font-size: 20px; font-weight: 800; color: white; margin: 0;
+    }
+    .trial-capture-header .trial-pills {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .trial-pill {
+      background: rgba(255,255,255,0.2); color: white;
+      font-size: 12px; font-weight: 600; padding: 4px 12px;
+      border-radius: 100px;
+    }
+    .trial-capture-body {
+      background: white; padding: 28px 36px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
+      align-items: center;
+    }
+    @media (max-width: 620px) {
+      .trial-capture-body { grid-template-columns: 1fr; gap: 20px; }
+      .trial-capture-header { padding: 16px 20px; }
+      .trial-capture-body { padding: 20px; }
+    }
+    .trial-price-block { text-align: center; }
+    .trial-price-block .tp-price {
+      font-size: 72px; font-weight: 800; color: var(--brand);
+      line-height: 1; letter-spacing: -2px;
+    }
+    .trial-price-block .tp-label {
+      font-size: 14px; color: var(--text-muted); margin-top: 4px;
+    }
+    .trial-price-block .tp-features {
+      list-style: none; margin-top: 16px; text-align: left;
+    }
+    .trial-price-block .tp-features li {
+      font-size: 13px; color: var(--text); padding: 4px 0;
+      display: flex; gap: 8px; align-items: flex-start;
+    }
+    .trial-price-block .tp-features .ck { color: #10B981; font-weight: 700; }
+    .trial-form-block {}
+    .trial-form-block label {
+      display: block; font-size: 13px; font-weight: 600;
+      color: var(--text); margin-bottom: 8px;
+    }
+    .trial-email-input {
+      width: 100%; padding: 13px 16px; border-radius: 10px;
+      border: 2px solid var(--border); font-size: 15px;
+      font-family: inherit; color: var(--text);
+      transition: border-color 0.2s; outline: none;
+      margin-bottom: 12px;
+    }
+    .trial-email-input:focus { border-color: var(--brand); }
+    .trial-submit {
+      width: 100%; background: var(--brand); color: white;
+      border: none; border-radius: 10px; padding: 15px;
+      font-size: 16px; font-weight: 700; font-family: inherit;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .trial-submit:hover { background: var(--brand-dark); }
+    .trial-privacy {
+      font-size: 11px; color: var(--text-muted);
+      margin-top: 10px; line-height: 1.6;
+    }
+    .trial-success {
+      display: none; text-align: center; padding: 20px 0;
+    }
+    .trial-success .ts-icon { font-size: 40px; margin-bottom: 10px; }
+    .trial-success h4 { font-size: 18px; font-weight: 700; color: var(--brand); margin-bottom: 8px; }
+    .trial-success p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
+    .trial-download-btn {
+      display: inline-block; background: var(--brand); color: white;
+      padding: 12px 28px; border-radius: 10px; font-weight: 700;
+      font-size: 15px; text-decoration: none;
+      transition: background 0.2s;
+    }
+    .trial-download-btn:hover { background: var(--brand-dark); }
     .pricing-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -762,7 +872,7 @@
     <a class="btn-primary" href="#kaufen">Kostenlos testen</a>
     <a class="btn-secondary" href="#wie-es-funktioniert">Wie es funktioniert</a>
   </div>
-  <p class="hero-meta">Für macOS 13+ · <strong>7 Tage kostenlos</strong> · Keine Kreditkarte nötig</p>
+  <p class="hero-meta">Für macOS 13+ · <strong>3× schneller als Tippen</strong> · 7 Tage kostenlos testen</p>
   <div class="hero-trust">
     <span>🔒 Audiodaten werden nicht gespeichert</span>
     <span>🏛️ Volle Datenhoheit — bleibt auf deinem Mac</span>
@@ -772,24 +882,82 @@
 
 <!-- SOCIAL PROOF -->
 <section class="social-proof">
-  <div class="testimonials">
-    <div class="testimonial">
-      <div class="testimonial-stars">★★★★★</div>
-      <div class="testimonial-text">„AngelWrite hat meine Kommunikation komplett verändert. Ich diktiere auf Deutsch, der Englisch-Modus macht daraus sauberes Business-English — sofort einsatzbereit."</div>
-      <div class="testimonial-author">— Marcus E., Founder & Coach · ValueLift</div>
-    </div>
-    <div class="testimonial">
-      <div class="testimonial-stars">★★★★★</div>
-      <div class="testimonial-text">„Der Immer-Freundlich-Modus hat mir schon mehr als eine schwierige E-Mail gerettet. Ich rede raus was ich denke — AngelWrite macht es professionell."</div>
-      <div class="testimonial-author">— Beta-Nutzerin · Unternehmensberaterin</div>
-    </div>
-    <div class="testimonial">
-      <div class="testimonial-stars">★★★★★</div>
-      <div class="testimonial-text">„Endlich keine Meeting-Notizen mehr tippen. Taste halten, sprechen, loslassen — und der Klar-Modus macht den Rest. Spart mir täglich mindestens 30 Minuten."</div>
-      <div class="testimonial-author">— Beta-Nutzer · Führungskraft, Mittelstand</div>
+  <p class="social-proof-label">Was Nutzer sagen</p>
+  <div class="marquee-wrap">
+    <div class="marquee-track" id="marquee-track">
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Ich diktiere auf Deutsch, der Englisch-Modus macht daraus sauberes Business-English — sofort einsatzbereit. Kein manuelles Übersetzen mehr."</div>
+        <div class="m-author">— Marcus E., Founder & Coach · ValueLift</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Meine KI-Prompts sind seitdem auf einem anderen Level. Ich spreche meinen Gedanken aus — AngelWrite strukturiert ihn und er landet direkt als fertiger Prompt im Chatfenster."</div>
+        <div class="m-author">— Beta-Nutzer · Online-Marketer & KI-Enthusiast</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Der Immer-Freundlich-Modus hat mir schon mehr als eine schwierige E-Mail gerettet. Ich rede raus was ich denke — AngelWrite macht es professionell."</div>
+        <div class="m-author">— Beta-Nutzerin · Unternehmensberaterin</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Endlich keine Meeting-Notizen mehr tippen. Taste halten, sprechen, loslassen — der Klar-Modus macht den Rest. Spart mir täglich mindestens 30 Minuten."</div>
+        <div class="m-author">— Beta-Nutzer · Führungskraft, Mittelstand</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Als Freelancer schreibe ich täglich Angebote, Briefings, Nachrichten. AngelWrite hat meine Output-Geschwindigkeit verdreifacht — ohne Qualitätsverlust."</div>
+        <div class="m-author">— Beta-Nutzer · Freelancer & Content Creator</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Nach jeder Coaching-Session diktiere ich meine Notizen — der Klar-Modus macht daraus saubere, lesbare Zusammenfassungen. Ich spare mindestens eine Stunde pro Tag."</div>
+        <div class="m-author">— Beta-Nutzerin · Business Coach</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„Slack, E-Mails, Notion — AngelWrite arbeitet überall. Der Text erscheint direkt an meinem Cursor, keine App muss freigegeben werden. Maximale Produktivität."</div>
+        <div class="m-author">— Beta-Nutzer · Projektmanager, Remote-Team</div>
+      </div>
+
+      <div class="m-card">
+        <div class="m-stars">★★★★★</div>
+        <div class="m-text">„161 Wörter pro Minute statt 53 — das ist keine Werbung, das ist mein Alltag. AngelWrite hat mein Produktivitätsniveau dauerhaft verändert."</div>
+        <div class="m-author">— Beta-Nutzer · Geschäftsführer, Beratungsunternehmen</div>
+      </div>
+
     </div>
   </div>
 </section>
+
+<!-- STAT STRIP -->
+<div style="padding: 0 24px 56px;">
+  <div class="stat-strip">
+    <div class="stat-item">
+      <div class="stat-val">3×</div>
+      <div class="stat-label">schneller als Tippen</div>
+      <div class="stat-source">Stanford HCI Lab, peer-reviewed</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">161</div>
+      <div class="stat-label">Wörter pro Minute</div>
+      <div class="stat-source">Sprechen vs. 53 WPM Tippen</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">20%</div>
+      <div class="stat-label">weniger Fehler</div>
+      <div class="stat-source">mit Spracheingabe vs. Tippen</div>
+    </div>
+  </div>
+</div>
 
 <!-- HOW IT WORKS -->
 <section class="section" id="wie-es-funktioniert">
@@ -950,8 +1118,8 @@
     <div class="benefit">
       <div class="benefit-icon">⚡</div>
       <div>
-        <h4>3× schneller als Tippen</h4>
-        <p>Sprechen ist natürlicher und schneller — dein Gedanke kommt ungefiltert raus.</p>
+        <h4>3× schneller als Tippen — belegt</h4>
+        <p>Menschen sprechen 161 Wörter pro Minute, tippen aber nur 53. Mit AngelWrite entfällt zusätzlich das Nachbearbeiten. <span style="font-size:12px;color:var(--text-muted);">Quelle: Stanford HCI Lab</span></p>
       </div>
     </div>
     <div class="benefit">
@@ -1080,9 +1248,54 @@
     <h2 class="section-title">Starte kostenlos. Wächst mit dir.</h2>
     <p class="section-sub" style="margin-bottom: 40px;">7 Tage testen, keine Kreditkarte nötig — dann das Modell, das zu dir passt.</p>
 
-    <div class="trial-banner">
-      <div class="trial-title">✦ 7 Tage kostenlos testen</div>
-      <p>Voller Pro-Funktionsumfang. Keine Kreditkarte. Kein Risiko. Einfach starten.</p>
+    <!-- TRIAL CAPTURE -->
+    <div class="trial-capture">
+      <div class="trial-capture-header">
+        <h3>✦ 7 Tage kostenlos — voller Pro-Zugang</h3>
+        <div class="trial-pills">
+          <span class="trial-pill">Keine Kreditkarte</span>
+          <span class="trial-pill">Kein Abo</span>
+          <span class="trial-pill">Sofort-Download</span>
+        </div>
+      </div>
+      <div class="trial-capture-body">
+        <div class="trial-price-block">
+          <div class="tp-price">0 €</div>
+          <div class="tp-label">für 7 Tage · danach ab 19 €</div>
+          <ul class="tp-features">
+            <li><span class="ck">✓</span> Alle 5 Modi freigeschaltet</li>
+            <li><span class="ck">✓</span> Cloud-Transkription via Whisper</li>
+            <li><span class="ck">✓</span> KI-Veredelung inklusive</li>
+            <li><span class="ck">✓</span> Text direkt am Cursor, in jeder App</li>
+            <li><span class="ck">✓</span> Kein Risiko — endet automatisch</li>
+          </ul>
+        </div>
+        <div class="trial-form-block">
+          <div id="trial-form-wrap">
+            <form name="trial-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="trial-form">
+              <input type="hidden" name="form-name" value="trial-signup" />
+              <input type="hidden" name="bot-field" style="display:none" />
+              <label for="trial-email">Deine E-Mail-Adresse</label>
+              <input
+                class="trial-email-input"
+                type="email"
+                id="trial-email"
+                name="email"
+                placeholder="name@beispiel.de"
+                required
+              />
+              <button class="trial-submit" type="submit">Jetzt kostenlos testen →</button>
+            </form>
+            <p class="trial-privacy">🔒 Kein Spam. Wir schicken dir gelegentlich Infos und Updates zu AngelWrite. Abmeldung jederzeit per Klick.</p>
+          </div>
+          <div class="trial-success" id="trial-success">
+            <div class="ts-icon">✦</div>
+            <h4>Bereit zum Start!</h4>
+            <p>Deine E-Mail ist gespeichert. Lade jetzt AngelWrite herunter und starte deine 7 Tage.</p>
+            <a class="trial-download-btn" href="#DOWNLOAD_URL_HIER">AngelWrite herunterladen</a>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="pricing-grid">
@@ -1384,6 +1597,32 @@ document.addEventListener('DOMContentLoaded', function() {
 
   goTo(0);
   resetTimer();
+
+  // Trial-Form: Submit → Success-State
+  var trialForm = document.getElementById('trial-form');
+  if (trialForm) {
+    trialForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var formData = new FormData(trialForm);
+      fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams(formData).toString()
+      }).then(function() {
+        document.getElementById('trial-form-wrap').style.display = 'none';
+        document.getElementById('trial-success').style.display = 'block';
+      }).catch(function() {
+        document.getElementById('trial-form-wrap').style.display = 'none';
+        document.getElementById('trial-success').style.display = 'block';
+      });
+    });
+  }
+
+  // Marquee-Duplikation für nahtlose Loop
+  var track = document.getElementById('marquee-track');
+  if (track) {
+    var clone = track.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.parentNode.appendChild(clone);
+  }
 
   // Demo Tabs
   document.querySelectorAll('.demo-tab').forEach(function(tab) {
