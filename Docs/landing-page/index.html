@@ -423,12 +423,23 @@
       height: 280px;
     }
     .mb-panel {
-      padding: 32px 28px;
+      padding: 24px 28px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      overflow: hidden;
+      height: 280px;
+    }
+    .mb-content {
+      flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       overflow: hidden;
-      height: 280px;
+    }
+    .mb-content-center {
+      align-items: center;
+      text-align: center;
     }
     .mb-left {
       background: var(--bg-soft);
@@ -537,17 +548,23 @@
   <div class="modes-banner">
     <div class="mb-panel mb-left">
       <div class="mb-label">Shortcut</div>
-      <div class="mb-shortcut" id="mb-shortcut">Fn+⇧</div>
-      <div class="mb-mode-name" id="mb-mode-name"></div>
-      <div class="mb-dots" id="mb-dots"></div>
+      <div class="mb-content mb-content-center">
+        <div class="mb-shortcut" id="mb-shortcut"></div>
+        <div class="mb-mode-name" id="mb-mode-name"></div>
+        <div class="mb-dots" id="mb-dots"></div>
+      </div>
     </div>
     <div class="mb-panel mb-mid">
       <div class="mb-label">Du sprichst</div>
-      <div class="mb-spoken">„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend."</div>
+      <div class="mb-content">
+        <div class="mb-spoken" id="mb-spoken"></div>
+      </div>
     </div>
     <div class="mb-panel mb-right">
       <div class="mb-label">AngelWrite schreibt</div>
-      <div class="mb-output" id="mb-output"></div>
+      <div class="mb-content">
+        <div class="mb-output" id="mb-output"></div>
+      </div>
       <div class="mb-progress" id="mb-progress"></div>
     </div>
   </div>
@@ -927,40 +944,40 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-  var INTERVAL = 4000, TICK = 50, TW_SPEED = 22;
+  var INTERVAL = 4000, TICK = 50;
+  var TW_SHORT = 35, TW_OUTPUT = 14;
+
+  var spoken = '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”';
 
   var modes = [
     {
-      name: 'Direkt', shortcut: 'Fn+⇧',
-      color: '#1A1A2E', bg: '#D3D1C7', typewriter: false,
-      output: '„Ahm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”'
+      name: 'Direkt', shortcut: 'Fn+⇧', color: '#1A1A2E', bg: '#D3D1C7',
+      output: '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”'
     },
     {
-      name: 'Englisch', shortcut: 'Fn+⌃',
-      color: '#1D4ED8', bg: '#BFDBFE', typewriter: false,
+      name: 'Englisch', shortcut: 'Fn+⌃', color: '#1D4ED8', bg: '#BFDBFE',
       output: '”I wanted to briefly mention that yesterday\'s meeting didn\'t go as well as expected. We should find time to discuss it — I found it quite frustrating, to be honest.”'
     },
     {
-      name: 'Klar', shortcut: 'Fn+⌘',
-      color: '#166534', bg: '#BBF7D0', typewriter: false,
+      name: 'Klar', shortcut: 'Fn+⌘', color: '#166534', bg: '#BBF7D0',
       output: '„Ich möchte ansprechen, dass das gestrige Meeting nicht gut verlaufen ist. Ich schlage vor, wir sprechen darüber und finden gemeinsam eine Lösung.”'
     },
     {
-      name: 'Immer Freundlich', shortcut: 'Fn+⌥',
-      color: '#92400E', bg: '#FDE68A', typewriter: false,
+      name: 'Immer Freundlich', shortcut: 'Fn+⌥', color: '#92400E', bg: '#FDE68A',
       output: '„Ich würde gerne das gestrige Meeting kurz nachbesprechen. Ich sehe Potenzial, unsere Zusammenarbeit noch effektiver zu gestalten, und freue mich auf einen offenen Austausch.”'
     },
     {
-      name: 'Kundenindividuell', shortcut: 'Fn+x',
-      color: '#5038C0', bg: '#C4B5FD', typewriter: true,
+      name: 'Kundenindividuell', shortcut: 'Fn+x', color: '#5038C0', bg: '#C4B5FD',
       output: 'Betreff: Nachbesprechung Meeting\n\nHallo zusammen,\n\nkurze Bitte um einen Termin zur Nachbesprechung. Ich möchte offene Punkte klären.\n\nViele Grüße\nMarcus'
     }
   ];
 
-  var current = 0, progress = 0, twTimer = null;
+  var current = 0, progress = 0;
+  var timers = [];
 
   var shortcutEl = document.getElementById('mb-shortcut');
   var modeEl     = document.getElementById('mb-mode-name');
+  var spokenEl   = document.getElementById('mb-spoken');
   var outputEl   = document.getElementById('mb-output');
   var progressEl = document.getElementById('mb-progress');
   var dotsEl     = document.getElementById('mb-dots');
@@ -975,44 +992,39 @@ document.addEventListener('DOMContentLoaded', function() {
     return d;
   });
 
-  function flyIn(el, fn) {
-    el.style.transition = 'none';
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        fn();
-        el.style.transition = 'opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1)';
-        el.style.opacity = '1';
-        el.style.transform = 'translateY(0)';
-      });
-    });
+  function clearTimers() {
+    timers.forEach(function(t) { clearInterval(t); clearTimeout(t); });
+    timers = [];
   }
 
-  function typewrite(text) {
-    if (twTimer) clearInterval(twTimer);
-    outputEl.textContent = '';
-    var i = 0;
-    twTimer = setInterval(function() {
-      if (i < text.length) {
-        outputEl.textContent += text[i];
-        i++;
-      } else {
-        clearInterval(twTimer);
-        twTimer = null;
-      }
-    }, TW_SPEED);
+  function typeEl(el, text, speed, delay) {
+    var t = setTimeout(function() {
+      el.textContent = '';
+      var i = 0;
+      var iv = setInterval(function() {
+        if (i < text.length) { el.textContent += text[i++]; }
+        else { clearInterval(iv); }
+      }, speed);
+      timers.push(iv);
+    }, delay || 0);
+    timers.push(t);
+  }
+
+  function slideUp(el) {
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(18px)';
+    requestAnimationFrame(function() { requestAnimationFrame(function() {
+      el.style.transition = 'opacity 0.36s ease, transform 0.36s cubic-bezier(0.22,1,0.36,1)';
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    }); });
   }
 
   function goTo(i) {
-    if (twTimer) { clearInterval(twTimer); twTimer = null; }
+    clearTimers();
     current = i;
     var m = modes[i];
-
-    flyIn(shortcutEl, function() {
-      shortcutEl.textContent = m.shortcut;
-      shortcutEl.style.color = m.color;
-    });
 
     modeEl.style.background = m.bg;
     modeEl.style.color = m.color;
@@ -1024,22 +1036,28 @@ document.addEventListener('DOMContentLoaded', function() {
       d.className = 'mb-dot' + (idx === i ? ' active' : '');
     });
 
-    if (m.typewriter) {
-      flyIn(outputEl, function() { outputEl.textContent = ''; });
-      setTimeout(function() { typewrite(m.output); }, 420);
-    } else {
-      flyIn(outputEl, function() { outputEl.textContent = m.output; });
-    }
+    shortcutEl.style.color = m.color;
+    shortcutEl.textContent = '';
+    slideUp(shortcutEl);
+    typeEl(shortcutEl, m.shortcut, TW_SHORT, 80);
+
+    spokenEl.textContent = '';
+    slideUp(spokenEl);
+    typeEl(spokenEl, spoken, TW_OUTPUT, 80);
+
+    outputEl.textContent = '';
+    slideUp(outputEl);
+    typeEl(outputEl, m.output, TW_OUTPUT, 80);
 
     progress = 0;
     progressEl.style.width = '0%';
   }
 
-  var timer;
+  var mainTimer;
   function resetTimer() {
-    clearInterval(timer);
+    clearInterval(mainTimer);
     progress = 0;
-    timer = setInterval(function() {
+    mainTimer = setInterval(function() {
       progress += TICK;
       progressEl.style.width = Math.min((progress / INTERVAL) * 100, 100) + '%';
       if (progress >= INTERVAL) {
