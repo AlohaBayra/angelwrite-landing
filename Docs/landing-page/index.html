@@ -420,12 +420,15 @@
       margin: 0 auto 40px;
       text-align: left;
       box-shadow: 0 4px 32px rgba(107,79,224,0.10);
+      height: 280px;
     }
     .mb-panel {
       padding: 32px 28px;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
+      height: 280px;
     }
     .mb-left {
       background: var(--bg-soft);
@@ -924,43 +927,43 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+  var INTERVAL = 4000, TICK = 50, TW_SPEED = 22;
+
   var modes = [
     {
       name: 'Direkt', shortcut: 'Fn+⇧',
-      color: '#1A1A2E', bg: '#D3D1C7',
-      output: '„Ahm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.“'
+      color: '#1A1A2E', bg: '#D3D1C7', typewriter: false,
+      output: '„Ahm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”'
     },
     {
       name: 'Englisch', shortcut: 'Fn+⌃',
-      color: '#1D4ED8', bg: '#BFDBFE',
-      output: '"I wanted to briefly mention that yesterday\'s meeting didn\'t go as well as expected and that we should find time to discuss it. I found it quite frustrating, to be honest."'
+      color: '#1D4ED8', bg: '#BFDBFE', typewriter: false,
+      output: '”I wanted to briefly mention that yesterday\'s meeting didn\'t go as well as expected. We should find time to discuss it — I found it quite frustrating, to be honest.”'
     },
     {
       name: 'Klar', shortcut: 'Fn+⌘',
-      color: '#166534', bg: '#BBF7D0',
-      output: '„Ich möchte kurz ansprechen, dass das gestrige Meeting nicht gut verlaufen ist. Ich schlage vor, wir sprechen darüber und finden gemeinsam eine Lösung.“'
+      color: '#166534', bg: '#BBF7D0', typewriter: false,
+      output: '„Ich möchte ansprechen, dass das gestrige Meeting nicht gut verlaufen ist. Ich schlage vor, wir sprechen darüber und finden gemeinsam eine Lösung.”'
     },
     {
       name: 'Immer Freundlich', shortcut: 'Fn+⌥',
-      color: '#92400E', bg: '#FDE68A',
-      output: '„Ich würde gerne das gestrige Meeting kurz nachbesprechen. Ich sehe Potenzial, unsere Zusammenarbeit noch effektiver zu gestalten, und freue mich auf einen offenen Austausch.“'
+      color: '#92400E', bg: '#FDE68A', typewriter: false,
+      output: '„Ich würde gerne das gestrige Meeting kurz nachbesprechen. Ich sehe Potenzial, unsere Zusammenarbeit noch effektiver zu gestalten, und freue mich auf einen offenen Austausch.”'
     },
     {
       name: 'Kundenindividuell', shortcut: 'Fn+x',
-      color: '#5038C0', bg: '#C4B5FD',
-      output: 'Betreff: Nachbesprechung Meeting gestern\n\nHallo zusammen,\n\nich möchte das gestrige Meeting kurz reflektieren und offene Punkte klären. Bitte gebt mir einen Termin.\n\nViele Grüße\nMarcus'
+      color: '#5038C0', bg: '#C4B5FD', typewriter: true,
+      output: 'Betreff: Nachbesprechung Meeting\n\nHallo zusammen,\n\nkurze Bitte um einen Termin zur Nachbesprechung. Ich möchte offene Punkte klären.\n\nViele Grüße\nMarcus'
     }
   ];
 
-  var current = 0, progress = 0;
-  var INTERVAL = 3500, TICK = 50;
+  var current = 0, progress = 0, twTimer = null;
 
   var shortcutEl = document.getElementById('mb-shortcut');
-  var modeEl    = document.getElementById('mb-mode-name');
-  var outputEl  = document.getElementById('mb-output');
-  var progressEl= document.getElementById('mb-progress');
-  var dotsEl    = document.getElementById('mb-dots');
-
+  var modeEl     = document.getElementById('mb-mode-name');
+  var outputEl   = document.getElementById('mb-output');
+  var progressEl = document.getElementById('mb-progress');
+  var dotsEl     = document.getElementById('mb-dots');
   if (!shortcutEl) return;
 
   var dotEls = modes.map(function(m, i) {
@@ -972,27 +975,62 @@ document.addEventListener('DOMContentLoaded', function() {
     return d;
   });
 
+  function flyIn(el, fn) {
+    el.style.transition = 'none';
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        fn();
+        el.style.transition = 'opacity 0.38s ease, transform 0.38s cubic-bezier(0.22,1,0.36,1)';
+        el.style.opacity = '1';
+        el.style.transform = 'translateY(0)';
+      });
+    });
+  }
+
+  function typewrite(text) {
+    if (twTimer) clearInterval(twTimer);
+    outputEl.textContent = '';
+    var i = 0;
+    twTimer = setInterval(function() {
+      if (i < text.length) {
+        outputEl.textContent += text[i];
+        i++;
+      } else {
+        clearInterval(twTimer);
+        twTimer = null;
+      }
+    }, TW_SPEED);
+  }
+
   function goTo(i) {
+    if (twTimer) { clearInterval(twTimer); twTimer = null; }
     current = i;
     var m = modes[i];
-    outputEl.style.opacity = '0';
-    outputEl.style.transform = 'translateY(6px)';
-    shortcutEl.style.color = m.color;
-    shortcutEl.textContent = m.shortcut;
+
+    flyIn(shortcutEl, function() {
+      shortcutEl.textContent = m.shortcut;
+      shortcutEl.style.color = m.color;
+    });
+
     modeEl.style.background = m.bg;
     modeEl.style.color = m.color;
     modeEl.textContent = m.name;
     progressEl.style.background = m.color;
+
     dotEls.forEach(function(d, idx) {
       d.style.background = idx === i ? m.color : '#E5E7EB';
       d.className = 'mb-dot' + (idx === i ? ' active' : '');
     });
-    setTimeout(function() {
-      outputEl.textContent = m.output;
-      outputEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-      outputEl.style.opacity = '1';
-      outputEl.style.transform = 'translateY(0)';
-    }, 200);
+
+    if (m.typewriter) {
+      flyIn(outputEl, function() { outputEl.textContent = ''; });
+      setTimeout(function() { typewrite(m.output); }, 420);
+    } else {
+      flyIn(outputEl, function() { outputEl.textContent = m.output; });
+    }
+
     progress = 0;
     progressEl.style.width = '0%';
   }
