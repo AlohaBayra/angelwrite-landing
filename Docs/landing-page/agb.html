@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Allgemeine Geschäftsbedingungen – AngelWrite</title>
+  <meta name="description" content="AGB für die Nutzung der AngelWrite macOS-App inkl. Kündigungs- und Erstattungsregelungen." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #6B4FE0;
+      --brand-dark: #5038C0;
+      --brand-light: #EDE9FF;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --bg: #FFFFFF;
+      --bg-soft: #F9F7FF;
+      --border: #E5E7EB;
+      --radius: 16px;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--brand); }
+    .nav-back {
+      color: var(--brand); font-weight: 600; font-size: 14px;
+      text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .nav-back:hover { color: var(--brand-dark); }
+
+    /* CONTENT */
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .page-header h1 span { color: var(--brand); }
+    .page-meta {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 40px 0 16px;
+      color: var(--text);
+    }
+    h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin: 28px 0 10px;
+      color: var(--text);
+    }
+
+    p { margin-bottom: 16px; color: #374151; }
+
+    ul, ol {
+      margin: 0 0 16px 24px;
+      color: #374151;
+    }
+    li { margin-bottom: 6px; }
+
+    .address-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-family: monospace;
+      font-size: 14px;
+      line-height: 1.8;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 24px;
+      font-size: 14px;
+    }
+    th {
+      background: var(--bg-soft);
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 600;
+      border: 1px solid var(--border);
+      color: var(--text);
+    }
+    td {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      color: #374151;
+      vertical-align: top;
+    }
+    tr:nth-child(even) td { background: #FAFAFA; }
+
+    .highlight-box {
+      background: var(--brand-light);
+      border-left: 4px solid var(--brand);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    .warning-box {
+      background: #FFF7ED;
+      border-left: 4px solid #F59E0B;
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      color: #374151;
+      font-size: 15px;
+    }
+
+    .section-number {
+      display: inline-block;
+      background: var(--brand);
+      color: white;
+      font-size: 12px;
+      font-weight: 700;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      text-align: center; line-height: 24px;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    footer a { color: var(--brand); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Angel<span>Write</span></a>
+    <a href="index.html" class="nav-back">← Zurück zur Startseite</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>Allgemeine <span>Geschäftsbedingungen</span></h1>
+      <p class="page-meta">Stand: Mai 2026 · AngelWrite, betrieben von ValueLift – Marcus Eichler</p>
+    </div>
+
+    <!-- §1 GELTUNGSBEREICH -->
+    <h2>§ 1 Geltungsbereich</h2>
+    <p>Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für alle Verträge zwischen</p>
+    <div class="address-box">
+      Marcus Eichler · ValueLift<br>
+      Arberstraße 19<br>
+      94428 Eichendorf, Deutschland<br>
+      E-Mail: legal@angelwrite.app
+    </div>
+    <p>(nachfolgend „Anbieter") und Personen, die AngelWrite käuflich erwerben oder nutzen (nachfolgend „Kunde").</p>
+    <p>Abweichende Bedingungen des Kunden werden nicht anerkannt, es sei denn, der Anbieter stimmt ihrer Geltung ausdrücklich schriftlich zu.</p>
+
+    <!-- §2 VERTRAGSGEGENSTAND -->
+    <h2>§ 2 Vertragsgegenstand</h2>
+    <p>AngelWrite ist eine macOS-Anwendung für Push-to-Talk-Diktat, die gesprochene Sprache in Text umwandelt und optional mittels KI aufbereitet. Der Anbieter bietet drei Lizenzstufen an:</p>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Tier</th>
+          <th>Preis</th>
+          <th>Leistungsumfang</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Lokal</strong></td>
+          <td>€ 19,– (einmalig)</td>
+          <td>Lokale Spracherkennung (WhisperKit), kein Cloud-Dienst, kein KI-Post-Processing. Läuft vollständig auf dem Gerät des Kunden.</td>
+        </tr>
+        <tr>
+          <td><strong>Pro</strong></td>
+          <td>€ 99,– / Jahr</td>
+          <td>Alle 5 Diktiermodi, Cloud-Spracherkennung (OpenAI Whisper), KI-Post-Processing über AngelWrite-Server. Inkl. 7-Tage-Testzeitraum.</td>
+        </tr>
+        <tr>
+          <td><strong>Advanced</strong></td>
+          <td>€ 149,– (einmalig)</td>
+          <td>Eigener API-Schlüssel (BYOK: OpenAI oder Anthropic), individuell anpassbarer Diktiermodus. Kein AngelWrite-Server erforderlich.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Der Vertragsschluss erfolgt durch den Abschluss des Kaufvorgangs auf angelwrite.app und die Bestätigung per E-Mail durch den Anbieter.</p>
+
+    <!-- §3 PREISE UND ZAHLUNG -->
+    <h2>§ 3 Preise und Zahlung</h2>
+    <p>Alle angegebenen Preise sind Endpreise in Euro und enthalten die gesetzliche Umsatzsteuer. Die Zahlung erfolgt im Voraus per Kreditkarte oder einem anderen auf der Webseite angebotenen Zahlungsverfahren.</p>
+    <p>Beim Tier <strong>Pro</strong> verlängert sich das Abonnement automatisch um ein weiteres Jahr, sofern der Kunde nicht spätestens 14 Tage vor Ablauf der Laufzeit kündigt (§ 5 dieser AGB).</p>
+
+    <!-- §4 WIDERRUFSRECHT -->
+    <h2>§ 4 Widerrufsrecht und Ausschluss</h2>
+    <div class="highlight-box">
+      Verbrauchern steht grundsätzlich ein 14-tägiges Widerrufsrecht zu. Dieses erlischt bei digitalen Inhalten vorzeitig, sobald der Kunde der sofortigen Ausführung ausdrücklich zugestimmt und zur Kenntnis genommen hat, dass er damit sein Widerrufsrecht verliert.
+    </div>
+    <p>Beim Abschluss des Kaufvorgangs bestätigt der Kunde, dass er mit der sofortigen Bereitstellung der Lizenz einverstanden ist und sein Widerrufsrecht damit erlischt – sofern er die Software bereits heruntergeladen oder aktiviert hat.</p>
+    <p>Hiervon unberührt bleiben die Regelungen zur anteiligen Erstattung in § 6 (Kündigung) und § 7 (Einstellung des Dienstes).</p>
+
+    <!-- §5 KÜNDIGUNG DES ABONNEMENTS (PRO) -->
+    <h2>§ 5 Kündigung des Pro-Abonnements</h2>
+
+    <h3>5.1 Kündigung durch den Kunden</h3>
+    <p>Der Kunde kann das Pro-Abonnement jederzeit zum Ende der laufenden Abrechnungsperiode kündigen. Eine Kündigung erfolgt ausschließlich per E-Mail an:</p>
+    <div class="address-box">
+      legal@angelwrite.app<br>
+      Betreff: Kündigung AngelWrite Pro<br><br>
+      Bitte folgende Angaben beifügen:<br>
+      – Vollständiger Name<br>
+      – E-Mail-Adresse des Kontos<br>
+      – Kaufdatum oder Bestellnummer
+    </div>
+    <p>Die Kündigung wird innerhalb von 5 Werktagen per E-Mail bestätigt. Das Abonnement läuft bis zum Ende der bereits bezahlten Periode weiter; eine anteilige Rückerstattung für die verbleibende Laufzeit nach Kündigung durch den Kunden erfolgt nicht.</p>
+
+    <h3>5.2 Kündigung durch den Anbieter</h3>
+    <p>Der Anbieter kann das Abonnement aus wichtigem Grund (z. B. Verstoß gegen diese AGB) mit sofortiger Wirkung kündigen. In diesem Fall erhält der Kunde eine anteilige Erstattung für die nicht genutzte Laufzeit gemäß § 6.1.</p>
+
+    <h3>5.3 Testzeitraum (Pro)</h3>
+    <p>Der 7-tägige Testzeitraum ist kostenlos. Kündigt der Kunde nicht vor Ablauf des Testzeitraums, beginnt automatisch das kostenpflichtige Jahresabonnement. Eine Kündigung während des Testzeitraums ist jederzeit per E-Mail möglich und führt zu keiner Belastung.</p>
+
+    <!-- §6 ERSTATTUNGSREGELUNGEN -->
+    <h2>§ 6 Erstattungsregelungen</h2>
+
+    <h3>6.1 Anteilige Erstattung beim Pro-Abonnement</h3>
+    <p>Eine anteilige Erstattung für die verbleibende, noch nicht genutzte Laufzeit wird in folgenden Fällen gewährt:</p>
+    <ul>
+      <li>Kündigung durch den Anbieter ohne Verschulden des Kunden</li>
+      <li>Einstellung des Dienstes durch den Anbieter (§ 7)</li>
+    </ul>
+    <p>Die Berechnung erfolgt tagesgenau nach folgender Formel:</p>
+    <div class="highlight-box">
+      <strong>Erstattungsbetrag</strong> = (Verbleibende Tage ÷ 365) × € 99,–
+    </div>
+    <p>Beispiel: Verbleiben nach Einstellung noch 200 Tage der Laufzeit, beträgt die Erstattung (200 ÷ 365) × € 99 = ca. € 54,25.</p>
+
+    <h3>6.2 Anteilige Erstattung beim Advanced-Tier</h3>
+    <p>Da das Advanced-Tier als einmalige Lizenz erworben wird und die Kernfunktion (BYOK) keine Serverinfrastruktur des Anbieters voraussetzt, wird im Fall der Einstellung serverseitiger Leistungen keine Erstattung geschuldet, sofern die App selbst weiterhin funktionsfähig bleibt.</p>
+    <p>Wird der Betrieb der App insgesamt eingestellt und ist die Software dadurch dauerhaft nicht mehr nutzbar, gilt folgende Staffel-Erstattung:</p>
+    <table>
+      <thead>
+        <tr>
+          <th>Zeitraum seit Kauf</th>
+          <th>Erstattung</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0 – 6 Monate</td>
+          <td>75 % des Kaufpreises (€ 111,75)</td>
+        </tr>
+        <tr>
+          <td>7 – 12 Monate</td>
+          <td>50 % des Kaufpreises (€ 74,50)</td>
+        </tr>
+        <tr>
+          <td>13 – 24 Monate</td>
+          <td>25 % des Kaufpreises (€ 37,25)</td>
+        </tr>
+        <tr>
+          <td>Mehr als 24 Monate</td>
+          <td>Keine Erstattung</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>6.3 Lokal-Tier</h3>
+    <p>Das Lokal-Tier läuft vollständig auf dem Gerät des Kunden ohne Serveranbindung. Eine Erstattungspflicht besteht nicht, da keine laufende Servicepflicht seitens des Anbieters besteht. Die App bleibt nach Kauf dauerhaft nutzbar, solange das Betriebssystem kompatibel ist.</p>
+
+    <h3>6.4 Auszahlung</h3>
+    <p>Erstattungen erfolgen auf dem ursprünglichen Zahlungsweg innerhalb von 30 Kalendertagen nach Bearbeitung des Antrags.</p>
+
+    <!-- §7 EINSTELLUNG DES DIENSTES -->
+    <h2>§ 7 Einstellung des Dienstes</h2>
+
+    <div class="warning-box">
+      Der Anbieter behält sich das Recht vor, den Dienst (Server, App-Vertrieb) einzustellen. In diesem Fall gelten die nachfolgenden Regelungen zum Schutz der Kunden.
+    </div>
+
+    <h3>7.1 Ankündigungspflicht</h3>
+    <p>Der Anbieter verpflichtet sich, eine geplante Einstellung des Dienstes mindestens <strong>90 Tage im Voraus</strong> anzukündigen. Die Ankündigung erfolgt:</p>
+    <ul>
+      <li>Per E-Mail an alle registrierten Kunden</li>
+      <li>Durch einen gut sichtbaren Hinweis auf angelwrite.app</li>
+      <li>Durch eine Benachrichtigung innerhalb der App (sofern technisch möglich)</li>
+    </ul>
+    <p>Im Fall einer unvorhergesehenen, nicht vermeidbaren Einstellung (z. B. Insolvenz eines unverzichtbaren Drittanbieters) wird der Anbieter die Kunden schnellstmöglich informieren.</p>
+
+    <h3>7.2 Erstattung bei Einstellung</h3>
+    <p>Bei Einstellung des Dienstes erhalten Kunden automatisch eine Erstattung gemäß § 6, ohne dass eine gesonderte Anfrage erforderlich ist. Der Anbieter wird die Erstattung proaktiv auf den hinterlegten Zahlungsweg veranlassen.</p>
+
+    <!-- §8 VERFÜGBARKEIT UND HAFTUNG -->
+    <h2>§ 8 Verfügbarkeit und Haftung</h2>
+
+    <h3>8.1 Verfügbarkeit</h3>
+    <p>Der Anbieter ist bestrebt, eine hohe Verfügbarkeit der Cloud-Dienste zu gewährleisten, übernimmt jedoch keine Garantie für eine ununterbrochene Erreichbarkeit. Wartungsarbeiten werden nach Möglichkeit vorab angekündigt.</p>
+    <p>Temporäre Ausfälle (z. B. durch Wartung oder Störungen bei Drittanbietern wie OpenAI oder dem Hosting-Dienstleister) begründen keinen Anspruch auf Erstattung, sofern sie 72 Stunden im Monat nicht überschreiten.</p>
+
+    <h3>8.2 Haftungsbeschränkung</h3>
+    <p>Der Anbieter haftet unbeschränkt bei Vorsatz und grober Fahrlässigkeit sowie bei Verletzung wesentlicher Vertragspflichten. Im Übrigen ist die Haftung auf den vorhersehbaren, vertragstypischen Schaden begrenzt.</p>
+    <p>Der Anbieter haftet nicht für Schäden, die durch fehlerhafte Transkription, falsch verstandene Diktatinhalte oder durch das KI-Post-Processing veränderte Texte entstehen. Der Kunde ist für die Überprüfung und Verwendung aller erzeugten Texte selbst verantwortlich.</p>
+
+    <!-- §9 NUTZUNGSRECHTE -->
+    <h2>§ 9 Nutzungsrechte</h2>
+    <p>Mit dem Kauf erhält der Kunde ein nicht übertragbares, nicht ausschließliches Recht zur Nutzung der Software auf seinen eigenen macOS-Geräten für private und gewerbliche Zwecke. Eine Weitergabe, Weiterveräußerung oder Sublizenzierung ist nicht gestattet.</p>
+
+    <!-- §10 DATENSCHUTZ -->
+    <h2>§ 10 Datenschutz</h2>
+    <p>Die Erhebung und Verarbeitung personenbezogener Daten erfolgt gemäß der <a href="datenschutz.html" style="color: var(--brand);">Datenschutzerklärung</a> des Anbieters, die Bestandteil dieser AGB ist.</p>
+
+    <!-- §11 ÄNDERUNGEN DER AGB -->
+    <h2>§ 11 Änderungen dieser AGB</h2>
+    <p>Der Anbieter behält sich vor, diese AGB mit einer Ankündigungsfrist von mindestens <strong>30 Tagen</strong> zu ändern. Die Ankündigung erfolgt per E-Mail. Widerspricht der Kunde den geänderten Bedingungen nicht innerhalb von 30 Tagen nach Zugang der Mitteilung, gelten die neuen AGB als akzeptiert. Auf dieses Widerspruchsrecht wird der Anbieter in der Ankündigungs-E-Mail ausdrücklich hinweisen.</p>
+    <p>Bei wesentlichen Änderungen zu Lasten des Kunden (insbesondere Preiserhöhungen beim Pro-Tier) erhält der Kunde ein außerordentliches Kündigungsrecht zum Zeitpunkt des Inkrafttretens der Änderung.</p>
+
+    <!-- §12 SCHLUSSBESTIMMUNGEN -->
+    <h2>§ 12 Schlussbestimmungen</h2>
+    <p>Es gilt das Recht der Bundesrepublik Deutschland unter Ausschluss des UN-Kaufrechts. Gerichtsstand für Streitigkeiten mit Kaufleuten ist der Sitz des Anbieters, sofern gesetzlich zulässig.</p>
+    <p>Sollten einzelne Bestimmungen dieser AGB unwirksam sein oder werden, bleibt die Wirksamkeit der übrigen Bestimmungen unberührt.</p>
+    <p>Streitbeilegung: Die EU-Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: <a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="noopener" style="color: var(--brand);">https://ec.europa.eu/consumers/odr</a>. Der Anbieter ist nicht verpflichtet und nicht bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+    <footer>
+      <p>
+        <a href="index.html">angelwrite.app</a> ·
+        <a href="datenschutz.html">Datenschutzerklärung</a> ·
+        AGB Stand Mai 2026
+      </p>
+      <p style="margin-top: 8px;">© 2026 Marcus Eichler · ValueLift</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
