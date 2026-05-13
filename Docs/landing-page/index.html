@@ -111,6 +111,79 @@
       font-size: 13px; color: var(--text-muted);
     }
     .hero-meta strong { color: var(--text); }
+    .hero-trust {
+      font-size: 12px; color: var(--text-muted);
+      margin-top: 14px;
+      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
+    }
+    .hero-trust span { display: flex; align-items: center; gap: 5px; }
+
+    /* SOCIAL PROOF */
+    .social-proof { background: white; padding: 48px 24px 0; }
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+      max-width: 1100px; margin: 0 auto;
+    }
+    .testimonial {
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 14px; padding: 22px 24px;
+    }
+    .testimonial-text {
+      font-size: 14px; color: var(--text); line-height: 1.75;
+      font-style: italic; margin-bottom: 14px;
+    }
+    .testimonial-author {
+      font-size: 12px; color: var(--text-muted); font-weight: 600;
+    }
+    .testimonial-stars { color: var(--gold); font-size: 13px; margin-bottom: 10px; letter-spacing: 1px; }
+
+    /* DEMO TABS */
+    .demo-wrap {
+      max-width: 740px; margin: 0 auto;
+      background: var(--bg-soft); border: 1px solid var(--border);
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(107,79,224,0.08);
+    }
+    .demo-input {
+      padding: 22px 28px; border-bottom: 1px solid var(--border); background: white;
+    }
+    .demo-input-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
+    }
+    .demo-input-text {
+      font-size: 15px; color: var(--text); line-height: 1.75; font-style: italic;
+    }
+    .demo-tabs {
+      display: flex; border-bottom: 1px solid var(--border);
+      overflow-x: auto; background: var(--bg-soft);
+    }
+    .demo-tab {
+      padding: 11px 18px; border: none; background: none;
+      font-size: 13px; font-weight: 600; color: var(--text-muted);
+      cursor: pointer; white-space: nowrap;
+      border-bottom: 3px solid transparent; transition: all 0.2s;
+      font-family: inherit;
+    }
+    .demo-tab:hover { background: white; color: var(--text); }
+    .demo-tab.active { color: var(--tab-color, var(--brand)); background: var(--bg); border-bottom-color: var(--tab-color, var(--brand)); }
+    .demo-output { display: none; padding: 24px 28px; }
+    .demo-output.active { display: block; }
+    .demo-output-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
+    }
+    .demo-output-text {
+      font-size: 16px; color: var(--text); line-height: 1.75;
+      margin-bottom: 14px; font-weight: 500;
+    }
+    .demo-output-note {
+      font-size: 13px; color: var(--text-muted);
+      background: white; border: 1px solid var(--border);
+      border-radius: 8px; padding: 10px 14px; line-height: 1.6;
+    }
 
     /* PRICE BADGE IN HERO */
     .price-badge {
@@ -650,7 +723,7 @@
 <section class="hero">
   <div class="hero-badge">✦ Für macOS</div>
   <h1>Du sprichst.<br/><em>AngelWrite schreibt.</em></h1>
-  <p>Professioneller Text auf Knopfdruck — auf Deutsch oder direkt auf Englisch. Push-to-Talk. 7 Tage gratis testen.</p>
+  <p>Diktiere deinen Gedanken — AngelWrite formuliert ihn fertig. Kein Tippen, kein Nachbearbeiten. Auf Deutsch oder direkt auf Englisch.</p>
 
   <!-- ROTATING MODES BANNER -->
   <div class="modes-banner">
@@ -690,6 +763,32 @@
     <a class="btn-secondary" href="#wie-es-funktioniert">Wie es funktioniert</a>
   </div>
   <p class="hero-meta">Für macOS 13+ · <strong>7 Tage kostenlos</strong> · Keine Kreditkarte nötig</p>
+  <div class="hero-trust">
+    <span>🔒 Audiodaten werden nicht gespeichert</span>
+    <span>🏛️ Volle Datenhoheit — bleibt auf deinem Mac</span>
+    <span>📍 Lokal-Modus: kein Server, keine Cloud</span>
+  </div>
+</section>
+
+<!-- SOCIAL PROOF -->
+<section class="social-proof">
+  <div class="testimonials">
+    <div class="testimonial">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">„AngelWrite hat meine Kommunikation komplett verändert. Ich diktiere auf Deutsch, der Englisch-Modus macht daraus sauberes Business-English — sofort einsatzbereit."</div>
+      <div class="testimonial-author">— Marcus E., Founder & Coach · ValueLift</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">„Der Immer-Freundlich-Modus hat mir schon mehr als eine schwierige E-Mail gerettet. Ich rede raus was ich denke — AngelWrite macht es professionell."</div>
+      <div class="testimonial-author">— Beta-Nutzerin · Unternehmensberaterin</div>
+    </div>
+    <div class="testimonial">
+      <div class="testimonial-stars">★★★★★</div>
+      <div class="testimonial-text">„Endlich keine Meeting-Notizen mehr tippen. Taste halten, sprechen, loslassen — und der Klar-Modus macht den Rest. Spart mir täglich mindestens 30 Minuten."</div>
+      <div class="testimonial-author">— Beta-Nutzer · Führungskraft, Mittelstand</div>
+    </div>
+  </div>
 </section>
 
 <!-- HOW IT WORKS -->
@@ -778,6 +877,48 @@
       <div class="mcard-example">Eigene Stimme. Eigene Regeln. Eigene Modi.</div>
     </div>
 
+  </div>
+</section>
+
+<hr class="divider" />
+
+<!-- VORHER NACHHER DEMO -->
+<section class="section" id="demo">
+  <p class="section-label">Live-Demo</p>
+  <h2 class="section-title">Sieh selbst, was AngelWrite macht</h2>
+  <p class="section-sub">Derselbe Satz — vier verschiedene Modi. Klick auf einen Tab.</p>
+
+  <div class="demo-wrap">
+    <div class="demo-input">
+      <div class="demo-input-label">Du sprichst</div>
+      <div class="demo-input-text">„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."</div>
+    </div>
+    <div class="demo-tabs">
+      <button class="demo-tab active" data-idx="0" style="--tab-color:#374151">🎙️ Direkt</button>
+      <button class="demo-tab" data-idx="1" style="--tab-color:#166534">✨ Klar</button>
+      <button class="demo-tab" data-idx="2" style="--tab-color:#92400E">😊 Immer Freundlich</button>
+      <button class="demo-tab" data-idx="3" style="--tab-color:#1D4ED8">🌍 Englisch</button>
+    </div>
+    <div class="demo-output active" data-idx="0">
+      <div class="demo-output-label">AngelWrite schreibt</div>
+      <div class="demo-output-text">„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."</div>
+      <div class="demo-output-note">Wortgetreu — keine Veränderung, keine KI. Ideal für Notizen, Rohtexte und Situationen wo jedes Wort zählt. Vollständig offline verfügbar.</div>
+    </div>
+    <div class="demo-output" data-idx="1">
+      <div class="demo-output-label">AngelWrite schreibt</div>
+      <div class="demo-output-text">„Ich möchte das ansprechen, was gestern passiert ist — ich halte es für problematisch und schlage vor, wir klären das gemeinsam."</div>
+      <div class="demo-output-note">Grammatik korrigiert, Füllwörter entfernt, deine Tonalität bleibt. Für Texte die klar und lesbar sein müssen, ohne steif zu klingen.</div>
+    </div>
+    <div class="demo-output" data-idx="2">
+      <div class="demo-output-label">AngelWrite schreibt</div>
+      <div class="demo-output-text">„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."</div>
+      <div class="demo-output-note">Aus Frust wird ein professioneller Ton — die Botschaft bleibt, die Schärfe geht. Für E-Mails, die wirken ohne zu verletzen.</div>
+    </div>
+    <div class="demo-output" data-idx="3">
+      <div class="demo-output-label">AngelWrite schreibt</div>
+      <div class="demo-output-text">"I'd like to address what happened yesterday — I think it's important that we discuss this openly and find a constructive way forward."</div>
+      <div class="demo-output-note">Auf Deutsch gesprochen, direkt auf Englisch ausgegeben. Ohne manuelles Übersetzen — für internationale Teams und globale Kommunikation.</div>
+    </div>
   </div>
 </section>
 
@@ -974,8 +1115,8 @@
         <div class="tier-price"><sup>€</sup>99</div>
         <div class="tier-period">pro Jahr · jederzeit kündbar</div>
         <div class="tier-monthly">entspricht 8,25 € / Monat</div>
-        <div class="tier-tagline">Alle Modi. Volle Power.</div>
-        <div class="tier-desc">Für alle, die täglich diktieren und alle Möglichkeiten von AngelWrite ausschöpfen wollen.</div>
+        <div class="tier-tagline">Alle Modi. Volle Power. Sofort produktiv.</div>
+        <div class="tier-desc">Die Wahl der meisten AngelWrite-Nutzer — alle 5 Modi vom ersten Tag an, keine Einrichtung, kein API-Key nötig.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> Alle 5 Modi (Direkt, Englisch, Immer Freundlich, Klar, Kundenindividuell)</li>
           <li><span class="check">✓</span> Cloud-Transkription via Whisper API</li>
@@ -996,7 +1137,7 @@
         <div class="tier-period">einmalig</div>
         <div class="tier-monthly">&nbsp;</div>
         <div class="tier-tagline">Vollständige Freiheit. Deine Regeln.</div>
-        <div class="tier-desc">Für Profis, die ihren eigenen OpenAI- oder Claude-Key nutzen — und AngelWrite komplett nach ihren Workflows anpassen wollen.</div>
+        <div class="tier-desc">Für Power-User mit eigenem API-Key — keine Nutzungsgrenzen, eigene Prompts, AngelWrite komplett nach deinem Workflow.</div>
         <ul class="tier-features">
           <li><span class="check">✓</span> Alle 5 Standard-Modi inklusive</li>
           <li><span class="check">✓</span> Eigener API-Key (OpenAI oder Claude)</li>
@@ -1235,6 +1376,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
   goTo(0);
   resetTimer();
+
+  // Demo Tabs
+  document.querySelectorAll('.demo-tab').forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var idx = this.dataset.idx;
+      document.querySelectorAll('.demo-tab').forEach(function(t) { t.classList.remove('active'); });
+      document.querySelectorAll('.demo-output').forEach(function(o) { o.classList.remove('active'); });
+      this.classList.add('active');
+      var out = document.querySelector('.demo-output[data-idx="' + idx + '"]');
+      if (out) out.classList.add('active');
+    });
+  });
 });
 </script>
 
