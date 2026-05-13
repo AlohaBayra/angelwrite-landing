@@ -468,7 +468,7 @@
     .mb-spoken {
       font-size: 13px;
       line-height: 1.75;
-      color: var(--text-muted);
+      color: var(--text);
       font-style: italic;
       border-left: 2px solid var(--border);
       padding-left: 14px;
@@ -548,93 +548,6 @@
       <div class="mb-progress" id="mb-progress"></div>
     </div>
   </div>
-
-  <script>
-  (function() {
-    var modes = [
-      {
-        name: "Direkt", shortcut: "Fn+⇧",
-        color: "#5F5E5A", bg: "#D3D1C7",
-        output: "„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.""
-      },
-      {
-        name: "Englisch", shortcut: "Fn+⌃",
-        color: "#1D4ED8", bg: "#BFDBFE",
-        output: "\"I wanted to briefly mention that yesterday's meeting didn't go particularly well and we should discuss it again. Honestly, I found it quite frustrating.\""
-      },
-      {
-        name: "Klar", shortcut: "Fn+⌘",
-        color: "#166534", bg: "#BBF7D0",
-        output: "„Ich möchte ansprechen, dass das gestrige Meeting nicht wie erwartet verlaufen ist und wir darüber sprechen sollten. Ich fand es frustrierend.""
-      },
-      {
-        name: "Immer Freundlich", shortcut: "Fn+⌥",
-        color: "#92400E", bg: "#FDE68A",
-        output: "„Ich würde gerne das gestrige Meeting kurz reflektieren — ich sehe Verbesserungspotenzial und freue mich, gemeinsam Lösungen zu finden.""
-      },
-      {
-        name: "Kundenindividuell", shortcut: "Fn+x",
-        color: "#5038C0", bg: "#C4B5FD",
-        output: "Betreff: Nachbesprechung Meeting gestern\n\nHallo zusammen,\n\nbitte findet einen Termin für ein kurzes Gespräch. Ich möchte offene Punkte klären.\n\nViele Grüße"
-      }
-    ];
-    var current = 0, progress = 0;
-    var INTERVAL = 4000, TICK = 60;
-    var shortcutEl = document.getElementById('mb-shortcut');
-    var modeEl = document.getElementById('mb-mode-name');
-    var outputEl = document.getElementById('mb-output');
-    var progressEl = document.getElementById('mb-progress');
-    var dotsContainer = document.getElementById('mb-dots');
-    var dotEls = modes.map(function(m, i) {
-      var d = document.createElement('button');
-      d.className = 'mb-dot';
-      d.setAttribute('aria-label', m.name);
-      d.onclick = function() { goTo(i); resetTimer(); };
-      dotsContainer.appendChild(d);
-      return d;
-    });
-    function goTo(i) {
-      current = i;
-      var m = modes[i];
-      outputEl.style.opacity = '0';
-      outputEl.style.transform = 'translateY(5px)';
-      shortcutEl.style.color = m.color;
-      shortcutEl.textContent = m.shortcut;
-      modeEl.style.background = m.bg;
-      modeEl.style.color = m.color;
-      modeEl.textContent = m.name;
-      progressEl.style.background = m.color;
-      dotEls.forEach(function(d, idx) {
-        d.style.background = idx === i ? m.color : '#E5E7EB';
-        d.className = 'mb-dot' + (idx === i ? ' active' : '');
-      });
-      setTimeout(function() {
-        outputEl.textContent = m.output;
-        outputEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
-        outputEl.style.opacity = '1';
-        outputEl.style.transform = 'translateY(0)';
-      }, 220);
-      progress = 0;
-      progressEl.style.width = '0%';
-    }
-    var timer;
-    function resetTimer() {
-      clearInterval(timer);
-      progress = 0;
-      timer = setInterval(function() {
-        progress += TICK;
-        progressEl.style.width = Math.min((progress / INTERVAL) * 100, 100) + '%';
-        if (progress >= INTERVAL) {
-          current = (current + 1) % modes.length;
-          goTo(current);
-          progress = 0;
-        }
-      }, TICK);
-    }
-    goTo(0);
-    resetTimer();
-  })();
-  </script>
 
   <div class="price-badge">
     <span class="intro">Trial</span>
@@ -1008,6 +921,100 @@
   <p>© 2026 AngelWrite · ValueLift · Alle Rechte vorbehalten</p>
   <p style="margin-top: 8px; font-size: 12px;">AngelWrite ist ein Produkt von Marcus Eichler / ValueLift · macOS ist ein Markenzeichen von Apple Inc.</p>
 </footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var modes = [
+    {
+      name: 'Direkt', shortcut: 'Fn+⇧',
+      color: '#1A1A2E', bg: '#D3D1C7',
+      output: '„Ahm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.“'
+    },
+    {
+      name: 'Englisch', shortcut: 'Fn+⌃',
+      color: '#1D4ED8', bg: '#BFDBFE',
+      output: '"I wanted to briefly mention that yesterday\'s meeting didn\'t go as well as expected and that we should find time to discuss it. I found it quite frustrating, to be honest."'
+    },
+    {
+      name: 'Klar', shortcut: 'Fn+⌘',
+      color: '#166534', bg: '#BBF7D0',
+      output: '„Ich möchte kurz ansprechen, dass das gestrige Meeting nicht gut verlaufen ist. Ich schlage vor, wir sprechen darüber und finden gemeinsam eine Lösung.“'
+    },
+    {
+      name: 'Immer Freundlich', shortcut: 'Fn+⌥',
+      color: '#92400E', bg: '#FDE68A',
+      output: '„Ich würde gerne das gestrige Meeting kurz nachbesprechen. Ich sehe Potenzial, unsere Zusammenarbeit noch effektiver zu gestalten, und freue mich auf einen offenen Austausch.“'
+    },
+    {
+      name: 'Kundenindividuell', shortcut: 'Fn+x',
+      color: '#5038C0', bg: '#C4B5FD',
+      output: 'Betreff: Nachbesprechung Meeting gestern\n\nHallo zusammen,\n\nich möchte das gestrige Meeting kurz reflektieren und offene Punkte klären. Bitte gebt mir einen Termin.\n\nViele Grüße\nMarcus'
+    }
+  ];
+
+  var current = 0, progress = 0;
+  var INTERVAL = 3500, TICK = 50;
+
+  var shortcutEl = document.getElementById('mb-shortcut');
+  var modeEl    = document.getElementById('mb-mode-name');
+  var outputEl  = document.getElementById('mb-output');
+  var progressEl= document.getElementById('mb-progress');
+  var dotsEl    = document.getElementById('mb-dots');
+
+  if (!shortcutEl) return;
+
+  var dotEls = modes.map(function(m, i) {
+    var d = document.createElement('button');
+    d.className = 'mb-dot';
+    d.setAttribute('aria-label', m.name);
+    d.onclick = function() { goTo(i); resetTimer(); };
+    dotsEl.appendChild(d);
+    return d;
+  });
+
+  function goTo(i) {
+    current = i;
+    var m = modes[i];
+    outputEl.style.opacity = '0';
+    outputEl.style.transform = 'translateY(6px)';
+    shortcutEl.style.color = m.color;
+    shortcutEl.textContent = m.shortcut;
+    modeEl.style.background = m.bg;
+    modeEl.style.color = m.color;
+    modeEl.textContent = m.name;
+    progressEl.style.background = m.color;
+    dotEls.forEach(function(d, idx) {
+      d.style.background = idx === i ? m.color : '#E5E7EB';
+      d.className = 'mb-dot' + (idx === i ? ' active' : '');
+    });
+    setTimeout(function() {
+      outputEl.textContent = m.output;
+      outputEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+      outputEl.style.opacity = '1';
+      outputEl.style.transform = 'translateY(0)';
+    }, 200);
+    progress = 0;
+    progressEl.style.width = '0%';
+  }
+
+  var timer;
+  function resetTimer() {
+    clearInterval(timer);
+    progress = 0;
+    timer = setInterval(function() {
+      progress += TICK;
+      progressEl.style.width = Math.min((progress / INTERVAL) * 100, 100) + '%';
+      if (progress >= INTERVAL) {
+        current = (current + 1) % modes.length;
+        goTo(current);
+      }
+    }, TICK);
+  }
+
+  goTo(0);
+  resetTimer();
+});
+</script>
 
 </body>
 </html>
