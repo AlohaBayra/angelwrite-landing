@@ -598,7 +598,7 @@
     /* MODES BANNER */
     .modes-banner {
       display: grid;
-      grid-template-columns: 180px 1fr 1fr;
+      grid-template-columns: 220px 1fr 1fr;
       border-radius: 16px;
       overflow: hidden;
       border: 1px solid var(--border);
@@ -1267,9 +1267,8 @@
         </div>
         <div class="trial-form-block">
           <div id="trial-form-wrap">
-            <form name="trial-signup" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="trial-form">
-              <input type="hidden" name="form-name" value="trial-signup" />
-              <input type="hidden" name="bot-field" style="display:none" />
+            <form name="trial-signup" id="trial-form">
+
               <label for="trial-email">Deine E-Mail-Adresse</label>
               <input
                 class="trial-email-input"
@@ -1442,7 +1441,7 @@ document.addEventListener('DOMContentLoaded', function() {
          + ' font-weight=”700” fill=”'+tFill+'”>'+label+'</text>';
   }
   function buildKbd(keys, color) {
-    var s = '<svg viewBox=”0 0 182 102” xmlns=”http://www.w3.org/2000/svg” style=”width:154px;height:86px”>';
+    var s = '<svg viewBox=”0 0 182 102” xmlns=”http://www.w3.org/2000/svg” style=”width:100%;max-width:160px;height:auto”>';
     s += '<rect x=”1” y=”1” width=”180” height=”100” rx=”9” fill=”#E0E1E5” stroke=”#C5C7CC” stroke-width=”1”/>';
     // Row 1: Shift (full width) — or x-key highlighted for mode 5
     if (keys.x) {
@@ -1592,16 +1591,9 @@ document.addEventListener('DOMContentLoaded', function() {
   if (trialForm) {
     trialForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      var formData = new FormData(trialForm);
-      fetch('/', { method: 'POST', headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: new URLSearchParams(formData).toString()
-      }).then(function() {
-        document.getElementById('trial-form-wrap').style.display = 'none';
-        document.getElementById('trial-success').style.display = 'block';
-      }).catch(function() {
-        document.getElementById('trial-form-wrap').style.display = 'none';
-        document.getElementById('trial-success').style.display = 'block';
-      });
+      // TODO: systeme.io API hier einbinden (siehe Notion Backlog)
+      document.getElementById('trial-form-wrap').style.display = 'none';
+      document.getElementById('trial-success').style.display = 'block';
     });
   }
 
