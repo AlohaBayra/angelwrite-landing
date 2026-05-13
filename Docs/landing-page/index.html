@@ -1616,12 +1616,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  // Marquee-Duplikation für nahtlose Loop
+  // Marquee-Duplikation für nahtlose Loop — Karten innerhalb desselben Tracks verdoppeln
   var track = document.getElementById('marquee-track');
   if (track) {
-    var clone = track.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.parentNode.appendChild(clone);
+    Array.from(track.children).forEach(function(card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      track.appendChild(clone);
+    });
   }
 
   // Demo Tabs
