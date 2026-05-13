@@ -1417,33 +1417,41 @@
 document.addEventListener('DOMContentLoaded', function() {
   var INTERVAL = 4000, TICK = 50, TW_OUTPUT = 15;
 
-  /* ── Keyboard HTML Generator ── */
+  /* ── Keyboard DOM Builder ── */
   function buildKbd(keys, color) {
-    function k(label, active, wide) {
-      var bg     = active ? color   : '#EBEBED';
-      var fg     = active ? '#fff'  : '#444';
-      var shadow = active ? color   : '#AEAEB2';
-      return '<div style=”'
-        + 'background:' + bg + ';'
-        + 'color:' + fg + ';'
-        + 'border-radius:5px;'
-        + 'box-shadow:0 3px 0 ' + shadow + ';'
-        + 'font-size:11px;font-weight:700;'
-        + 'display:flex;align-items:center;justify-content:center;'
-        + 'padding:5px 4px;min-height:30px;'
-        + (wide ? 'width:100%;' : 'flex:1;')
-        + '”>' + label + '</div>';
+    function css(el, styles) { el.setAttribute('style', styles); }
+    function key(label, active, wide) {
+      var el = document.createElement('div');
+      var bg = active ? color : '#EBEBED';
+      var fg = active ? '#fff' : '#444';
+      var sh = active ? color : '#AEAEB2';
+      css(el,
+        'background:' + bg +
+        ';color:' + fg +
+        ';border-radius:5px' +
+        ';box-shadow:0 3px 0 ' + sh +
+        ';font-size:11px;font-weight:700' +
+        ';display:flex;align-items:center;justify-content:center' +
+        ';padding:5px 4px;min-height:30px' +
+        (wide ? ';width:100%' : ';flex:1')
+      );
+      el.textContent = label;
+      return el;
     }
-    var row1 = keys.x
-      ? k('fn + x', true, true)
-      : k('⇧ shift', keys.shift, true);
-    var row2 = k('fn', keys.fn) + k('⌃', keys.ctrl) + k('⌥', keys.opt) + k('⌘', keys.cmd);
-    return '<div style=”'
-      + 'background:#D1D1D6;border-radius:8px;padding:6px;'
-      + 'display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box;”>'
-      + '<div style=”display:flex;”>' + row1 + '</div>'
-      + '<div style=”display:flex;gap:4px;”>' + row2 + '</div>'
-      + '</div>';
+    var wrap = document.createElement('div');
+    css(wrap, 'background:#D1D1D6;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box');
+    var r1 = document.createElement('div');
+    css(r1, 'display:flex');
+    r1.appendChild(keys.x ? key('fn + x', true, true) : key('⇧ shift', keys.shift, true));
+    var r2 = document.createElement('div');
+    css(r2, 'display:flex;gap:4px');
+    r2.appendChild(key('fn', keys.fn));
+    r2.appendChild(key('⌃', keys.ctrl));
+    r2.appendChild(key('⌥', keys.opt));
+    r2.appendChild(key('⌘', keys.cmd));
+    wrap.appendChild(r1);
+    wrap.appendChild(r2);
+    return wrap;
   }
 
   var spoken = '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”';
@@ -1542,10 +1550,8 @@ document.addEventListener('DOMContentLoaded', function() {
       d.className = 'mb-dot' + (idx === i ? ' active' : '');
     });
 
-    kbdEl.innerHTML = buildKbd(m.keys, m.color);
-    kbdEl.style.opacity = '1';
-    kbdEl.style.transform = 'none';
-    kbdEl.style.transition = 'none';
+    kbdEl.innerHTML = '';
+    kbdEl.appendChild(buildKbd(m.keys, m.color));
 
     // "Du sprichst" bleibt immer fest stehen
 
