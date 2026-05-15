@@ -143,6 +143,43 @@
       .trial-v2 { grid-template-columns: 1fr; gap: 24px; }
     }
 
+    /* ── Waveform Animation (Du sprichst) ── */
+    .vb-waveform {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 36px;
+      margin-bottom: 6px;
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .vb-waveform.active { opacity: 1; }
+    .vb-waveform span {
+      display: block;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--accent);
+      transform-origin: center;
+      animation: waveBar 0.72s ease-in-out infinite alternate;
+    }
+    .vb-waveform span:nth-child(1)  { height: 8px;  animation-delay: 0.00s; }
+    .vb-waveform span:nth-child(2)  { height: 20px; animation-delay: 0.11s; }
+    .vb-waveform span:nth-child(3)  { height: 13px; animation-delay: 0.05s; }
+    .vb-waveform span:nth-child(4)  { height: 28px; animation-delay: 0.16s; }
+    .vb-waveform span:nth-child(5)  { height: 18px; animation-delay: 0.08s; }
+    .vb-waveform span:nth-child(6)  { height: 32px; animation-delay: 0.13s; }
+    .vb-waveform span:nth-child(7)  { height: 22px; animation-delay: 0.04s; }
+    .vb-waveform span:nth-child(8)  { height: 14px; animation-delay: 0.19s; }
+    .vb-waveform span:nth-child(9)  { height: 26px; animation-delay: 0.07s; }
+    .vb-waveform span:nth-child(10) { height: 10px; animation-delay: 0.14s; }
+    .vb-waveform span:nth-child(11) { height: 18px; animation-delay: 0.02s; }
+    .vb-waveform span:nth-child(12) { height: 8px;  animation-delay: 0.17s; }
+    @keyframes waveBar {
+      from { transform: scaleY(0.25); }
+      to   { transform: scaleY(1); }
+    }
+    .vb-spoken { transition: opacity 0.4s; }
+
     /* ── inline Testi quote over pricing ── */
     .testi-quote-bridge {
       background: var(--bg-2); border: 1px solid var(--line);
@@ -207,6 +244,11 @@
       </div>
       <div class="vb-panel">
         <div class="vb-label">Du sprichst</div>
+        <div class="vb-waveform" id="vb-waveform">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span>
+        </div>
         <div class="vb-spoken" id="vb-spoken"></div>
       </div>
       <div class="vb-panel">
@@ -878,10 +920,11 @@ function startProgress(duration) {
 
 function showMode(idx) {
   var m = MODES[idx];
-  var kbdEl = document.getElementById('vb-keyboard');
-  var nameEl = document.getElementById('vb-mode-name');
+  var kbdEl    = document.getElementById('vb-keyboard');
+  var nameEl   = document.getElementById('vb-mode-name');
   var spokenEl = document.getElementById('vb-spoken');
   var outputEl = document.getElementById('vb-output');
+  var waveEl   = document.getElementById('vb-waveform');
   if (!kbdEl) return;
 
   kbdEl.innerHTML = '';
@@ -889,13 +932,28 @@ function showMode(idx) {
   nameEl.textContent = m.name;
   buildDots(MODES.length, idx);
 
-  spokenEl.textContent = m.spoken;
+  // Reset
+  spokenEl.textContent = '';
+  spokenEl.style.opacity = '0';
   outputEl.textContent = '';
   startProgress(INTERVAL);
 
+  // Phase 1: Waveform – zeigt, dass gesprochen wird
+  if (waveEl) { waveEl.classList.add('active'); }
+
+  // Phase 2 (nach 1,3s): Waveform weg → gesprochener Text einblenden
+  setTimeout(function() {
+    if (waveEl) { waveEl.classList.remove('active'); }
+    setTimeout(function() {
+      spokenEl.textContent = m.spoken;
+      spokenEl.style.opacity = '1';
+    }, 350);
+  }, 1300);
+
+  // Phase 3 (nach 2s): Output tippen
   setTimeout(function() {
     typewrite(outputEl, m.output);
-  }, 600);
+  }, 2000);
 }
 
 function nextMode() {
