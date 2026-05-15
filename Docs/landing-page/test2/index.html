@@ -143,6 +143,31 @@
       .trial-v2 { grid-template-columns: 1fr; gap: 24px; }
     }
 
+    /* ── Step-Badge (1 / 2 / 3) ── */
+    .vb-step {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; font-weight: 600;
+      background: var(--line);
+      color: var(--ink-4);
+      margin-right: 6px;
+      vertical-align: middle;
+      transition: background 0.35s, color 0.35s, transform 0.25s;
+      flex-shrink: 0;
+    }
+    .vb-panel { transition: background 0.35s; }
+    .vb-panel.step-active { background: var(--bg-tint); }
+    .vb-panel.step-active .vb-step {
+      background: var(--accent);
+      color: #fff;
+      transform: scale(1.15);
+    }
+    .vb-panel.step-active .vb-label { color: var(--accent); }
+    .vb-label { transition: color 0.35s; display: flex; align-items: center; }
+
     /* ── Waveform Animation (Du sprichst) ── */
     .vb-waveform {
       display: flex;
@@ -236,14 +261,14 @@
 
     <!-- Rotating Modes Banner -->
     <div class="v-banner">
-      <div class="vb-panel">
-        <div class="vb-label">Shortcut</div>
+      <div class="vb-panel" id="vb-p1">
+        <div class="vb-label"><span class="vb-step">1</span>Shortcut</div>
         <div id="vb-keyboard"></div>
         <div class="vb-mode-name" id="vb-mode-name"></div>
         <div class="vb-dots" id="vb-dots"></div>
       </div>
-      <div class="vb-panel">
-        <div class="vb-label">Du sprichst</div>
+      <div class="vb-panel" id="vb-p2">
+        <div class="vb-label"><span class="vb-step">2</span>Du sprichst</div>
         <div class="vb-waveform" id="vb-waveform">
           <span></span><span></span><span></span><span></span><span></span>
           <span></span><span></span><span></span><span></span><span></span>
@@ -251,8 +276,8 @@
         </div>
         <div class="vb-spoken" id="vb-spoken"></div>
       </div>
-      <div class="vb-panel">
-        <div class="vb-label">AngelWrite schreibt</div>
+      <div class="vb-panel" id="vb-p3">
+        <div class="vb-label"><span class="vb-step">3</span>AngelWrite schreibt</div>
         <div class="vb-output" id="vb-output"></div>
         <div class="vb-progress"><div class="vb-progress-bar" id="vb-progress"></div></div>
       </div>
@@ -921,6 +946,13 @@ function startProgress(duration) {
   }, 50);
 }
 
+function setActivePanel(n) {
+  ['vb-p1', 'vb-p2', 'vb-p3'].forEach(function(id, i) {
+    var p = document.getElementById(id);
+    if (p) p.classList.toggle('step-active', i + 1 === n);
+  });
+}
+
 function showMode(idx) {
   var m = MODES[idx];
   var kbdEl    = document.getElementById('vb-keyboard');
@@ -939,22 +971,30 @@ function showMode(idx) {
   spokenEl.textContent = '';
   spokenEl.style.opacity = '0';
   outputEl.textContent = '';
+  if (waveEl) { waveEl.classList.remove('active'); }
   startProgress(INTERVAL);
 
-  // Phase 1: Waveform + gesprochener Text gleichzeitig
-  if (waveEl) { waveEl.classList.add('active'); }
-  spokenEl.textContent = m.spoken;
-  spokenEl.style.opacity = '1';
+  // Schritt 1: Shortcut-Panel leuchtet auf (sofort)
+  setActivePanel(1);
 
-  // Phase 2 (nach 1,4s): Waveform ausblenden
+  // Schritt 2 (nach 900ms): Du sprichst — Waveform + Text gleichzeitig
+  setTimeout(function() {
+    setActivePanel(2);
+    if (waveEl) { waveEl.classList.add('active'); }
+    spokenEl.textContent = m.spoken;
+    spokenEl.style.opacity = '1';
+  }, 900);
+
+  // Waveform ausblenden (nach 1,8s)
   setTimeout(function() {
     if (waveEl) { waveEl.classList.remove('active'); }
-  }, 1400);
-
-  // Phase 3 (nach 1,8s): Output zeitversetzt tippen
-  setTimeout(function() {
-    typewrite(outputEl, m.output);
   }, 1800);
+
+  // Schritt 3 (nach 2s): AngelWrite schreibt — Output tippen
+  setTimeout(function() {
+    setActivePanel(3);
+    typewrite(outputEl, m.output);
+  }, 2000);
 }
 
 function nextMode() {
