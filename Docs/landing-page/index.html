@@ -566,6 +566,8 @@
       color: var(--text-muted);
     }
     .compare-table td.row-label { font-weight: 600; color: var(--text); background: var(--bg-soft); text-align: left; white-space: nowrap; }
+    .cv { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 22px; line-height: 1; }
+    .cv span { font-size: 12px; line-height: 1.3; text-align: center; }
     .compare-table td.col-angel { background: #F5F2FF; font-weight: 700; color: var(--brand); }
     .compare-table tr:nth-child(even) td.col-angel { background: #EDE9FF; }
     .compare-section-sub {
@@ -1238,52 +1240,52 @@
         <tbody>
           <tr>
             <td class="row-label">⚡ Sofort starten — kein Setup, kein API-Key</td>
-            <td class="col-angel">✅ Ja</td>
-            <td>✅ Ja</td>
-            <td>⚠️ API-Key nötig</td>
-            <td>✅ Ja</td>
+            <td class="col-angel"><div class="cv">✅<span>Ja</span></div></td>
+            <td><div class="cv">✅<span>Ja</span></div></td>
+            <td><div class="cv">⚠️<span>API-Key nötig</span></div></td>
+            <td><div class="cv">✅<span>Ja</span></div></td>
           </tr>
           <tr>
             <td class="row-label">✨ KI verfeinert deinen Text automatisch</td>
-            <td class="col-angel">✅ 5 fertige Modi</td>
-            <td>⚠️ Begrenzt</td>
-            <td>⚠️ Nur mit eigenem API-Key</td>
-            <td>❌ Reines Diktat</td>
+            <td class="col-angel"><div class="cv">✅<span>5 fertige Modi</span></div></td>
+            <td><div class="cv">⚠️<span>Begrenzt</span></div></td>
+            <td><div class="cv">⚠️<span>Nur mit eigenem API-Key</span></div></td>
+            <td><div class="cv">❌<span>Reines Diktat</span></div></td>
           </tr>
           <tr>
             <td class="row-label">🌍 Deutsch sprechen, Englisch schreiben</td>
-            <td class="col-angel">✅ Eingebaut</td>
-            <td>❌</td>
-            <td>⚠️ Mit Setup</td>
-            <td>❌</td>
+            <td class="col-angel"><div class="cv">✅<span>Eingebaut</span></div></td>
+            <td><div class="cv">❌</div></td>
+            <td><div class="cv">⚠️<span>Mit Setup</span></div></td>
+            <td><div class="cv">❌</div></td>
           </tr>
           <tr>
             <td class="row-label">🎛️ Prompt auf deinen Stil anpassen</td>
-            <td class="col-angel">✅ Kundenindividuell-Modus</td>
-            <td>❌</td>
-            <td>❌</td>
-            <td>❌</td>
+            <td class="col-angel"><div class="cv">✅<span>Kundenindividuell-Modus</span></div></td>
+            <td><div class="cv">❌</div></td>
+            <td><div class="cv">❌</div></td>
+            <td><div class="cv">❌</div></td>
           </tr>
           <tr>
             <td class="row-label">📡 Ohne Internet nutzbar</td>
-            <td class="col-angel">⚠️ Lokal-Modus (€19)</td>
-            <td>❌ Nur Cloud</td>
-            <td>✅ Ja</td>
-            <td>✅ Ja</td>
+            <td class="col-angel"><div class="cv">⚠️<span>Lokal-Modus (€19)</span></div></td>
+            <td><div class="cv">❌<span>Nur Cloud</span></div></td>
+            <td><div class="cv">✅<span>Ja</span></div></td>
+            <td><div class="cv">✅<span>Ja</span></div></td>
           </tr>
           <tr>
             <td class="row-label">🔒 Audio wird nicht in die Cloud gesendet</td>
-            <td class="col-angel">⚠️ Im Lokal-Modus</td>
-            <td>❌ US-Server</td>
-            <td>⚠️ Je nach Modus</td>
-            <td>✅ Immer lokal</td>
+            <td class="col-angel"><div class="cv">⚠️<span>Im Lokal-Modus</span></div></td>
+            <td><div class="cv">❌<span>US-Server</span></div></td>
+            <td><div class="cv">⚠️<span>Je nach Modus</span></div></td>
+            <td><div class="cv">✅<span>Immer lokal</span></div></td>
           </tr>
           <tr>
             <td class="row-label">💶 Preis</td>
-            <td class="col-angel" style="font-weight:700;color:var(--brand)">ab €8/Monat · einmalig €149</td>
+            <td class="col-angel" style="font-weight:700;color:var(--brand)">ab €8/Monat<br><span style="font-size:13px">einmalig €149</span></td>
             <td>$144 / Jahr</td>
-            <td>$84.99/Jahr · $249 einmalig</td>
-            <td>$59/Jahr · $149 einmalig</td>
+            <td>$84.99/Jahr<br><span style="font-size:13px">$249 einmalig</span></td>
+            <td>$59/Jahr<br><span style="font-size:13px">$149 einmalig</span></td>
           </tr>
         </tbody>
       </table>
