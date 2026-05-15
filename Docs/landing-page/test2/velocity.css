@@ -176,6 +176,8 @@ section { padding: 96px 0; }
 .price-card.featured .price-list li { color: rgba(255,255,255,0.85); }
 .price-card.featured .price-list li::before { color: #95E0B6; }
 .price-card.featured .price-list .price-section { color: rgba(255,255,255,0.35); border-bottom-color: rgba(255,255,255,0.12); }
+.price-card.featured .btn-primary { background: var(--accent); color: #fff; border-color: var(--accent); }
+.price-card.featured .btn-primary:hover { background: #4444C0; border-color: #4444C0; }
 .price-tag { position: absolute; top: -10px; right: 24px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.02em; }
 .price-name { font-size: 18px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 4px; }
 .price-sub { font-size: 14px; color: var(--ink-3); margin: 0 0 24px; }
