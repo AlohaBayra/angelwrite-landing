@@ -880,8 +880,11 @@ function buildKbd(keys) {
   }
   var r2 = document.createElement('div');
   css(r2, 'display:flex;gap:4px');
-  r2.appendChild(key('fn', keys.fn)); r2.appendChild(key('⌃', keys.ctrl));
-  r2.appendChild(key('⌥', keys.opt)); r2.appendChild(key('⌘', keys.cmd));
+  // Untere Reihe: nur fn markieren — die zweite Taste ist bereits oben groß hervorgehoben
+  r2.appendChild(key('fn', keys.fn));
+  r2.appendChild(key('⌃', false));
+  r2.appendChild(key('⌥', false));
+  r2.appendChild(key('⌘', false));
   wrap.appendChild(r1); wrap.appendChild(r2);
   return wrap;
 }
@@ -938,22 +941,20 @@ function showMode(idx) {
   outputEl.textContent = '';
   startProgress(INTERVAL);
 
-  // Phase 1: Waveform – zeigt, dass gesprochen wird
+  // Phase 1: Waveform + gesprochener Text gleichzeitig
   if (waveEl) { waveEl.classList.add('active'); }
+  spokenEl.textContent = m.spoken;
+  spokenEl.style.opacity = '1';
 
-  // Phase 2 (nach 1,3s): Waveform weg → gesprochener Text einblenden
+  // Phase 2 (nach 1,4s): Waveform ausblenden
   setTimeout(function() {
     if (waveEl) { waveEl.classList.remove('active'); }
-    setTimeout(function() {
-      spokenEl.textContent = m.spoken;
-      spokenEl.style.opacity = '1';
-    }, 350);
-  }, 1300);
+  }, 1400);
 
-  // Phase 3 (nach 2s): Output tippen
+  // Phase 3 (nach 1,8s): Output zeitversetzt tippen
   setTimeout(function() {
     typewrite(outputEl, m.output);
-  }, 2000);
+  }, 1800);
 }
 
 function nextMode() {
