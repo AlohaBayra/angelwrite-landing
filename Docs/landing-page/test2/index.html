@@ -47,7 +47,7 @@
       width: 7px; height: 7px; border-radius: 50%;
       background: var(--line); transition: background 0.3s;
     }
-    .vb-dot.active { background: var(--accent); }
+    .vb-dot.active { background: var(--mode-color, var(--accent)); }
     .vb-spoken {
       font-size: 14px; color: var(--ink-3);
       font-style: italic; line-height: 1.6; flex: 1;
@@ -64,7 +64,7 @@
       border-radius: 999px; overflow: hidden; margin-top: auto;
     }
     .vb-progress-bar {
-      height: 100%; background: var(--accent);
+      height: 100%; background: var(--mode-color, var(--accent));
       width: 0%; transition: width linear;
     }
     @media (max-width: 720px) {
@@ -161,11 +161,11 @@
     .vb-panel { transition: background 0.35s; }
     .vb-panel.step-active { background: var(--bg-tint); }
     .vb-panel.step-active .vb-step {
-      background: var(--accent);
+      background: var(--mode-color, var(--accent));
       color: #fff;
       transform: scale(1.15);
     }
-    .vb-panel.step-active .vb-label { color: var(--accent); }
+    .vb-panel.step-active .vb-label { color: var(--mode-color, var(--accent)); }
     .vb-label { transition: color 0.35s; display: flex; align-items: center; }
 
     /* ── Waveform Animation (Du sprichst) ── */
@@ -856,27 +856,24 @@
 <script>
 /* ── Velocity Modes Banner ── */
 var MODES = [
-  { name: 'Direkt',           keys: { fn: true, shift: true },
+  { name: 'Direkt',           color: '#5B5BD6', keys: { fn: true, shift: true },
     spoken:  '„Meeting morgen 10 Uhr — nicht vergessen."',
     output:  '„Meeting morgen 10 Uhr — nicht vergessen."' },
-  { name: 'Englisch',         keys: { fn: true, ctrl: true },
+  { name: 'Englisch',         color: '#3838BC', keys: { fn: true, ctrl: true },
     spoken:  '„Ich schicke dir gleich den überarbeiteten Entwurf."',
     output:  '"I\'ll send you the revised draft shortly."' },
-  { name: 'Klar',             keys: { fn: true, cmd: true },
+  { name: 'Klar',             color: '#7474E0', keys: { fn: true, cmd: true },
     spoken:  '„Ähm ich find das irgendwie problematisch..."',
     output:  '„Ich halte das für problematisch und schlage vor, wir klären das."' },
-  { name: 'Immer Freundlich', keys: { fn: true, opt: true },
+  { name: 'Immer Freundlich', color: '#9292EA', keys: { fn: true, opt: true },
     spoken:  '„Das ist total unnötig und nervt mich!"',
-    output:  '„Ich würde gerne gemeinsam eine Lösung finden."' },
-  { name: 'Kundenindividuell',keys: { x: true },
-    spoken:  '„Fasse das Meeting auf Englisch zusammen..."',
-    output:  '"Executive Summary: Q3 targets on track."' }
+    output:  '„Ich würde gerne gemeinsam eine Lösung finden."' }
 ];
 var INTERVAL = 4000, TICK = 50, TW = 14;
 var cur = 0, twTimer = null, progTimer = null;
 
-function buildKbd(keys) {
-  var accent = '#5B5BD6';
+function buildKbd(keys, accent) {
+  accent = accent || '#5B5BD6';
   function css(el, s) { el.setAttribute('style', s); }
   function key(label, active, wide) {
     var el = document.createElement('div');
@@ -962,8 +959,18 @@ function showMode(idx) {
   var waveEl   = document.getElementById('vb-waveform');
   if (!kbdEl) return;
 
+  // Farbe des Modus ins Banner-Element schreiben (Waveform + Dots + Badge + Progress)
+  var banner = document.querySelector('.v-banner');
+  if (banner) banner.style.setProperty('--mode-color', m.color);
+  // Waveform-Stäbe direkt umfärben
+  if (waveEl) {
+    Array.prototype.forEach.call(waveEl.querySelectorAll('span'), function(s) {
+      s.style.background = m.color;
+    });
+  }
+
   kbdEl.innerHTML = '';
-  kbdEl.appendChild(buildKbd(m.keys));
+  kbdEl.appendChild(buildKbd(m.keys, m.color));
   nameEl.textContent = m.name;
   buildDots(MODES.length, idx);
 
