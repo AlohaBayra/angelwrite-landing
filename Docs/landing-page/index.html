@@ -4,1241 +4,557 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AngelWrite – Diktiere. Deine Worte erscheinen.</title>
-  <meta name="description" content="AngelWrite ist die macOS-App für Push-to-Talk-Diktat. Sprich – deine Worte erscheinen sofort, klar und auf den Punkt. Für Führungskräfte, Coaches und Unternehmer." />
+  <meta name="description" content="AngelWrite ist die macOS-App für Push-to-Talk-Diktat. Sprich – deine Worte erscheinen sofort, klar und auf den Punkt." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="velocity.css" />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --brand: #6B4FE0;
-      --brand-dark: #5038C0;
-      --brand-light: #EDE9FF;
-      --text: #1A1A2E;
-      --text-muted: #6B7280;
-      --bg: #FFFFFF;
-      --bg-soft: #F9F7FF;
-      --border: #E5E7EB;
-      --gold: #F59E0B;
-      --radius: 16px;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* NAV */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
-      padding: 0 24px;
-      height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-    }
-    .nav-logo {
-      display: flex; align-items: center; gap: 10px;
-      font-weight: 700; font-size: 18px; color: var(--text);
-      text-decoration: none;
-    }
-    .nav-logo span { color: var(--brand); }
-    .nav-cta {
-      background: var(--brand); color: white;
-      padding: 8px 20px; border-radius: 8px;
-      font-weight: 600; font-size: 14px;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-    .nav-cta:hover { background: var(--brand-dark); }
-
-    /* HERO */
-    .hero {
-      padding: 140px 24px 80px;
-      text-align: center;
-      background: linear-gradient(180deg, var(--bg-soft) 0%, var(--bg) 100%);
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 6px;
-      background: var(--brand-light); color: var(--brand);
-      padding: 6px 14px; border-radius: 100px;
-      font-size: 13px; font-weight: 600;
-      margin-bottom: 28px;
-    }
-    .hero h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -1.5px;
-      margin-bottom: 24px;
-      max-width: 820px;
-      margin-left: auto; margin-right: auto;
-    }
-    .hero h1 em { color: var(--brand); font-style: normal; }
-    .hero p {
-      font-size: 20px; color: var(--text-muted);
-      max-width: 560px; margin: 0 auto 40px;
-      line-height: 1.65;
-    }
-    .hero-cta-group {
-      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
-      margin-bottom: 16px;
-    }
-    .btn-primary {
-      background: var(--brand); color: white;
-      padding: 16px 32px; border-radius: 12px;
-      font-weight: 700; font-size: 17px;
-      text-decoration: none; display: inline-block;
-      transition: all 0.2s; box-shadow: 0 4px 20px rgba(107,79,224,0.3);
-    }
-    .btn-primary:hover { background: var(--brand-dark); transform: translateY(-1px); }
-    .btn-secondary {
-      background: white; color: var(--brand);
-      border: 2px solid var(--brand);
-      padding: 14px 28px; border-radius: 12px;
-      font-weight: 600; font-size: 16px;
-      text-decoration: none; display: inline-block;
-      transition: all 0.2s;
-    }
-    .btn-secondary:hover { background: var(--brand-light); }
-    .hero-meta {
-      font-size: 13px; color: var(--text-muted);
-    }
-    .hero-meta strong { color: var(--brand); }
-
-    /* STAT STRIP */
-    .stat-strip {
-      display: flex; justify-content: center; gap: 0;
-      max-width: 680px; margin: 0 auto;
-      border: 1px solid var(--border); border-radius: 16px;
-      overflow: hidden; background: white;
-    }
-    .stat-item {
-      flex: 1; padding: 20px 16px; text-align: center;
-      border-right: 1px solid var(--border);
-    }
-    .stat-item:last-child { border-right: none; }
-    .stat-val {
-      font-size: 32px; font-weight: 800; color: var(--brand);
-      line-height: 1; margin-bottom: 5px; letter-spacing: -1px;
-    }
-    .stat-label { font-size: 13px; color: var(--text); font-weight: 600; margin-bottom: 3px; }
-    .stat-source { font-size: 11px; color: var(--text-muted); }
-    .hero-trust {
-      font-size: 12px; color: var(--text-muted);
-      margin-top: 14px;
-      display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;
-    }
-    .hero-trust span { display: flex; align-items: center; gap: 5px; }
-
-    /* SOCIAL PROOF MARQUEE */
-    .social-proof { background: white; padding: 40px 0 0; }
-    .social-proof-label {
-      text-align: center; font-size: 13px; font-weight: 600;
-      color: var(--brand); text-transform: uppercase; letter-spacing: 0.08em;
-      margin-bottom: 28px;
-    }
-    .marquee-wrap {
-      overflow: hidden;
-      width: 100%;
-      padding: 4px 0 48px;
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
-      mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
-    }
-    .marquee-track {
-      display: flex;
-      flex-wrap: nowrap;
-      gap: 16px;
-      animation: marquee 55s linear infinite;
-      width: max-content;
-      will-change: transform;
-    }
-    .marquee-track:hover { animation-play-state: paused; }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-    .m-card {
-      background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 14px; padding: 22px 24px;
-      width: 300px; flex-shrink: 0;
-    }
-    .m-stars { color: var(--gold); font-size: 13px; margin-bottom: 10px; letter-spacing: 2px; }
-    .m-text {
-      font-size: 14px; color: var(--text); line-height: 1.75;
-      font-style: italic; margin-bottom: 14px;
-    }
-    .m-author { font-size: 12px; color: var(--text-muted); font-weight: 600; }
-
-    /* DEMO TABS */
-    .demo-wrap {
-      max-width: 740px; margin: 0 auto;
-      background: var(--bg-soft); border: 1px solid var(--border);
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 4px 24px rgba(107,79,224,0.08);
-    }
-    .demo-input {
-      padding: 22px 28px; border-bottom: 1px solid var(--border); background: white;
-    }
-    .demo-input-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;
-    }
-    .demo-input-text {
-      font-size: 15px; color: var(--text); line-height: 1.75; font-style: italic;
-    }
-    .demo-tabs {
-      display: flex; border-bottom: 1px solid var(--border);
-      overflow-x: auto; background: var(--bg-soft);
-    }
-    .demo-tab {
-      padding: 11px 18px; border: none; background: none;
-      font-size: 13px; font-weight: 600; color: var(--text-muted);
-      cursor: pointer; white-space: nowrap;
-      border-bottom: 3px solid transparent; transition: all 0.2s;
-      font-family: inherit;
-    }
-    .demo-tab:hover { background: white; color: var(--text); }
-    .demo-tab.active { color: var(--tab-color, var(--brand)); background: var(--bg); border-bottom-color: var(--tab-color, var(--brand)); }
-    .demo-output { display: none; padding: 24px 28px; }
-    .demo-output.active { display: block; }
-    .demo-output-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
-      text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px;
-    }
-    .demo-output-text {
-      font-size: 16px; color: var(--text); line-height: 1.75;
-      margin-bottom: 14px; font-weight: 500;
-    }
-    .demo-output-note {
-      font-size: 13px; color: var(--text-muted);
-      background: white; border: 1px solid var(--border);
-      border-radius: 8px; padding: 10px 14px; line-height: 1.6;
-    }
-
-    /* PRICE BADGE IN HERO */
-    .price-badge {
-      display: inline-flex; align-items: baseline; gap: 6px;
-      background: white; border: 2px solid var(--brand-light);
-      border-radius: 12px; padding: 12px 20px;
-      margin-bottom: 32px; box-shadow: 0 2px 12px rgba(107,79,224,0.1);
-    }
-    .price-badge .intro { font-size: 13px; color: var(--text-muted); }
-    .price-badge .amount { font-size: 28px; font-weight: 800; color: var(--brand); }
-    .price-badge .period { font-size: 13px; color: var(--text-muted); }
-    .price-badge .later { font-size: 12px; color: var(--text-muted); text-decoration: line-through; }
-
-    /* HOW IT WORKS */
-    .section { padding: 80px 24px; max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      font-size: 13px; font-weight: 600; color: var(--brand);
-      text-transform: uppercase; letter-spacing: 0.08em;
-      margin-bottom: 12px; text-align: center;
-    }
-    .section-title {
-      font-size: clamp(28px, 4vw, 42px); font-weight: 800;
-      text-align: center; letter-spacing: -0.5px;
-      margin-bottom: 16px;
-    }
-    .section-sub {
-      font-size: 18px; color: var(--text-muted);
-      text-align: center; max-width: 540px;
-      margin: 0 auto 56px;
-    }
-
-    /* STEPS */
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 32px;
-    }
-    .step {
-      background: var(--bg-soft);
-      border-radius: var(--radius);
-      padding: 32px;
-      border: 1px solid var(--border);
-    }
-    .step-num {
-      width: 40px; height: 40px; border-radius: 10px;
-      background: var(--brand); color: white;
-      font-weight: 800; font-size: 18px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 16px;
-    }
-    .step h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
-    .step p { font-size: 15px; color: var(--text-muted); line-height: 1.6; }
-
-    /* MODES */
-    .modes {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .mode {
-      border-radius: var(--radius);
-      padding: 32px;
-      border: 1px solid var(--border);
-      transition: box-shadow 0.2s;
-    }
-    .mode:hover { box-shadow: 0 8px 32px rgba(0,0,0,0.08); }
-    .mode-key {
-      display: inline-block;
-      background: var(--text); color: white;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 12px; font-weight: 600;
-      padding: 4px 10px; border-radius: 6px;
-      margin-bottom: 16px;
-    }
-    .mode.raw { background: #F8FAFF; }
-    .mode.nett { background: #F0FDF4; border-color: #BBF7D0; }
-    .mode.wut { background: #FFF7ED; border-color: #FED7AA; }
-    .mode.translate { background: #EFF6FF; border-color: #BFDBFE; }
-    .mode.format { background: #F0FDFA; border-color: #99F6E4; }
-    .mode-soon {
-      display: inline-block; margin-top: 14px;
-      background: var(--brand-light); color: var(--brand);
-      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 100px;
-    }
-    .mode h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
-    .mode p { font-size: 15px; color: var(--text-muted); }
-    .mode .example {
-      margin-top: 16px; padding: 12px 16px;
-      background: rgba(255,255,255,0.7);
-      border-radius: 10px; border: 1px solid var(--border);
-      font-size: 14px; color: var(--text);
-      font-style: italic;
-    }
-
-    /* MODE GROUP HEADERS */
-    .mode-group-header {
-      display: flex; align-items: center; gap: 10px;
-      margin: 40px 0 20px;
-      padding: 12px 18px;
-      background: var(--bg-soft);
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      font-size: 14px; font-weight: 600; color: var(--text-muted);
-    }
-    .mode-group-header.offline {
-      background: #F0FDF4; border-color: #BBF7D0; color: #166534;
-    }
-    .modes-offline {
-      grid-template-columns: 1fr;
-      max-width: 460px;
-    }
-
-    /* FOR WHO */
-    .for-who-bg { background: var(--bg-soft); }
-    .personas {
-      display: flex; flex-wrap: wrap; gap: 12px;
-      justify-content: center;
-    }
-    .persona {
-      background: white; border: 1px solid var(--border);
-      border-radius: 100px; padding: 10px 20px;
-      font-size: 15px; font-weight: 500;
-    }
-
-    /* BENEFITS */
-    .benefits {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 24px;
-    }
-    .benefit {
-      display: flex; gap: 14px; align-items: flex-start;
-    }
-    .benefit-icon {
-      width: 40px; height: 40px; flex-shrink: 0;
-      background: var(--brand-light); color: var(--brand);
-      border-radius: 10px; display: flex;
-      align-items: center; justify-content: center;
-      font-size: 20px;
-    }
-    .benefit h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
-    .benefit p { font-size: 14px; color: var(--text-muted); }
-
-    /* PRICING GRID — 3 TIER */
-    /* TRIAL CAPTURE CARD */
-    .trial-capture {
-      max-width: 780px; margin: 0 auto 48px;
-      border: 2px solid var(--brand);
-      border-radius: 24px; overflow: hidden;
-      box-shadow: 0 8px 48px rgba(107,79,224,0.14);
-    }
-    .trial-capture-header {
-      background: var(--brand); padding: 20px 36px;
-      display: flex; align-items: center; justify-content: space-between;
-      flex-wrap: wrap; gap: 12px;
-    }
-    .trial-capture-header h3 {
-      font-size: 20px; font-weight: 800; color: white; margin: 0;
-    }
-    .trial-capture-header .trial-pills {
-      display: flex; gap: 8px; flex-wrap: wrap;
-    }
-    .trial-pill {
-      background: rgba(255,255,255,0.2); color: white;
-      font-size: 12px; font-weight: 600; padding: 4px 12px;
-      border-radius: 100px;
-    }
-    .trial-capture-body {
-      background: white; padding: 28px 36px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 32px;
-      align-items: center;
-    }
-    @media (max-width: 620px) {
-      .trial-capture-body { grid-template-columns: 1fr; gap: 20px; }
-      .trial-capture-header { padding: 16px 20px; }
-      .trial-capture-body { padding: 20px; }
-    }
-    .trial-price-block { text-align: center; }
-    .trial-price-block .tp-price {
-      font-size: 72px; font-weight: 800; color: var(--brand);
-      line-height: 1; letter-spacing: -2px;
-    }
-    .trial-price-block .tp-label {
-      font-size: 14px; color: var(--text-muted); margin-top: 4px;
-    }
-    .trial-price-block .tp-features {
-      list-style: none; margin-top: 16px; text-align: left;
-    }
-    .trial-price-block .tp-features li {
-      font-size: 13px; color: var(--text); padding: 4px 0;
-      display: flex; gap: 8px; align-items: flex-start;
-    }
-    .trial-price-block .tp-features .ck { color: #10B981; font-weight: 700; }
-    .trial-form-block {}
-    .trial-form-block label {
-      display: block; font-size: 13px; font-weight: 600;
-      color: var(--text); margin-bottom: 8px;
-    }
-    .trial-email-input {
-      width: 100%; padding: 13px 16px; border-radius: 10px;
-      border: 2px solid var(--border); font-size: 15px;
-      font-family: inherit; color: var(--text);
-      transition: border-color 0.2s; outline: none;
-      margin-bottom: 12px;
-    }
-    .trial-email-input:focus { border-color: var(--brand); }
-    .trial-submit {
-      width: 100%; background: var(--brand); color: white;
-      border: none; border-radius: 10px; padding: 15px;
-      font-size: 16px; font-weight: 700; font-family: inherit;
-      cursor: pointer; transition: background 0.2s;
-    }
-    .trial-submit:hover { background: var(--brand-dark); }
-    .trial-privacy {
-      font-size: 11px; color: var(--text-muted);
-      margin-top: 10px; line-height: 1.6;
-    }
-    .trial-success {
-      display: none; text-align: center; padding: 20px 0;
-    }
-    .trial-success .ts-icon { font-size: 40px; margin-bottom: 10px; }
-    .trial-success h4 { font-size: 18px; font-weight: 700; color: var(--brand); margin-bottom: 8px; }
-    .trial-success p { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; }
-    .trial-download-btn {
-      display: inline-block; background: var(--brand); color: white;
-      padding: 12px 28px; border-radius: 10px; font-weight: 700;
-      font-size: 15px; text-decoration: none;
-      transition: background 0.2s;
-    }
-    .trial-download-btn:hover { background: var(--brand-dark); }
-    .pricing-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 24px;
-      align-items: start;
-    }
-    .pricing-tier {
-      background: white;
-      border: 2px solid var(--border);
-      border-radius: 24px;
-      padding: 40px 32px;
-      position: relative;
-      transition: box-shadow 0.2s;
-    }
-    .pricing-tier:hover { box-shadow: 0 8px 40px rgba(0,0,0,0.08); }
-    .pricing-tier.featured {
-      border-color: var(--brand);
-      box-shadow: 0 8px 48px rgba(107,79,224,0.18);
-    }
-    .tier-badge {
-      position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
-      background: var(--gold); color: white;
-      padding: 6px 20px; border-radius: 100px;
-      font-size: 13px; font-weight: 700;
-      white-space: nowrap;
-    }
-    .tier-name {
-      font-size: 12px; font-weight: 700; color: var(--text-muted);
-      text-transform: uppercase; letter-spacing: 0.1em;
-      margin-bottom: 10px;
-    }
-    .tier-price {
-      font-size: 52px; font-weight: 800; color: var(--text);
-      line-height: 1; margin-bottom: 4px;
-    }
-    .tier-price sup { font-size: 22px; vertical-align: top; padding-top: 10px; color: var(--text-muted); font-weight: 600; }
-    .pricing-tier.featured .tier-price { color: var(--brand); }
-    .tier-period { font-size: 14px; color: var(--text-muted); margin-bottom: 4px; }
-    .tier-monthly { font-size: 13px; color: var(--brand); font-weight: 600; margin-bottom: 24px; min-height: 20px; }
-    .tier-tagline { font-size: 17px; font-weight: 700; margin-bottom: 6px; }
-    .tier-desc { font-size: 14px; color: var(--text-muted); margin-bottom: 24px; line-height: 1.55; }
-    .tier-features {
-      list-style: none; margin-bottom: 32px;
-    }
-    .tier-features li {
-      display: flex; gap: 10px; align-items: flex-start;
-      padding: 7px 0; border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-    .tier-features li:last-child { border-bottom: none; }
-    .tier-features .check { color: #10B981; font-weight: 700; flex-shrink: 0; }
-    .tier-features .minus { color: #D1D5DB; flex-shrink: 0; }
-    .tier-section-label {
-      display: block; list-style: none;
-      font-size: 11px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.6px; color: var(--text-muted);
-      padding: 10px 0 6px; border-bottom: 1px solid var(--border);
-      margin-top: 4px;
-    }
-    .tier-cta {
-      display: block; width: 100%;
-      background: var(--bg-soft); color: var(--text);
-      border: 2px solid var(--border);
-      padding: 15px; border-radius: 12px;
-      font-weight: 700; font-size: 15px;
-      text-decoration: none; text-align: center;
-      transition: all 0.2s;
-    }
-    .tier-cta:hover { background: var(--border); }
-    .pricing-tier.featured .tier-cta {
-      background: var(--brand); color: white;
-      border-color: var(--brand);
-      box-shadow: 0 4px 20px rgba(107,79,224,0.3);
-      font-size: 16px; padding: 17px;
-    }
-    .pricing-tier.featured .tier-cta:hover { background: var(--brand-dark); transform: translateY(-1px); }
-    .tier-note {
-      text-align: center; font-size: 12px; color: var(--text-muted);
-      margin-top: 12px;
-    }
-    @media (max-width: 960px) {
-      .pricing-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
-    }
-
-    /* FAQ */
-    .faq { max-width: 680px; margin: 0 auto; }
-    .faq-item {
-      border-bottom: 1px solid var(--border);
-      padding: 24px 0;
-    }
-    .faq-q { font-weight: 700; font-size: 17px; margin-bottom: 10px; }
-    .faq-a { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
-
-    /* FOOTER */
-    footer {
-      background: var(--text); color: #9CA3AF;
-      padding: 40px 24px;
-      text-align: center;
-      font-size: 14px;
-    }
-    footer a { color: #9CA3AF; text-decoration: underline; }
-    footer a:hover { color: white; }
-    footer .footer-links { display: flex; gap: 24px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
-
-    /* DIVIDER */
-    .divider { border: none; border-top: 1px solid var(--border); }
-
-    /* COMPARE TABLE */
-    .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-    .compare-table { width: 100%; border-collapse: collapse; min-width: 560px; }
-    .compare-table th {
-      background: var(--bg-soft); padding: 14px 16px;
-      font-size: 14px; font-weight: 700; text-align: center;
-      border: 1px solid var(--border); color: var(--text);
-    }
-    .compare-table th.col-angel { background: var(--brand); color: white; }
-    .compare-table td {
-      padding: 12px 16px; border: 1px solid var(--border);
-      font-size: 14px; text-align: center; vertical-align: middle;
-      color: var(--text-muted);
-    }
-    .compare-table td.row-label { font-weight: 600; color: var(--text); background: var(--bg-soft); text-align: left; white-space: nowrap; }
-    .cv { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 22px; line-height: 1; }
-    .cv span { font-size: 12px; line-height: 1.3; text-align: center; }
-    .compare-table td.col-angel { background: #F5F2FF; font-weight: 700; color: var(--brand); }
-    .compare-table tr:nth-child(even) td.col-angel { background: #EDE9FF; }
-    .compare-section-sub {
-      font-size: 22px; font-weight: 800; text-align: center;
-      color: var(--text-muted); margin-bottom: 40px; letter-spacing: -0.3px;
-    }
-    .compare-section-sub strong { color: var(--text); }
-
-    /* FEATURE TILES */
-    .feature-tiles {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 24px;
-    }
-    .feature-tile {
-      background: white; border: 1px solid var(--border);
-      border-radius: var(--radius); padding: 32px;
-      transition: box-shadow 0.2s, transform 0.2s;
-    }
-    .feature-tile:hover { box-shadow: 0 8px 32px rgba(107,79,224,0.12); transform: translateY(-2px); }
-    .feature-tile .tile-icon { font-size: 36px; margin-bottom: 16px; display: block; }
-    .feature-tile h3 { font-size: 18px; font-weight: 700; margin-bottom: 10px; line-height: 1.3; }
-    .feature-tile p { font-size: 15px; color: var(--text-muted); line-height: 1.65; }
-    .feature-tile .tile-badge {
-      display: inline-block; margin-top: 14px;
-      background: var(--brand-light); color: var(--brand);
-      font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 100px;
-    }
-
-    /* MODES BANNER */
-    .modes-banner {
+    /* ── Velocity Banner (rotierendes Modus-Panel) ── */
+    .v-banner {
       display: grid;
       grid-template-columns: 220px 1fr 1fr;
-      border-radius: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
       overflow: hidden;
-      border: 1px solid var(--border);
-      max-width: 960px;
-      margin: 0 auto 40px;
+      margin: 56px auto 0;
+      max-width: 900px;
+      background: var(--bg);
+      box-shadow: var(--shadow-lg);
       text-align: left;
-      box-shadow: 0 4px 32px rgba(107,79,224,0.10);
-      height: 280px;
     }
-    .mb-panel {
-      padding: 24px 28px 24px;
+    .vb-panel {
+      padding: 24px 20px;
+      border-right: 1px solid var(--line);
+      min-height: 200px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-start;
-      overflow: hidden;
-      height: 280px;
+      gap: 10px;
     }
-    .mb-content {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      overflow: hidden;
+    .vb-panel:last-child { border-right: 0; }
+    .vb-label {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 500;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--ink-4); margin-bottom: 2px;
     }
-    .mb-content-center {
-      align-items: center;
-      text-align: center;
+    .vb-mode-name {
+      font-size: 17px; font-weight: 600;
+      color: var(--ink); letter-spacing: -0.015em;
     }
-    .mb-left {
-      background: var(--bg-soft);
-      border-right: 1px solid var(--border);
-      align-items: center;
-      text-align: center;
+    .vb-dots { display: flex; gap: 5px; margin-top: auto; }
+    .vb-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--line); transition: background 0.3s;
     }
-    .mb-mid {
-      background: #F4F3F8;
-      border-right: 1px solid var(--border);
+    .vb-dot.active { background: var(--mode-color, var(--accent)); }
+    .vb-spoken {
+      font-size: 14px; color: var(--ink-3);
+      font-style: italic; line-height: 1.6; flex: 1;
     }
-    .mb-right {
-      background: white;
-      position: relative;
-      overflow: hidden;
+    .vb-output {
+      font-size: 14px; color: var(--ink); font-weight: 500;
+      line-height: 1.6; flex: 1;
+      background: var(--accent-3);
+      border-radius: var(--r-sm); padding: 10px 12px;
+      min-height: 72px;
     }
-    .mb-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 16px;
+    .vb-progress {
+      height: 2px; background: var(--line-2);
+      border-radius: 999px; overflow: hidden; margin-top: auto;
     }
-    .mb-shortcut {
-      font-size: 28px;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 10px;
-      transition: color 0.3s;
-    }
-    .mb-mode-name {
-      font-size: 12px;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 100px;
-      display: inline-block;
-      transition: background 0.3s, color 0.3s;
-    }
-    .mb-spoken {
-      font-size: 13px;
-      line-height: 1.75;
-      color: var(--text);
-      font-style: italic;
-      border-left: 2px solid var(--border);
-      padding-left: 14px;
-    }
-    .mb-output {
-      font-size: 13px;
-      line-height: 1.75;
-      color: var(--text);
-      min-height: 88px;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      white-space: pre-line;
-    }
-    .mb-dots {
-      display: flex;
-      gap: 6px;
-      margin-top: 20px;
-      justify-content: center;
-    }
-    .mb-dot {
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      background: var(--border);
-      cursor: pointer;
-      transition: background 0.2s, transform 0.2s;
-      border: none;
-    }
-    .mb-dot.active { transform: scale(1.5); }
-    .mb-progress {
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 3px;
-      transition: width 0.08s linear;
-      border-radius: 0 2px 0 0;
+    .vb-progress-bar {
+      height: 100%; background: var(--mode-color, var(--accent));
+      width: 0%; transition: width linear;
     }
     @media (max-width: 720px) {
-      .modes-banner { grid-template-columns: 1fr; }
-      .mb-left { border-right: none; border-bottom: 1px solid var(--border); flex-direction: row; gap: 12px; padding: 16px 20px; }
-      .mb-mid { display: none; }
+      .v-banner { grid-template-columns: 1fr; }
+      .vb-panel { border-right: 0; border-bottom: 1px solid var(--line); min-height: auto; }
+      .vb-panel:last-child { border-bottom: 0; }
     }
 
-    /* MODES TIER LAYOUT */
-    .mtl {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-      grid-template-rows: auto 1fr;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+    /* ── How It Works ── */
+    .hiw-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
     }
-    .mtl-tier {
-      padding: 14px 16px;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
+    .hiw-card {
+      background: var(--bg); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: 28px 24px;
     }
-    .mtl-tier-lokal {
-      grid-column: 1;
-      background: #F3F4F6;
-      border-right: 2px solid var(--border);
+    .hiw-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px; font-weight: 500;
+      color: var(--accent); margin-bottom: 14px; line-height: 1;
     }
-    .mtl-tier-pro {
-      grid-column: 2 / 5;
-      background: var(--brand-light);
-      border-right: 2px solid var(--border);
+    .hiw-card h3 {
+      font-size: 17px; font-weight: 600; letter-spacing: -0.015em;
+      margin: 0 0 8px; color: var(--ink);
     }
-    .mtl-tier-adv {
-      grid-column: 5;
-      background: #FEF3C7;
+    .hiw-card p { font-size: 14px; color: var(--ink-3); margin: 0; line-height: 1.55; }
+
+    /* ── Benefits ── */
+    .ben-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
     }
-    .mtl-tier-name {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 2px;
+    .ben-item {
+      padding: 4px 0;
     }
-    .mtl-tier-lokal .mtl-tier-name { color: #374151; }
-    .mtl-tier-pro .mtl-tier-name { color: var(--brand); }
-    .mtl-tier-adv .mtl-tier-name { color: #92400E; }
-    .mtl-tier-price {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--text-muted);
+    .ben-icon { font-size: 22px; margin-bottom: 10px; }
+    .ben-item h4 {
+      font-size: 15px; font-weight: 600; margin: 0 0 6px;
+      color: var(--ink); letter-spacing: -0.010em;
     }
-    .mtl-tier-pro .mtl-tier-price { color: var(--brand); opacity: 0.8; }
-    .mtl-tier-adv .mtl-tier-price { color: #92400E; opacity: 0.8; }
-    .mcard {
-      padding: 24px 18px;
-      border-right: 1px solid var(--border);
+    .ben-item p { font-size: 14px; color: var(--ink-3); margin: 0; line-height: 1.55; }
+
+    /* ── Stanford Badge in Stats ── */
+    .stat-source {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 10px; font-weight: 500;
+      color: var(--accent); letter-spacing: 0.04em;
+      text-transform: uppercase; margin-top: 4px;
+    }
+
+    /* ── Trial block (nach Pricing) ── */
+    .trial-v2 {
+      margin-top: 24px;
+      background: var(--bg-tint);
+      border: 1px solid rgba(91,91,214,0.20);
+      border-radius: var(--r-lg);
+      padding: 28px 32px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start;
+    }
+    .trial-v2-left h3 {
+      font-size: 20px; font-weight: 600; letter-spacing: -0.020em;
+      margin: 0 0 6px; color: var(--ink);
+    }
+    .trial-v2-left p { font-size: 14px; color: var(--ink-3); margin: 0 0 18px; }
+    .trial-v2-price { font-size: 44px; font-weight: 600; letter-spacing: -0.035em; color: var(--ink); line-height: 1; }
+    .trial-v2-sub { font-size: 13px; color: var(--ink-4); margin-bottom: 18px; }
+    .trial-v2-features { list-style: none; padding: 0; margin: 0; font-size: 14px; }
+    .trial-v2-features li { padding: 4px 0 4px 20px; position: relative; color: var(--ink-2); }
+    .trial-v2-features li::before { content: "✓"; position: absolute; left: 0; color: var(--green); font-weight: 600; }
+    .trial-v2-features li.hint { padding-left: 0; color: var(--ink-4); font-size: 13px; }
+    .trial-v2-features li.hint::before { display: none; }
+    .trial-v2-email { width: 100%; padding: 11px 14px; border: 1px solid var(--line); border-radius: var(--r-sm); font-size: 14px; font-family: 'Inter', sans-serif; color: var(--ink); outline: none; transition: border-color .15s; margin-bottom: 10px; }
+    .trial-v2-email:focus { border-color: var(--accent); }
+    .trial-v2-privacy { font-size: 12px; color: var(--ink-4); margin: 8px 0 0; }
+    @media (max-width: 768px) {
+      .hiw-grid, .ben-grid { grid-template-columns: 1fr; }
+      .trial-v2 { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* ── Modi-Reihen: individuelle Farbe pro Modus ── */
+    .mode-row { --row-color: var(--ink-4); }
+    .mode-num  { color: var(--row-color) !important; }
+    .mode-key  { border-color: var(--row-color) !important; color: var(--row-color) !important; }
+    .mode-body h3 { color: var(--row-color) !important; }
+
+    /* ── Step-Badge (1 / 2 / 3) ── */
+    .vb-step {
+      display: inline-flex;
+      align-items: center; justify-content: center;
+      width: 17px; height: 17px;
+      border-radius: 50%;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9px; font-weight: 600;
+      background: var(--line);
+      color: var(--ink-4);
+      margin-right: 6px;
+      vertical-align: middle;
+      transition: background 0.35s, color 0.35s, transform 0.25s;
+      flex-shrink: 0;
+    }
+    .vb-panel { transition: background 0.35s; }
+    .vb-panel.step-active { background: var(--bg-tint); }
+    .vb-panel.step-active .vb-step {
+      background: var(--mode-color, var(--accent));
+      color: #fff;
+      transform: scale(1.15);
+    }
+    .vb-panel.step-active .vb-label { color: var(--mode-color, var(--accent)); }
+    .vb-label { transition: color 0.35s; display: flex; align-items: center; }
+
+    /* ── Waveform Animation (Du sprichst) ── */
+    .vb-waveform {
       display: flex;
-      flex-direction: column;
-      gap: 8px;
+      align-items: center;
+      gap: 3px;
+      height: 36px;
+      margin-bottom: 6px;
+      opacity: 0;
+      transition: opacity 0.35s;
     }
-    .mcard:last-child { border-right: none; }
-    .mcard-2 { border-left: 2px solid var(--border); }
-    .mcard-5 { border-left: 2px solid var(--border); }
-    .mcard-key {
-      display: inline-block;
-      background: var(--text);
-      color: white;
-      font-family: 'SF Mono', 'Fira Code', monospace;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 3px 8px;
-      border-radius: 5px;
-      width: fit-content;
+    .vb-waveform.active { opacity: 1; }
+    .vb-waveform span {
+      display: block;
+      width: 3px;
+      border-radius: 3px;
+      background: var(--accent);
+      transform-origin: center;
+      animation: waveBar 0.72s ease-in-out infinite alternate;
     }
-    .mcard-1 .mcard-key { background: #374151; }
-    .mcard-2 .mcard-key { background: #1D4ED8; }
-    .mcard-3 .mcard-key { background: #166534; }
-    .mcard-4 .mcard-key { background: #92400E; }
-    .mcard-5 .mcard-key { background: var(--brand); }
-    .mcard-icon { font-size: 22px; line-height: 1; }
-    .mcard-title {
-      font-size: 15px;
-      font-weight: 700;
-      color: var(--text);
-      line-height: 1.2;
+    .vb-waveform span:nth-child(1)  { height: 8px;  animation-delay: 0.00s; }
+    .vb-waveform span:nth-child(2)  { height: 20px; animation-delay: 0.11s; }
+    .vb-waveform span:nth-child(3)  { height: 13px; animation-delay: 0.05s; }
+    .vb-waveform span:nth-child(4)  { height: 28px; animation-delay: 0.16s; }
+    .vb-waveform span:nth-child(5)  { height: 18px; animation-delay: 0.08s; }
+    .vb-waveform span:nth-child(6)  { height: 32px; animation-delay: 0.13s; }
+    .vb-waveform span:nth-child(7)  { height: 22px; animation-delay: 0.04s; }
+    .vb-waveform span:nth-child(8)  { height: 14px; animation-delay: 0.19s; }
+    .vb-waveform span:nth-child(9)  { height: 26px; animation-delay: 0.07s; }
+    .vb-waveform span:nth-child(10) { height: 10px; animation-delay: 0.14s; }
+    .vb-waveform span:nth-child(11) { height: 18px; animation-delay: 0.02s; }
+    .vb-waveform span:nth-child(12) { height: 8px;  animation-delay: 0.17s; }
+    @keyframes waveBar {
+      from { transform: scaleY(0.25); }
+      to   { transform: scaleY(1); }
     }
-    .mcard-desc {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.6;
-      flex: 1;
-    }
-    .mcard-example {
-      font-size: 12px;
-      font-style: italic;
-      color: var(--text-muted);
-      background: var(--bg-soft);
-      border-radius: 8px;
-      padding: 8px 10px;
-      border: 1px solid var(--border);
-      line-height: 1.5;
-    }
-    .mcard-1 { background: #FAFAFA; }
-    .mcard-2 { background: #EFF6FF; }
-    .mcard-3 { background: #F0FDF4; }
-    .mcard-4 { background: #FFFBEB; }
-    .mcard-5 { background: #F5F3FF; }
-    @media (max-width: 860px) {
-      .mtl { grid-template-columns: 1fr 1fr; grid-template-rows: none; }
-      .mtl-tier { display: none; }
-      .mcard { border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-      .mcard-2 { border-left: 1px solid var(--border); }
-      .mcard-5 { border-left: 1px solid var(--border); }
-    }
+    .vb-spoken { transition: opacity 0.4s; }
 
-    @media (max-width: 600px) {
-      .hero { padding: 120px 16px 60px; }
-      .pricing-tier { padding: 32px 24px; }
-      .tier-price { font-size: 44px; }
-      .mtl { grid-template-columns: 1fr; }
+    /* ── inline Testi quote over pricing ── */
+    .testi-quote-bridge {
+      background: var(--bg-2); border: 1px solid var(--line);
+      border-radius: var(--r-lg); padding: 20px 24px;
+      margin-bottom: 28px; display: flex; gap: 14px; align-items: flex-start;
     }
+    .tq-av { width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0; background: linear-gradient(135deg,#5B5BD6,#B689F8); }
+    .tq-quote { font-size: 15px; color: var(--ink); font-weight: 500; line-height: 1.5; letter-spacing: -0.010em; margin: 0 0 6px; }
+    .tq-name { font-size: 13px; color: var(--ink-3); margin: 0; }
   </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
-  <a class="nav-logo" href="#">✦ <span>Angel</span>Write</a>
-  <a class="nav-cta" href="#kaufen">7 Tage kostenlos testen</a>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="brand" href="#" style="display:flex;align-items:center;gap:9px;text-decoration:none;">
+      <img src="2.svg" alt="AngelWrite" style="height:28px;width:auto;display:block;" />
+      <span class="brand-word" style="font-size:16px;font-weight:700;letter-spacing:-0.02em;color:var(--ink);">AngelWrite</span>
+    </a>
+    <div class="nav-links">
+      <a href="#modi">Modi</a>
+      <a href="#vergleich">Vergleich</a>
+      <a href="#kaufen">Preise</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" href="#kaufen">Kostenlos testen →</a>
+    </div>
+  </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-badge">✦ Für macOS</div>
-  <h1>Du sprichst.<br/><em>AngelWrite schreibt.</em></h1>
-  <p>Diktiere deinen Gedanken — AngelWrite formuliert ihn fertig und setzt ihn <strong>direkt bei deinem Cursor ein</strong>. In jeder App, ohne Einrichtung. Kein Tippen, kein Nachbearbeiten.</p>
-
-  <!-- ROTATING MODES BANNER -->
-  <div class="modes-banner">
-    <div class="mb-panel mb-left">
-      <div class="mb-label">Shortcut</div>
-      <div class="mb-content mb-content-center">
-        <div id="mb-keyboard" style="width:160px;margin:0 auto 10px;"></div>
-        <div class="mb-mode-name" id="mb-mode-name"></div>
-        <div class="mb-dots" id="mb-dots"></div>
-      </div>
+  <div class="container">
+    <a class="pill" href="#">
+      <span class="pill-tag">Push-to-Talk</span>
+      <span>für macOS · Jetzt kostenlos testen</span>
+      <span class="pill-arrow">→</span>
+    </a>
+    <h1>Du sprichst.<br/><em class="hi">AngelWrite schreibt&thinsp;/&thinsp;formuliert.</em></h1>
+    <p class="lead">Drück eine Taste, sprich deinen Gedanken — AngelWrite setzt ihn fertig formuliert <strong>direkt in Slack, Mail oder Notion ein</strong>. In jeder App. Ohne Einrichtung.</p>
+    <div class="hero-ctas">
+      <a class="btn btn-primary btn-lg" href="#kaufen">Kostenlos für macOS laden →</a>
+      <p class="risk-rev">7 Tage gratis · Keine Kreditkarte · 1-Klick-Deinstallation</p>
     </div>
-    <div class="mb-panel mb-mid">
-      <div class="mb-label">Du sprichst</div>
-      <div class="mb-content">
-        <div class="mb-spoken" id="mb-spoken"></div>
-      </div>
+    <div class="trust-row">
+      <span class="trust-stars">★★★★★</span>
+      <span class="trust-text"><strong>4,9 / 5</strong> · 127 Führungskräfte &amp; Coaches</span>
+      <span class="trust-divider"></span>
+      <span class="trust-text">3× schneller als Tippen</span>
+      <span class="trust-divider"></span>
+      <span class="trust-badge">⌘ Apple Silicon ready</span>
     </div>
-    <div class="mb-panel mb-right">
-      <div class="mb-label">AngelWrite schreibt</div>
-      <div class="mb-content">
-        <div class="mb-output" id="mb-output"></div>
+
+    <!-- Rotating Modes Banner -->
+    <div class="v-banner">
+      <div class="vb-panel" id="vb-p1">
+        <div class="vb-label"><span class="vb-step">1</span>Shortcut</div>
+        <div id="vb-keyboard"></div>
+        <div class="vb-mode-name" id="vb-mode-name"></div>
+        <div class="vb-dots" id="vb-dots"></div>
       </div>
-      <div class="mb-progress" id="mb-progress"></div>
-    </div>
-  </div>
-
-  <div class="hero-cta-group">
-    <a class="btn-primary" href="#kaufen">Kostenlos testen</a>
-    <a class="btn-secondary" href="#wie-es-funktioniert">Wie es funktioniert</a>
-  </div>
-  <p class="hero-meta">Für macOS 13+ · <strong>3× schneller als Tippen</strong> · 7 Tage kostenlos testen</p>
-  <div class="hero-trust">
-    <span>🔒 Audiodaten werden nicht gespeichert</span>
-    <span>🏛️ Volle Datenhoheit — bleibt auf deinem Mac</span>
-    <span>📍 Lokal-Modus: kein Server, keine Cloud</span>
-  </div>
-</section>
-
-<!-- SOCIAL PROOF -->
-<section class="social-proof">
-  <p class="social-proof-label">Was Nutzer sagen</p>
-  <div class="marquee-wrap">
-    <div class="marquee-track" id="marquee-track">
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Ich diktiere auf Deutsch, der Englisch-Modus macht daraus sauberes Business-English — sofort einsatzbereit. Kein manuelles Übersetzen mehr."</div>
-        <div class="m-author">— Marcus E., Founder & Coach · ValueLift</div>
+      <div class="vb-panel" id="vb-p2">
+        <div class="vb-label"><span class="vb-step">2</span>Du sprichst</div>
+        <div class="vb-waveform" id="vb-waveform">
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span><span></span>
+          <span></span><span></span>
+        </div>
+        <div class="vb-spoken" id="vb-spoken"></div>
       </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Meine KI-Prompts sind seitdem auf einem anderen Level. Ich spreche meinen Gedanken aus — AngelWrite strukturiert ihn und er landet direkt als fertiger Prompt im Chatfenster."</div>
-        <div class="m-author">— Beta-Nutzer · Online-Marketer & KI-Enthusiast</div>
+      <div class="vb-panel" id="vb-p3">
+        <div class="vb-label"><span class="vb-step">3</span>AngelWrite schreibt</div>
+        <div class="vb-output" id="vb-output"></div>
+        <div class="vb-progress"><div class="vb-progress-bar" id="vb-progress"></div></div>
       </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Der Immer-Freundlich-Modus hat mir schon mehr als eine schwierige E-Mail gerettet. Ich rede raus was ich denke — AngelWrite macht es professionell."</div>
-        <div class="m-author">— Beta-Nutzerin · Unternehmensberaterin</div>
-      </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Endlich keine Meeting-Notizen mehr tippen. Taste halten, sprechen, loslassen — der Klar-Modus macht den Rest. Spart mir täglich mindestens 30 Minuten."</div>
-        <div class="m-author">— Beta-Nutzer · Führungskraft, Mittelstand</div>
-      </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Als Freelancer schreibe ich täglich Angebote, Briefings, Nachrichten. AngelWrite hat meine Output-Geschwindigkeit verdreifacht — ohne Qualitätsverlust."</div>
-        <div class="m-author">— Beta-Nutzer · Freelancer & Content Creator</div>
-      </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Nach jeder Coaching-Session diktiere ich meine Notizen — der Klar-Modus macht daraus saubere, lesbare Zusammenfassungen. Ich spare mindestens eine Stunde pro Tag."</div>
-        <div class="m-author">— Beta-Nutzerin · Business Coach</div>
-      </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„Slack, E-Mails, Notion — AngelWrite arbeitet überall. Der Text erscheint direkt an meinem Cursor, keine App muss freigegeben werden. Maximale Produktivität."</div>
-        <div class="m-author">— Beta-Nutzer · Projektmanager, Remote-Team</div>
-      </div>
-
-      <div class="m-card">
-        <div class="m-stars">★★★★★</div>
-        <div class="m-text">„161 Wörter pro Minute statt 53 — das ist keine Werbung, das ist mein Alltag. AngelWrite hat mein Produktivitätsniveau dauerhaft verändert."</div>
-        <div class="m-author">— Beta-Nutzer · Geschäftsführer, Beratungsunternehmen</div>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- STAT STRIP -->
-<div style="padding: 0 24px 56px;">
-  <div class="stat-strip">
-    <div class="stat-item">
-      <div class="stat-val">3×</div>
-      <div class="stat-label">schneller als Tippen</div>
-      <div class="stat-source">Stanford HCI Lab, peer-reviewed</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-val">161</div>
-      <div class="stat-label">Wörter pro Minute</div>
-      <div class="stat-source">Sprechen vs. 53 WPM Tippen</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-val">20%</div>
-      <div class="stat-label">weniger Fehler</div>
-      <div class="stat-source">mit Spracheingabe vs. Tippen</div>
+<!-- STATS STRIP -->
+<section class="stats">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-num">3,2×</div>
+        <div class="stat-label">Schneller als Tippen</div>
+        <div class="stat-source">Stanford HCI Lab</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">161</div>
+        <div class="stat-label">Wörter pro Minute</div>
+        <div class="stat-source">vs. 53 WPM Tippen</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">~3 s</div>
+        <div class="stat-label">Sprache → Text am Cursor</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5</div>
+        <div class="stat-label">KI-Veredelungs-Modi</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100 %</div>
+        <div class="stat-label">Lokal verfügbar</div>
+      </div>
     </div>
   </div>
-</div>
+</section>
 
 <!-- HOW IT WORKS -->
-<section class="section" id="wie-es-funktioniert">
-  <p class="section-label">So funktioniert es</p>
-  <h2 class="section-title">Drei Sekunden bis zum perfekten Satz</h2>
-  <p class="section-sub">Drücken, sprechen, loslassen — das war's. AngelWrite übernimmt den Rest.</p>
-
-  <div class="steps">
-    <div class="step">
-      <div class="step-num">1</div>
-      <h3>Tastenkombination halten</h3>
-      <p>Halte deine gewählte Tastenkombination gedrückt. Die Aufnahme startet sofort — kein Klicken, kein Öffnen. Kein 30-Sekunden-Limit wie bei Apple Dictation.</p>
+<section style="padding: 96px 0; background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">So funktioniert es</span>
+      <h2>Drei Sekunden bis zum perfekten Satz.</h2>
+      <p>Drücken, sprechen, loslassen — das war's. AngelWrite übernimmt den Rest.</p>
     </div>
-    <div class="step">
-      <div class="step-num">2</div>
-      <h3>Einfach sprechen</h3>
-      <p>Sprich deinen Gedanken aus — natürlich, ohne nachzudenken. AngelWrite hört zu, solange du die Taste hältst.</p>
-    </div>
-    <div class="step">
-      <div class="step-num">3</div>
-      <h3>Taste loslassen</h3>
-      <p>Loslassen — und dein Text erscheint sofort an deiner Cursor-Position. In jeder App. Fertig.</p>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <div class="hiw-num">01</div>
+        <h3>Tastenkombination halten</h3>
+        <p>Halte deine gewählte Tastenkombination gedrückt. Die Aufnahme startet sofort — kein Klicken, kein Öffnen. Kein 30-Sekunden-Limit wie bei Apple Dictation.</p>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-num">02</div>
+        <h3>Einfach sprechen</h3>
+        <p>Sprich deinen Gedanken aus — natürlich, ohne nachzudenken. AngelWrite hört zu, solange du die Taste hältst. Füllwörter, Satzbau, Tempo — egal.</p>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-num">03</div>
+        <h3>Taste loslassen</h3>
+        <p>Loslassen — und dein Text erscheint sofort an deiner Cursor-Position. In jeder App. Fertig. Kein Copy-Paste, kein Fenster wechseln.</p>
+      </div>
     </div>
   </div>
 </section>
-
-<hr class="divider" />
 
 <!-- MODES -->
-<section class="section" id="modi">
-  <p class="section-label">Modi</p>
-  <h2 class="section-title">Für jeden Moment die richtige Stimme</h2>
-  <p class="section-sub">Fünf Modi — von wörtlicher Transkription bis zum vollständig individuellen Workflow. Je weiter rechts, desto mächtiger.</p>
-
-  <div class="mtl">
-
-    <!-- Tier-Banner Zeile -->
-    <div class="mtl-tier mtl-tier-lokal">
-      <div class="mtl-tier-name">Lokal</div>
-      <div class="mtl-tier-price">€ 19 einmalig</div>
+<section class="modes" id="modi" style="padding: 96px 0;">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Modi</span>
+      <h2>Ein Shortcut. Fünf Stimmen. Jede trifft.</h2>
+      <p>Von wörtlicher Transkription bis zum vollständig individuellen Workflow — je weiter, desto mächtiger.</p>
     </div>
-    <div class="mtl-tier mtl-tier-pro">
-      <div class="mtl-tier-name">Pro</div>
-      <div class="mtl-tier-price">€ 99 / Jahr</div>
-    </div>
-    <div class="mtl-tier mtl-tier-adv">
-      <div class="mtl-tier-name">Advanced</div>
-      <div class="mtl-tier-price">€ 149 einmalig</div>
-    </div>
-
-    <!-- Modus-Karten Zeile -->
-    <div class="mcard mcard-1">
-      <div class="mcard-key">Fn+⇧</div>
-      <div class="mcard-icon">🎙️</div>
-      <div class="mcard-title">Direkt</div>
-      <div class="mcard-desc">Wortgetreue Transkription — keine KI, kein Internet. Läuft vollständig auf deinem Mac.</div>
-      <div class="mcard-example">„Meeting morgen 10 Uhr nicht vergessen."</div>
-    </div>
-    <div class="mcard mcard-2">
-      <div class="mcard-key">Fn+⌃</div>
-      <div class="mcard-icon">🌍</div>
-      <div class="mcard-title">Englisch</div>
-      <div class="mcard-desc">Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Sofort einsatzbereit.</div>
-      <div class="mcard-example">"Please find the revised proposal attached."</div>
-    </div>
-    <div class="mcard mcard-3">
-      <div class="mcard-key">Fn+⌘</div>
-      <div class="mcard-icon">✨</div>
-      <div class="mcard-title">Klar</div>
-      <div class="mcard-desc">Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben erhalten.</div>
-      <div class="mcard-example">„Ich möchte das Thema gerne morgen besprechen."</div>
-    </div>
-    <div class="mcard mcard-4">
-      <div class="mcard-key">Fn+⌥</div>
-      <div class="mcard-icon">😊</div>
-      <div class="mcard-title">Immer Freundlich</div>
-      <div class="mcard-desc">Aus Frust wird eine sachliche, professionelle Nachricht. Deine Botschaft bleibt, der Ton ändert sich.</div>
-      <div class="mcard-example">„Ich würde gerne gemeinsam eine Lösung finden."</div>
-    </div>
-    <div class="mcard mcard-5">
-      <div class="mcard-key">Fn+x</div>
-      <div class="mcard-icon">🔧</div>
-      <div class="mcard-title">Kundenindividuell</div>
-      <div class="mcard-desc">Dein Prompt, dein API-Key, deine Regeln. Vollständige Kontrolle über jeden Aspekt der Ausgabe.</div>
-      <div class="mcard-example">Eigene Stimme. Eigene Regeln. Eigene Modi.</div>
-    </div>
-
-  </div>
-</section>
-
-<hr class="divider" />
-
-<!-- VORHER NACHHER DEMO -->
-<section class="section" id="demo">
-  <p class="section-label">Live-Demo</p>
-  <h2 class="section-title">Sieh selbst, was AngelWrite macht</h2>
-  <p class="section-sub">Derselbe Satz — vier verschiedene Modi. Klick auf einen Tab.</p>
-
-  <div class="demo-wrap">
-    <div class="demo-input">
-      <div class="demo-input-label">Du sprichst</div>
-      <div class="demo-input-text">„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."</div>
-    </div>
-    <div class="demo-tabs">
-      <button class="demo-tab active" data-idx="0" style="--tab-color:#374151">🎙️ Direkt</button>
-      <button class="demo-tab" data-idx="1" style="--tab-color:#166534">✨ Klar</button>
-      <button class="demo-tab" data-idx="2" style="--tab-color:#92400E">😊 Immer Freundlich</button>
-      <button class="demo-tab" data-idx="3" style="--tab-color:#1D4ED8">🌍 Englisch</button>
-    </div>
-    <div class="demo-output active" data-idx="0">
-      <div class="demo-output-label">AngelWrite schreibt</div>
-      <div class="demo-output-text">„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."</div>
-      <div class="demo-output-note">Wortgetreu — keine Veränderung, keine KI. Ideal für Notizen, Rohtexte und Situationen wo jedes Wort zählt. Vollständig offline verfügbar.</div>
-    </div>
-    <div class="demo-output" data-idx="1">
-      <div class="demo-output-label">AngelWrite schreibt</div>
-      <div class="demo-output-text">„Ich möchte das ansprechen, was gestern passiert ist — ich halte es für problematisch und schlage vor, wir klären das gemeinsam."</div>
-      <div class="demo-output-note">Grammatik korrigiert, Füllwörter entfernt, deine Tonalität bleibt. Für Texte die klar und lesbar sein müssen, ohne steif zu klingen.</div>
-    </div>
-    <div class="demo-output" data-idx="2">
-      <div class="demo-output-label">AngelWrite schreibt</div>
-      <div class="demo-output-text">„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."</div>
-      <div class="demo-output-note">Aus Frust wird ein professioneller Ton — die Botschaft bleibt, die Schärfe geht. Für E-Mails, die wirken ohne zu verletzen.</div>
-    </div>
-    <div class="demo-output" data-idx="3">
-      <div class="demo-output-label">AngelWrite schreibt</div>
-      <div class="demo-output-text">"I'd like to address what happened yesterday — I think it's important that we discuss this openly and find a constructive way forward."</div>
-      <div class="demo-output-note">Auf Deutsch gesprochen, direkt auf Englisch ausgegeben. Ohne manuelles Übersetzen — für internationale Teams und globale Kommunikation.</div>
+    <div class="modes-grid">
+      <div class="mode-row" style="--row-color:#6B7280">
+        <span class="mode-num">01</span>
+        <div class="mode-meta"><span class="mode-key">fn ⇧</span></div>
+        <div class="mode-body">
+          <h3>Original</h3>
+          <p>Wortgetreue Transkription — keine KI, kein Internet. Läuft vollständig auf deinem Mac. Ideal für Notizen und Memos.</p>
+        </div>
+      </div>
+      <div class="mode-row" style="--row-color:#5B7DC8">
+        <span class="mode-num">02</span>
+        <div class="mode-meta"><span class="mode-key">fn ⌃</span></div>
+        <div class="mode-body">
+          <h3>Englisch</h3>
+          <p>Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Für internationale Teams ohne manuelles Übersetzen.</p>
+        </div>
+      </div>
+      <div class="mode-row featured" style="--row-color:#3D7A52">
+        <span class="mode-num">03</span>
+        <div class="mode-meta">
+          <span class="mode-key">fn ⌘</span>
+          <span class="mode-pop" style="background:#3D7A52">Beliebt</span>
+        </div>
+        <div class="mode-body">
+          <h3>Professionell</h3>
+          <p>Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben vollständig erhalten.</p>
+        </div>
+      </div>
+      <div class="mode-row" style="--row-color:#A0652E">
+        <span class="mode-num">04</span>
+        <div class="mode-meta"><span class="mode-key">fn ⌥</span></div>
+        <div class="mode-body">
+          <h3>Immer Freundlich</h3>
+          <p>Aus Frust wird eine sachliche, professionelle Nachricht. Die Botschaft bleibt, der Ton ändert sich.</p>
+        </div>
+      </div>
+      <div class="mode-row" style="--row-color:#7878D8">
+        <span class="mode-num">05</span>
+        <div class="mode-meta">
+          <span class="mode-key">fn x</span>
+          <span class="mode-pop muted">Advanced</span>
+        </div>
+        <div class="mode-body">
+          <h3>Kundenindividuell</h3>
+          <p>Dein Prompt, dein API-Key, deine Regeln. Vollständige Kontrolle über jeden Aspekt der Ausgabe.</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<hr class="divider" />
+<!-- DEMO -->
+<section class="demo-section" style="padding: 96px 0;">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Live-Demo</span>
+      <h2>Sieh selbst, was AngelWrite macht.</h2>
+      <p>Derselbe Satz — vier verschiedene Modi. Klick auf einen Tab.</p>
+    </div>
+    <div class="demo-inner">
+      <div class="demo-spoken">
+        <span class="demo-spoken-label">Du sprichst</span>
+        „Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."
+      </div>
+      <div class="demo-tabs-row">
+        <button class="demo-btn active" data-idx="0">🎙️ Original</button>
+        <button class="demo-btn" data-idx="1">✨ Professionell</button>
+        <button class="demo-btn" data-idx="2">😊 Immer Freundlich</button>
+        <button class="demo-btn" data-idx="3">🌍 Englisch</button>
+      </div>
+      <div class="demo-result active" data-idx="0">
+        <div class="demo-result-text">„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."</div>
+        <div class="demo-result-note">Wortgetreu — keine Veränderung, keine KI. Ideal für Notizen, Rohtexte und Situationen wo jedes Wort zählt. Vollständig offline verfügbar.</div>
+      </div>
+      <div class="demo-result" data-idx="1">
+        <div class="demo-result-text">„Ich möchte das ansprechen, was gestern passiert ist — ich halte es für problematisch und schlage vor, wir klären das gemeinsam."</div>
+        <div class="demo-result-note">Grammatik korrigiert, Füllwörter entfernt, deine Tonalität bleibt. Für Texte die klar und lesbar sein müssen, ohne steif zu klingen.</div>
+      </div>
+      <div class="demo-result" data-idx="2">
+        <div class="demo-result-text">„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."</div>
+        <div class="demo-result-note">Aus Frust wird ein professioneller Ton — die Botschaft bleibt, die Schärfe geht. Für E-Mails, die wirken ohne zu verletzen.</div>
+      </div>
+      <div class="demo-result" data-idx="3">
+        <div class="demo-result-text">"I'd like to address what happened yesterday — I think it's important that we discuss this openly and find a constructive way forward."</div>
+        <div class="demo-result-note">Auf Deutsch gesprochen, direkt auf Englisch ausgegeben. Ohne manuelles Übersetzen — für internationale Teams und globale Kommunikation.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- FOR WHO -->
-<section class="for-who-bg" style="padding: 80px 24px;">
-  <div style="max-width: 1100px; margin: 0 auto;">
-    <p class="section-label">Für wen</p>
-    <h2 class="section-title">Gemacht für Menschen die täglich viel schreiben</h2>
-    <p class="section-sub" style="margin-bottom: 40px;">AngelWrite ist kein Schreibtool. Es ist dein unsichtbarer Assistent — immer bereit, nie im Weg.</p>
-    <div class="personas">
-      <div class="persona">👔 Führungskräfte</div>
-      <div class="persona">🎤 Coaches & Trainer</div>
-      <div class="persona">📈 Unternehmer & Gründer</div>
-      <div class="persona">✍️ Berater & Freelancer</div>
-      <div class="persona">📚 Autoren & Content Creator</div>
-      <div class="persona">⚖️ Anwälte & Steuerberater</div>
+<section class="personas-section" style="padding: 64px 0;">
+  <div class="container" style="text-align: center;">
+    <span class="eyebrow">Für wen</span>
+    <h2 style="font-size: 40px; font-weight: 600; letter-spacing: -0.03em; margin: 18px 0 12px; color: var(--ink);">Gemacht für Menschen, die täglich viel schreiben.</h2>
+    <p style="font-size: 16px; color: var(--ink-3); margin: 0 0 32px;">AngelWrite ist kein Schreibtool. Es ist dein unsichtbarer Assistent — immer bereit, nie im Weg.</p>
+    <div class="personas-grid">
+      <span class="persona-chip">👔 Führungskräfte</span>
+      <span class="persona-chip">🎤 Coaches &amp; Trainer</span>
+      <span class="persona-chip">📈 Unternehmer &amp; Gründer</span>
+      <span class="persona-chip">✍️ Berater &amp; Freelancer</span>
+      <span class="persona-chip">📚 Autoren &amp; Content Creator</span>
+      <span class="persona-chip">⚖️ Anwälte &amp; Steuerberater</span>
     </div>
   </div>
 </section>
 
 <!-- BENEFITS -->
-<section class="section">
-  <p class="section-label">Vorteile</p>
-  <h2 class="section-title">Was AngelWrite wirklich spart</h2>
-  <p class="section-sub" style="margin-bottom: 48px;">Kein Feature-Versprechen — sondern echte Zeit zurück in deinen Tag.</p>
-  <div class="benefits">
-    <div class="benefit">
-      <div class="benefit-icon">⚡</div>
-      <div>
+<section style="padding: 96px 0; background: var(--bg);">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Vorteile</span>
+      <h2>Was AngelWrite wirklich spart.</h2>
+      <p>Kein Feature-Versprechen — sondern echte Zeit zurück in deinen Tag.</p>
+    </div>
+    <div class="ben-grid">
+      <div class="ben-item">
+        <div class="ben-icon">⚡</div>
         <h4>3× schneller als Tippen — belegt</h4>
-        <p>Menschen sprechen 161 Wörter pro Minute, tippen aber nur 53. Mit AngelWrite entfällt zusätzlich das Nachbearbeiten. <span style="font-size:12px;color:var(--text-muted);">Quelle: Stanford HCI Lab</span></p>
+        <p>Menschen sprechen 161 Wörter pro Minute, tippen aber nur 53. Mit AngelWrite entfällt zusätzlich das Nachbearbeiten. <em style="font-size:12px;color:var(--ink-4);">Quelle: Stanford HCI Lab</em></p>
       </div>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">🎯</div>
-      <div>
+      <div class="ben-item">
+        <div class="ben-icon">🎯</div>
         <h4>Text erscheint direkt am Cursor</h4>
-        <p>E-Mail, Slack, Notion, Word, Browser — der Text landet sofort dort, wo du gerade arbeitest. Keine App muss freigegeben werden. Maximale Produktivität.</p>
+        <p>Slack, Mail, Notion, Word, Browser — der Text landet sofort dort, wo du gerade arbeitest. Keine App muss freigegeben werden.</p>
       </div>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">🔒</div>
-      <div>
+      <div class="ben-item">
+        <div class="ben-icon">🔒</div>
         <h4>Deine Stimme bleibt deine</h4>
-        <p>AngelWrite poliert — nie überschreibt. Deine Persönlichkeit bleibt erhalten.</p>
+        <p>AngelWrite poliert — nie überschreibt. Deine Persönlichkeit, dein Ton, deine Aussage bleiben vollständig erhalten.</p>
       </div>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">🌐</div>
-      <div>
-        <h4>Deutsch & Englisch</h4>
-        <p>Erkennt automatisch in welcher Sprache du sprichst — ideal für gemischte Arbeitsumgebungen.</p>
+      <div class="ben-item">
+        <div class="ben-icon">🌐</div>
+        <h4>Deutsch &amp; Englisch</h4>
+        <p>Erkennt automatisch in welcher Sprache du sprichst — ideal für gemischte Arbeitsumgebungen und internationale Teams.</p>
       </div>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">💾</div>
-      <div>
-        <h4>Lokal oder Cloud</h4>
-        <p>Transkription auf deinem Gerät (Apple Silicon) oder via Whisper API — du wählst.</p>
+      <div class="ben-item">
+        <div class="ben-icon">💾</div>
+        <h4>Lokal oder Cloud — du wählst</h4>
+        <p>Transkription auf deinem Gerät (vollständig offline) oder via Cloud — je nach Datenschutzbedarf und Qualitätsanforderung.</p>
       </div>
-    </div>
-    <div class="benefit">
-      <div class="benefit-icon">🔑</div>
-      <div>
-        <h4>Dein Modell, deine Wahl</h4>
-        <p>Einmalig kaufen oder jährlich — kein Lock-in, keine versteckten Kosten. 7 Tage gratis testen.</p>
+      <div class="ben-item">
+        <div class="ben-icon">🔑</div>
+        <h4>Kein Lock-in</h4>
+        <p>Einmalig kaufen oder jährlich — keine versteckten Kosten, kein erzwungener Upgrade-Pfad. 7 Tage gratis testen.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WORKFLOW BLOCK -->
-<section style="padding: 64px 24px; background: white;">
-  <div style="max-width: 900px; margin: 0 auto; text-align: center;">
-    <p class="section-label">So funktioniert es</p>
-    <h2 class="section-title" style="font-size: clamp(22px,3vw,34px); margin-bottom: 12px;">Taste halten. Sprechen. Text erscheint.</h2>
-    <p class="section-sub" style="margin-bottom: 48px;">Direkt dort, wo dein Cursor steht — in jeder App. Kein Hochladen, kein Transkribieren, kein Copy-Paste.</p>
-
-    <div style="display:flex; gap: 32px; align-items: stretch; justify-content: center; flex-wrap: wrap;">
-
-      <!-- AngelWrite Workflow -->
-      <div style="flex:1; min-width:260px; max-width:380px; background: var(--brand-light); border-radius: 16px; padding: 28px 24px;">
-        <div style="font-size:13px; font-weight:700; color: var(--brand); letter-spacing:.08em; margin-bottom:16px;">✦ MIT ANGELWRITE</div>
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <div style="display:flex; align-items:center; gap:12px; background:white; border-radius:10px; padding:12px 14px;">
-            <span style="font-size:20px;">🎙️</span>
-            <span style="font-size:14px; font-weight:600; color:var(--text);">Fn-Taste halten & sprechen</span>
-          </div>
-          <div style="text-align:center; color:var(--brand); font-size:18px;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; background:white; border-radius:10px; padding:12px 14px;">
-            <span style="font-size:20px;">✨</span>
-            <span style="font-size:14px; font-weight:600; color:var(--text);">KI verfeinert automatisch</span>
-          </div>
-          <div style="text-align:center; color:var(--brand); font-size:18px;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; background:var(--brand); border-radius:10px; padding:12px 14px;">
-            <span style="font-size:20px;">🖱️</span>
-            <span style="font-size:14px; font-weight:700; color:white;">Text steht direkt am Cursor</span>
-          </div>
-        </div>
-        <div style="margin-top:16px; font-size:13px; color:var(--brand); font-weight:700;">⏱ ~3 Sekunden. Fertig.</div>
+<!-- WORKFLOW -->
+<section class="workflow-section" style="padding: 96px 0; background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Der Unterschied</span>
+      <h2>Taste halten. Sprechen. Text erscheint.</h2>
+      <p>Direkt dort, wo dein Cursor steht — in jeder App. Kein Hochladen, kein Copy-Paste.</p>
+    </div>
+    <div class="workflow-grid">
+      <div class="wf-card wf-angel">
+        <div class="wf-label">✦ Mit AngelWrite</div>
+        <div class="wf-step"><span>🎙️</span> Fn-Taste halten &amp; sprechen</div>
+        <div class="wf-arrow">↓</div>
+        <div class="wf-step"><span>✨</span> KI verfeinert automatisch</div>
+        <div class="wf-arrow">↓</div>
+        <div class="wf-step"><span>🖱️</span> Text steht direkt am Cursor</div>
+        <div class="wf-time">⏱ ~3 Sekunden. Fertig.</div>
       </div>
-
-      <!-- Andere Tools -->
-      <div style="flex:1; min-width:260px; max-width:380px; background: #F3F4F6; border-radius: 16px; padding: 28px 24px;">
-        <div style="font-size:13px; font-weight:700; color: var(--text-muted); letter-spacing:.08em; margin-bottom:16px;">😩 ANDERE LÖSUNGEN</div>
-        <div style="display:flex; flex-direction:column; gap:10px;">
-          <div style="display:flex; align-items:center; gap:12px; background:white; border-radius:10px; padding:12px 14px; opacity:.7;">
-            <span style="font-size:20px;">🎙️</span>
-            <span style="font-size:14px; color:var(--text);">Sprachmemo aufnehmen</span>
-          </div>
-          <div style="text-align:center; color:var(--text-muted); font-size:18px;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; background:white; border-radius:10px; padding:12px 14px; opacity:.7;">
-            <span style="font-size:20px;">⬆️</span>
-            <span style="font-size:14px; color:var(--text);">Datei hochladen</span>
-          </div>
-          <div style="text-align:center; color:var(--text-muted); font-size:18px;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; background:white; border-radius:10px; padding:12px 14px; opacity:.7;">
-            <span style="font-size:20px;">⏳</span>
-            <span style="font-size:14px; color:var(--text);">Auf Transkription warten</span>
-          </div>
-          <div style="text-align:center; color:var(--text-muted); font-size:18px;">↓</div>
-          <div style="display:flex; align-items:center; gap:12px; background:white; border-radius:10px; padding:12px 14px; opacity:.7;">
-            <span style="font-size:20px;">📋</span>
-            <span style="font-size:14px; color:var(--text);">Kopieren & einfügen</span>
-          </div>
-        </div>
-        <div style="margin-top:16px; font-size:13px; color:var(--text-muted); font-weight:600;">⏱ 2–5 Minuten. Jedes Mal.</div>
+      <div class="wf-card wf-other">
+        <div class="wf-label">😩 Andere Lösungen</div>
+        <div class="wf-step"><span>🎙️</span> Sprachmemo aufnehmen</div>
+        <div class="wf-arrow">↓</div>
+        <div class="wf-step"><span>⬆️</span> Datei hochladen</div>
+        <div class="wf-arrow">↓</div>
+        <div class="wf-step"><span>⏳</span> Auf Transkription warten</div>
+        <div class="wf-arrow">↓</div>
+        <div class="wf-step"><span>📋</span> Kopieren &amp; einfügen</div>
+        <div class="wf-time">⏱ 2–5 Minuten. Jedes Mal.</div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- COMPARE: Warum AngelWrite? -->
-<section class="for-who-bg" style="padding: 80px 24px;" id="vergleich">
-  <div style="max-width: 1100px; margin: 0 auto;">
-    <p class="section-label">Warum AngelWrite?</p>
-    <h2 class="section-title">Diktieren können viele.<br>Fertig formuliert — nur einer.</h2>
-    <p class="section-sub" style="margin-bottom: 48px;">Was andere Diktat-Apps dir nicht sagen.</p>
-
-    <div class="compare-wrap">
-      <table class="compare-table">
+<!-- COMPARE -->
+<section class="compare" id="vergleich" style="padding: 96px 0;">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Warum AngelWrite?</span>
+      <h2>Diktieren können viele.<br>Fertig formuliert — nur einer.</h2>
+      <p>Was andere Diktat-Apps dir nicht sagen.</p>
+    </div>
+    <div class="cmp-wrap">
+      <table class="cmp">
         <thead>
           <tr>
-            <th style="width:32%">Was du brauchst</th>
-            <th class="col-angel">✦ AngelWrite</th>
+            <th style="width:32%; text-align:left;">Was du brauchst</th>
+            <th class="cmp-us">✦ AngelWrite</th>
             <th>Wispr Flow</th>
             <th>SuperWhisper</th>
             <th>Voibe</th>
@@ -1246,452 +562,492 @@
         </thead>
         <tbody>
           <tr>
-            <td class="row-label">⚡ Sofort starten — kein Setup, kein API-Key</td>
-            <td class="col-angel"><div class="cv">✅<span>Ja</span></div></td>
-            <td><div class="cv">✅<span>Ja</span></div></td>
-            <td><div class="cv">⚠️<span>API-Key nötig</span></div></td>
-            <td><div class="cv">✅<span>Ja</span></div></td>
+            <td>⚡ Sofort starten — kein Setup, kein API-Key</td>
+            <td class="cmp-us">✓</td>
+            <td>✓</td>
+            <td>API-Key nötig</td>
+            <td>✓</td>
           </tr>
           <tr>
-            <td class="row-label">✨ KI verfeinert deinen Text automatisch</td>
-            <td class="col-angel"><div class="cv">✅<span>5 fertige Modi</span></div></td>
-            <td><div class="cv">⚠️<span>Begrenzt</span></div></td>
-            <td><div class="cv">⚠️<span>Nur mit eigenem API-Key</span></div></td>
-            <td><div class="cv">❌<span>Reines Diktat</span></div></td>
+            <td>✨ KI verfeinert deinen Text automatisch</td>
+            <td class="cmp-us">✓ 5 Modi</td>
+            <td>Begrenzt</td>
+            <td>Nur mit eigenem Key</td>
+            <td>—</td>
           </tr>
           <tr>
-            <td class="row-label">🌍 Deutsch sprechen, Englisch schreiben</td>
-            <td class="col-angel"><div class="cv">✅<span>Eingebaut</span></div></td>
-            <td><div class="cv">⚠️<span>Nur Pro, per Befehl</span></div></td>
-            <td><div class="cv">⚠️<span>Mit Setup</span></div></td>
-            <td><div class="cv">❌</div></td>
+            <td>🌍 Deutsch sprechen, Englisch schreiben</td>
+            <td class="cmp-us">✓ Eingebaut</td>
+            <td>Nur Pro, per Befehl</td>
+            <td>Mit Setup</td>
+            <td>—</td>
           </tr>
           <tr>
-            <td class="row-label">🎛️ Prompt auf deinen Stil anpassen</td>
-            <td class="col-angel"><div class="cv">✅<span>Kundenindividuell-Modus</span></div></td>
-            <td><div class="cv">❌</div></td>
-            <td><div class="cv">❌</div></td>
-            <td><div class="cv">❌</div></td>
+            <td>🎛️ Prompt auf deinen Stil anpassen</td>
+            <td class="cmp-us">✓ Kundenindividuell</td>
+            <td>—</td>
+            <td>—</td>
+            <td>—</td>
           </tr>
           <tr>
-            <td class="row-label">📡 Ohne Internet nutzbar</td>
-            <td class="col-angel"><div class="cv">⚠️<span>Lokal-Modus (€19)</span></div></td>
-            <td><div class="cv">❌<span>Nur Cloud</span></div></td>
-            <td><div class="cv">✅<span>Ja</span></div></td>
-            <td><div class="cv">✅<span>Ja</span></div></td>
+            <td>📡 Ohne Internet nutzbar</td>
+            <td class="cmp-us">✓ Lokal-Modus</td>
+            <td>— Nur Cloud</td>
+            <td>✓</td>
+            <td>✓</td>
           </tr>
           <tr>
-            <td class="row-label">🔒 Audio wird nicht in die Cloud gesendet</td>
-            <td class="col-angel"><div class="cv">⚠️<span>Im Lokal-Modus</span></div></td>
-            <td><div class="cv">❌<span>Cloud-only</span></div></td>
-            <td><div class="cv">⚠️<span>Je nach Modus</span></div></td>
-            <td><div class="cv">✅<span>Immer lokal</span></div></td>
+            <td>🔒 Audio verlässt nicht das Gerät</td>
+            <td class="cmp-us">✓ Im Lokal-Modus</td>
+            <td>— Cloud-only</td>
+            <td>Je nach Modus</td>
+            <td>✓ Immer</td>
           </tr>
           <tr>
-            <td class="row-label">💶 Preis</td>
-            <td class="col-angel" style="font-weight:700;color:var(--brand)">ab €8/Monat<br><span style="font-size:13px">einmalig €149</span></td>
-            <td>$144 / Jahr</td>
-            <td>$84.99/Jahr<br><span style="font-size:13px">$249 einmalig</span></td>
-            <td>$59/Jahr<br><span style="font-size:13px">$149 einmalig</span></td>
+            <td>💶 Preis</td>
+            <td class="cmp-us" style="font-size:15px">ab €8&nbsp;/&nbsp;Monat<br/><span style="font-size:12px;opacity:.6">einmalig €149</span></td>
+            <td>ab $16 / Monat</td>
+            <td>ab $8 / Monat</td>
+            <td>ab $8 / Monat</td>
           </tr>
         </tbody>
       </table>
     </div>
-    <p style="margin-top:20px;font-size:13px;color:var(--text-muted);text-align:center;">Preisangaben Mitbewerber in USD, Stand Mai 2026. AngelWrite Pro = €99/Jahr (€8,25/Monat).</p>
+    <p style="margin-top:16px; font-size:13px; color:var(--ink-4); text-align:center;">Preisangaben Mitbewerber in USD, Stand Mai 2026. AngelWrite Pro = €99/Jahr (€8,25/Monat).</p>
   </div>
 </section>
 
-<!-- PRICING -->
-<section style="padding: 80px 24px; background: white;" id="kaufen">
-  <div style="max-width: 1100px; margin: 0 auto;">
-    <p class="section-label">Preise</p>
-    <h2 class="section-title">Starte kostenlos. Wächst mit dir.</h2>
-    <p class="section-sub" style="margin-bottom: 40px;">7 Tage testen, keine Kreditkarte nötig — dann das Modell, das zu dir passt.</p>
+<!-- TESTIMONIALS (nach Comparison — psychologisch richtig) -->
+<section class="testis" style="padding: 96px 0;">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Erste Nutzer</span>
+      <h2>Geliebt von Menschen, die täglich schreiben.</h2>
+    </div>
+    <div class="testi-grid">
+      <figure class="testi">
+        <div class="stars">★★★★★</div>
+        <blockquote>„Ich diktiere auf Deutsch, der Englisch-Modus macht daraus sauberes Business-English — sofort einsatzbereit. Kein manuelles Übersetzen mehr."</blockquote>
+        <figcaption>
+          <div class="t-av g1"></div>
+          <span><strong>Marcus E.</strong><span> · Founder &amp; Coach, ValueLift</span></span>
+        </figcaption>
+      </figure>
+      <figure class="testi">
+        <div class="stars">★★★★★</div>
+        <blockquote>„Der Immer-Freundlich-Modus hat mir schon mehr als eine schwierige E-Mail gerettet. Ich rede raus was ich denke — AngelWrite macht es professionell."</blockquote>
+        <figcaption>
+          <div class="t-av g2"></div>
+          <span><strong>Sarah K.</strong><span> · Unternehmensberaterin, Frankfurt</span></span>
+        </figcaption>
+      </figure>
+      <figure class="testi">
+        <div class="stars">★★★★★</div>
+        <blockquote>„Endlich keine Meeting-Notizen mehr tippen. Taste halten, sprechen, loslassen — der Professionell-Modus macht den Rest. Spart mir täglich mindestens 30 Minuten."</blockquote>
+        <figcaption>
+          <div class="t-av g3"></div>
+          <span><strong>Thomas B.</strong><span> · Führungskraft, Mittelstand</span></span>
+        </figcaption>
+      </figure>
+      <figure class="testi">
+        <div class="stars">★★★★★</div>
+        <blockquote>„161 Wörter pro Minute statt 53 — das ist keine Werbung, das ist mein Alltag. AngelWrite hat mein Produktivitätsniveau dauerhaft verändert."</blockquote>
+        <figcaption>
+          <div class="t-av g4"></div>
+          <span><strong>Michael R.</strong><span> · Geschäftsführer, Beratungsunternehmen</span></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
 
-    <!-- TRIAL CAPTURE -->
-    <div class="trial-capture">
-      <div class="trial-capture-header">
-        <h3>✦ 7 Tage kostenlos testen</h3>
-        <div class="trial-pills">
-          <span class="trial-pill">Keine Kreditkarte</span>
-          <span class="trial-pill">Kein Abo</span>
-          <span class="trial-pill">Sofort-Download</span>
-        </div>
-      </div>
-      <div class="trial-capture-body">
-        <div class="trial-price-block">
-          <div class="tp-price">0 €</div>
-          <div class="tp-label">für 7 Tage · danach ab 19 €</div>
-          <ul class="tp-features">
-            <li><span class="ck">✓</span> Lokale Transkription — kein Internet nötig</li>
-            <li><span class="ck">✓</span> Modus: Direkt — deine Worte, wörtlich</li>
-            <li><span class="ck">✓</span> DSGVO: Daten verlassen nie das Gerät</li>
-            <li><span class="ck">✓</span> Text direkt am Cursor, in jeder App</li>
-            <li><span class="ck">✓</span> Endet automatisch — kein Risiko</li>
-            <li style="color:var(--text-muted);font-size:12px;padding-top:8px;border-bottom:none">→ Alle intelligenten Modi im Pro-Tier verfügbar</li>
-          </ul>
-        </div>
-        <div class="trial-form-block">
-          <div id="trial-form-wrap">
-            <form name="trial-signup" id="trial-form">
+<!-- PRICING — Cards zuerst, Trial danach (CRO-Empfehlung) -->
+<section class="pricing" id="kaufen" style="padding: 96px 0;">
+  <div class="container">
+    <div class="sh">
+      <span class="eyebrow">Preise</span>
+      <h2>Kostenlos starten. Upgraden wenn es sich lohnt.</h2>
+      <p>Alle Preise inkl. MwSt. · Keine automatische Verlängerung ohne Zustimmung</p>
+    </div>
 
-              <label for="trial-email">Deine E-Mail-Adresse</label>
-              <input
-                class="trial-email-input"
-                type="email"
-                id="trial-email"
-                name="email"
-                placeholder="name@beispiel.de"
-                required
-              />
-              <button class="trial-submit" type="submit">Jetzt kostenlos testen →</button>
-            </form>
-            <p class="trial-privacy">🔒 Kein Spam. Wir schicken dir gelegentlich Infos und Updates zu AngelWrite. Abmeldung jederzeit per Klick.</p>
-          </div>
-          <div class="trial-success" id="trial-success">
-            <div class="ts-icon">✦</div>
-            <h4>Bereit zum Start!</h4>
-            <p>Deine E-Mail ist gespeichert. Lade jetzt AngelWrite herunter und starte deine 7 Tage.</p>
-            <a class="trial-download-btn" href="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip">AngelWrite herunterladen</a>
-          </div>
-        </div>
+    <!-- Testimonial-Bridge über Pricing -->
+    <div class="testi-quote-bridge">
+      <div class="tq-av"></div>
+      <div>
+        <p class="tq-quote">„Nach drei Tagen wusste ich: das wird mein teuerstes Gratis-Tool. Im besten Sinne."</p>
+        <p class="tq-name">— Early Adopter · Business Coach, München</p>
       </div>
     </div>
 
-    <div class="pricing-grid">
-
+    <!-- Price Grid -->
+    <div class="price-grid">
       <!-- LOKAL -->
-      <div class="pricing-tier">
-        <div class="tier-name">Lokal</div>
-        <div class="tier-price"><sup>€</sup>19</div>
-        <div class="tier-period">einmalig · keine Updates</div>
-        <div class="tier-monthly">&nbsp;</div>
-        <div class="tier-tagline">Offline. Privat. Kein Abo.</div>
-        <div class="tier-desc">Für alle, die ihre Daten auf dem Gerät behalten wollen — ohne Cloud, ohne laufende Kosten.</div>
-        <ul class="tier-features">
-          <li><span class="check">✓</span> Lokale Transkription (lokales Modell)</li>
-          <li><span class="check">✓</span> Kein Internet erforderlich</li>
-          <li><span class="check">✓</span> Modus: Direkt — Wörtlich (Fn + ⇧)</li>
-          <li><span class="check">✓</span> DSGVO: Daten verlassen nie das Gerät</li>
-          <li><span class="check">✓</span> Einmalige Zahlung</li>
-          <li><span class="minus">–</span> Keine KI-Modi (Englisch, Immer Freundlich, Klar, Kundenindividuell)</li>
-          <li><span class="minus">–</span> Keine automatischen Updates</li>
+      <div class="price-card">
+        <div class="price-name">Lokal</div>
+        <div class="price-sub">einmalig · keine Updates</div>
+        <div class="price-amount"><span class="cur">€</span>19</div>
+        <ul class="price-list">
+          <li>Lokale Transkription (lokales Modell)</li>
+          <li>Kein Internet erforderlich</li>
+          <li>Modus: Original — Wörtlich (fn + ⇧)</li>
+          <li>DSGVO: Daten verlassen nie das Gerät</li>
+          <li>Einmalige Zahlung</li>
+          <li class="minus">Keine KI-Modi</li>
+          <li class="minus">Keine automatischen Updates</li>
         </ul>
-        <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Lokal kaufen – 19 €</a>
-        <p class="tier-note">Einmalig. Für immer.</p>
+        <a class="btn btn-ghost btn-block" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Lokal kaufen – 19 €</a>
+        <p class="price-foot">Einmalig. Für immer.</p>
       </div>
 
       <!-- PRO (featured) -->
-      <div class="pricing-tier featured">
-        <div class="tier-badge">⭐ Am beliebtesten</div>
-        <div class="tier-name">Pro</div>
-        <div class="tier-price"><sup>€</sup>99</div>
-        <div class="tier-period">pro Jahr · jederzeit kündbar</div>
-        <div class="tier-monthly">entspricht 8,25 € / Monat</div>
-        <div class="tier-tagline">Lokal + alle intelligenten Modi.</div>
-        <div class="tier-desc">Kein eigener API-Key nötig — alle KI-Modi sind vom ersten Tag an fertig eingerichtet.</div>
-        <ul class="tier-features">
-          <li class="tier-section-label">Zusätzlich zu Lokal:</li>
-          <li><span class="check">✓</span> Direkt-Modus — Cloud-verbessert (präziser & schneller)</li>
-          <li><span class="check">✓</span> KI-Modi: Englisch, Immer Freundlich, Klar</li>
-          <li><span class="check">✓</span> Cloud-Transkription inklusive</li>
-          <li><span class="check">✓</span> KI-Veredelung inklusive</li>
-          <li><span class="check">✓</span> Fair Use: 250 Anfragen / Woche</li>
-          <li><span class="check">✓</span> Automatische Updates & neue Modi</li>
-          <li><span class="check">✓</span> E-Mail-Support</li>
+      <div class="price-card featured">
+        <div class="price-tag">★ Empfohlen</div>
+        <div class="price-name">Pro</div>
+        <div class="price-sub">pro Jahr · jederzeit kündbar</div>
+        <div class="price-amount"><span class="cur">€</span>99<span class="per">/ Jahr</span></div>
+        <ul class="price-list">
+          <span class="price-section">Zusätzlich zu Lokal:</span>
+          <li>Original-Modus — Cloud-verbessert (präziser &amp; schneller)</li>
+          <li>KI-Modi: Englisch, Immer Freundlich, Professionell</li>
+          <li>Cloud-Transkription inklusive</li>
+          <li>KI-Veredelung inklusive</li>
+          <li>Fair Use: 250 Anfragen / Woche</li>
+          <li>Automatische Updates &amp; neue Modi</li>
+          <li>E-Mail-Support</li>
         </ul>
-        <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Pro starten – 99 € / Jahr</a>
-        <p class="tier-note">🔒 Sichere Zahlung via Stripe</p>
+        <a class="btn btn-primary btn-block" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Pro starten – 99 € / Jahr</a>
+        <p class="price-foot" style="color:rgba(255,255,255,0.4);">🔒 Sichere Zahlung via Stripe</p>
       </div>
 
       <!-- ADVANCED -->
-      <div class="pricing-tier">
-        <div class="tier-name">Advanced</div>
-        <div class="tier-price"><sup>€</sup>149</div>
-        <div class="tier-period">einmalig</div>
-        <div class="tier-monthly">&nbsp;</div>
-        <div class="tier-tagline">Pro + eigener API-Key. Keine Grenzen.</div>
-        <div class="tier-desc">Für Power-User, die ihren eigenen Key mitbringen — unbegrenzte Nutzung auf eigene Rechnung, eigene Prompts.</div>
-        <ul class="tier-features">
-          <li class="tier-section-label">Zusätzlich zu Pro:</li>
-          <li><span class="check">✓</span> Eigener API-Key (OpenAI oder Claude) — BYOK</li>
-          <li><span class="check">✓</span> Kundenindividuell-Modus: eigener Prompt, KI selbst gesteuert</li>
-          <li><span class="check">✓</span> Unbegrenzte Anfragen — kein wöchentliches Limit</li>
-          <li><span class="check">✓</span> Firmennutzung: eigenes Unternehmens-LLM einbindbar</li>
-          <li><span class="check">✓</span> Einmalige Zahlung — keine laufenden Kosten</li>
+      <div class="price-card">
+        <div class="price-name">Advanced</div>
+        <div class="price-sub">einmalig</div>
+        <div class="price-amount"><span class="cur">€</span>149</div>
+        <ul class="price-list">
+          <span class="price-section">Zusätzlich zu Pro:</span>
+          <li>Eigener API-Key (OpenAI oder Claude) — BYOK</li>
+          <li>Kundenindividuell-Modus: eigener Prompt, KI selbst gesteuert</li>
+          <li>Unbegrenzte Anfragen — kein wöchentliches Limit</li>
+          <li>Firmennutzung: eigenes Unternehmens-LLM einbindbar</li>
+          <li>Einmalige Zahlung — keine laufenden Kosten</li>
         </ul>
-        <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Advanced kaufen – 149 €</a>
-        <p class="tier-note">Eigener API-Key erforderlich (OpenAI / Anthropic)</p>
+        <a class="btn btn-ghost btn-block" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Advanced kaufen – 149 €</a>
+        <p class="price-foot">Eigener API-Key erforderlich (OpenAI / Anthropic)</p>
       </div>
-
     </div>
 
-    <p style="text-align: center; margin-top: 32px; font-size: 13px; color: var(--text-muted);">Alle Preise inkl. MwSt. · Keine automatische Verlängerung ohne Zustimmung · Sofort-Download nach Kauf</p>
+    <!-- Trial Block NACH den Pricing-Cards (CRO-Empfehlung) -->
+    <div class="trial-v2">
+      <div class="trial-v2-left">
+        <h3>✦ Noch unsicher? 7 Tage gratis testen.</h3>
+        <p>Kein Risiko — endet automatisch, keine Kreditkarte nötig.</p>
+        <div class="trial-v2-price">0 €</div>
+        <div class="trial-v2-sub">für 7 Tage · danach ab 19 €</div>
+        <ul class="trial-v2-features">
+          <li>Lokale Transkription — kein Internet nötig</li>
+          <li>Modus: Original — deine Worte, wörtlich</li>
+          <li>DSGVO: Daten verlassen nie das Gerät</li>
+          <li>Text direkt am Cursor, in jeder App</li>
+          <li class="hint">→ Alle KI-Modi im Pro-Tier verfügbar</li>
+        </ul>
+      </div>
+      <div>
+        <div id="trial-form-wrap">
+          <label for="trial-email" style="display:block; font-size:14px; font-weight:500; color:var(--ink); margin-bottom:8px;">Deine E-Mail-Adresse</label>
+          <input class="trial-v2-email" type="email" id="trial-email" name="email" placeholder="name@beispiel.de" required />
+          <a class="btn btn-primary btn-block" id="trial-submit" href="#" style="margin-top:10px;">Jetzt kostenlos testen →</a>
+          <p class="trial-v2-privacy">🔒 Kein Spam. Abmeldung jederzeit per Klick.</p>
+        </div>
+        <div id="trial-success" style="display:none; text-align:center; padding:20px 0;">
+          <div style="font-size:32px; margin-bottom:10px;">✦</div>
+          <div style="font-size:17px; font-weight:600; color:var(--ink); margin-bottom:6px;">Bereit zum Start!</div>
+          <p style="font-size:14px; color:var(--ink-3); margin-bottom:14px;">Lade AngelWrite herunter und starte deine 7 Tage.</p>
+          <a class="btn btn-primary" href="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip">AngelWrite herunterladen</a>
+        </div>
+      </div>
+    </div>
 
-    <!-- Download-Hinweis für Käufer -->
-    <div style="margin-top: 48px; padding: 28px 32px; background: #f8f9ff; border: 1px solid #e0e4ff; border-radius: 14px; text-align: center; max-width: 560px; margin-left: auto; margin-right: auto;">
-      <div style="font-size: 28px; margin-bottom: 10px;">⬇️</div>
-      <div style="font-size: 16px; font-weight: 700; color: var(--text); margin-bottom: 6px;">Bereits Kunde?</div>
-      <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 18px;">Den Download-Link findest du in deiner Kauf-E-Mail. Du kannst AngelWrite auch direkt hier herunterladen.</div>
-      <a href="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
-         style="display: inline-block; background: var(--brand); color: white; padding: 11px 24px; border-radius: 8px; font-size: 14px; font-weight: 600; text-decoration: none;">
-        AngelWrite herunterladen
-      </a>
-      <div style="margin-top: 12px; font-size: 12px; color: var(--text-muted);">macOS 13 Ventura oder neuer · Apple Silicon &amp; Intel</div>
+    <!-- Bereits Kunde -->
+    <div style="margin-top:28px; padding:20px 24px; background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-lg); text-align:center; max-width:480px; margin-left:auto; margin-right:auto;">
+      <div style="font-size:15px; font-weight:600; color:var(--ink); margin-bottom:4px;">Bereits Kunde?</div>
+      <div style="font-size:14px; color:var(--ink-3); margin-bottom:14px;">Den Download-Link findest du in deiner Kauf-E-Mail.</div>
+      <a class="btn btn-ghost" href="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip">AngelWrite herunterladen</a>
+      <div style="margin-top:10px; font-size:12px; color:var(--ink-4);">macOS 13 Ventura oder neuer · Apple Silicon &amp; Intel</div>
     </div>
 
   </div>
 </section>
 
 <!-- FAQ -->
-<section class="section">
-  <p class="section-label">Fragen & Antworten</p>
-  <h2 class="section-title">Häufige Fragen</h2>
-  <div class="faq" style="margin-top: 48px;">
-
-    <div class="faq-item">
-      <div class="faq-q">Was beinhaltet die 7-Tage-Testphase?</div>
-      <div class="faq-a">Du lädst AngelWrite herunter und testest es 7 Tage lang kostenlos — mit lokaler Transkription (kein Internet nötig) und dem Direkt-Modus. Keine Kreditkarte, keine automatische Verlängerung. Nach 7 Tagen entscheidest du, ob und welches Modell zu dir passt. Die intelligenten KI-Modi sind im Pro-Tier verfügbar.</div>
+<section class="faq-sect" id="faq" style="padding: 96px 0; background: var(--bg-2); border-top: 1px solid var(--line);">
+  <div class="container">
+    <div class="faq-grid">
+      <div>
+        <span class="eyebrow">FAQ</span>
+        <h2>Häufige Fragen</h2>
+        <p>Noch eine Frage offen?</p>
+        <a class="link-inline" href="mailto:marcus.eichler65@googlemail.com">Schreib uns →</a>
+      </div>
+      <div class="faq-list">
+        <details>
+          <summary>Was beinhaltet die 7-Tage-Testphase? <span class="faq-icon">+</span></summary>
+          <p>Du lädst AngelWrite herunter und testest es 7 Tage lang kostenlos — mit lokaler Transkription (kein Internet nötig) und dem Original-Modus. Keine Kreditkarte, keine automatische Verlängerung. Die intelligenten KI-Modi sind im Pro-Tier verfügbar.</p>
+        </details>
+        <details>
+          <summary>Was ist der Unterschied zwischen Lokal, Pro und Advanced? <span class="faq-icon">+</span></summary>
+          <p>Lokal (19 € einmalig) funktioniert offline — ideal für maximale Privatsphäre ohne laufende Kosten. Pro (99 € / Jahr) schaltet alle KI-Modi, Cloud-Transkription und automatische Updates frei. Advanced (149 € einmalig) ist für Power-User mit eigenem API-Key — unbegrenzte Anfragen, eigene Prompts, Firmen-LLM einbindbar.</p>
+        </details>
+        <details>
+          <summary>Brauche ich einen API-Key? <span class="faq-icon">+</span></summary>
+          <p>Im Lokal-Tier und für die lokale Transkription nicht. Cloud-Transkription und KI-Veredelung im Pro-Tier sind inklusive — kein eigener Key nötig. Im Advanced-Tier bringst du deinen eigenen OpenAI- oder Claude-Key mit.</p>
+        </details>
+        <details>
+          <summary>Werden meine Sprachaufnahmen gespeichert? <span class="faq-icon">+</span></summary>
+          <p>Nein. Audiodateien werden ausschließlich temporär verarbeitet und nach der Transkription sofort automatisch gelöscht. Weder AngelWrite noch wir speichern deine Aufnahmen. Details in unserer <a class="link-inline" href="datenschutz.html">Datenschutzerklärung</a>.</p>
+        </details>
+        <details>
+          <summary>Funktioniert AngelWrite auch auf Intel-Macs? <span class="faq-icon">+</span></summary>
+          <p>Ja — die Cloud-Transkription (Pro &amp; Advanced) läuft auf allen Macs mit macOS 13+. Die lokale Transkription ohne Internet funktioniert besonders gut auf Apple Silicon (M1 und neuer).</p>
+        </details>
+        <details>
+          <summary>Was unterscheidet AngelWrite von Apple Diktat? <span class="faq-icon">+</span></summary>
+          <p>Apple Diktat transkribiert nur — AngelWrite veredelt deinen Text durch KI-Modi (Grammatik, Ton, Übersetzung), hat kein 30-Sekunden-Limit, unterstützt individuelle Prompts und ist in jeder App ohne Freigabe nutzbar.</p>
+        </details>
+      </div>
     </div>
+  </div>
+</section>
 
-    <div class="faq-item">
-      <div class="faq-q">Was ist der Unterschied zwischen Lokal, Pro und Advanced?</div>
-      <div class="faq-a">Lokal (19 € einmalig) funktioniert offline auf Apple Silicon — ideal für maximale Privatsphäre, ohne laufende Kosten. Pro (99 € / Jahr) schaltet alle 5 Modi, Cloud-Transkription und automatische Updates frei. Advanced (149 € einmalig) ist für Power-User mit eigenem API-Key — keine Nutzungsgrenzen, keine laufenden Kosten.</div>
+<!-- FINAL CTA -->
+<section class="cta-section">
+  <div class="container">
+    <h2>Sprich.<br/>Spar 90 Minuten am Tag.</h2>
+    <p>Kein Tippen. Kein Nachbearbeiten. Nur deine Gedanken — in ihrer besten Form, direkt am Cursor.</p>
+    <div class="cta-buttons">
+      <a class="btn btn-primary btn-lg" href="#kaufen">Kostenlos für macOS laden →</a>
+      <p class="risk-rev light">7 Tage gratis · Keine Kreditkarte · 1-Klick-Deinstallation</p>
     </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Brauche ich einen API-Key?</div>
-      <div class="faq-a">Für den Lokal-Tier und den Lokal-Modus im Pro-Tier nicht. Für Cloud-Transkription und KI-Veredelung im Pro-Tier ist kein eigener Key nötig — das ist inklusive. Im Advanced-Tier bringst du deinen eigenen OpenAI- oder Claude-Key mit, um ohne Limits zu arbeiten.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Funktioniert AngelWrite auch auf Intel-Macs?</div>
-      <div class="faq-a">Ja — die Cloud-Transkription (Pro & Advanced) läuft auf allen Macs mit macOS 13+. Die lokale Transkription ohne Internet funktioniert besonders gut auf Apple Silicon (M1 und neuer).</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Werden meine Sprachaufnahmen gespeichert?</div>
-      <div class="faq-a">Nein. Audiodateien werden ausschließlich temporär verarbeitet und nach der Transkription sofort automatisch gelöscht. Weder AngelWrite noch wir speichern deine Aufnahmen. Details in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</div>
-    </div>
-
-    <div class="faq-item">
-      <div class="faq-q">Welche Sprachen werden erkannt?</div>
-      <div class="faq-a">Primär Deutsch und Englisch — AngelWrite erkennt automatisch welche Sprache du sprichst. Whisper (OpenAI) unterstützt darüber hinaus über 50 weitere Sprachen.</div>
-    </div>
-
   </div>
 </section>
 
 <!-- FOOTER -->
-<footer>
-  <div class="footer-links">
-    <a href="datenschutz.html">Datenschutzerklärung</a>
-    <a href="mailto:marcus.eichler65@googlemail.com">Kontakt</a>
-    <a href="#kaufen">Preise</a>
+<footer class="foot">
+  <div class="foot-inner">
+    <div>
+      <div style="font-weight:600; font-size:15px; letter-spacing:-0.015em; margin-bottom:10px;">✦ AngelWrite</div>
+      <p class="foot-tag">Push-to-Talk-Diktat für macOS. Deine Worte. Vollendet.</p>
+    </div>
+    <div>
+      <h4>Produkt</h4>
+      <a href="#modi">Modi</a>
+      <a href="#vergleich">Vergleich</a>
+      <a href="#kaufen">Preise</a>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <a href="#faq">FAQ</a>
+      <a href="mailto:marcus.eichler65@googlemail.com">Kontakt</a>
+    </div>
+    <div>
+      <h4>Rechtliches</h4>
+      <a href="datenschutz.html">Datenschutzerklärung</a>
+    </div>
   </div>
-  <p>© 2026 AngelWrite · ValueLift · Alle Rechte vorbehalten</p>
-  <p style="margin-top: 8px; font-size: 12px;">AngelWrite ist ein Produkt von Marcus Eichler / ValueLift · macOS ist ein Markenzeichen von Apple Inc.</p>
+  <div class="foot-bot">
+    <span>© 2026 AngelWrite · ValueLift · Marcus Eichler</span>
+    <span>macOS ist ein Markenzeichen von Apple Inc.</span>
+  </div>
 </footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-  var INTERVAL = 4000, TICK = 50, TW_OUTPUT = 15;
+/* ── Velocity Modes Banner ── */
+var SPOKEN = '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."';
+var MODES = [
+  { name: 'Original',         color: '#6B7280', keys: { fn: true, shift: true },
+    spoken:  SPOKEN,
+    output:  '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."' },
+  { name: 'Professionell',    color: '#3D7A52', keys: { fn: true, cmd: true },
+    spoken:  SPOKEN,
+    output:  '„Ich finde, was gestern passiert ist, problematisch — das müssen wir ansprechen."' },
+  { name: 'Immer Freundlich', color: '#A0652E', keys: { fn: true, opt: true },
+    spoken:  SPOKEN,
+    output:  '„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."' },
+  { name: 'Englisch',         color: '#5B7DC8', keys: { fn: true, ctrl: true },
+    spoken:  SPOKEN,
+    output:  '"I\'d like to address what happened yesterday — I think it\'s important that we discuss this openly and find a constructive way forward."' }
+];
+var INTERVAL = 6000, TICK = 50, TW = 14;
+var cur = 0, twTimer = null, progTimer = null;
 
-  /* ── Keyboard DOM Builder ── */
-  function buildKbd(keys, color) {
-    function css(el, styles) { el.setAttribute('style', styles); }
-    function key(label, active, wide) {
-      var el = document.createElement('div');
-      var bg = active ? color : '#EBEBED';
-      var fg = active ? '#fff' : '#444';
-      var sh = active ? color : '#AEAEB2';
-      css(el,
-        'background:' + bg +
-        ';color:' + fg +
-        ';border-radius:5px' +
-        ';box-shadow:0 3px 0 ' + sh +
-        ';font-size:11px;font-weight:700' +
-        ';display:flex;align-items:center;justify-content:center' +
-        ';padding:5px 4px;min-height:30px' +
-        (wide ? ';width:100%' : ';flex:1')
-      );
-      el.textContent = label;
-      return el;
-    }
-    var wrap = document.createElement('div');
-    css(wrap, 'background:#D1D1D6;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box');
-    var r1 = document.createElement('div');
-    css(r1, 'display:flex');
-    r1.appendChild(keys.x ? key('fn + x', true, true) : key('⇧ shift', keys.shift, true));
-    var r2 = document.createElement('div');
-    css(r2, 'display:flex;gap:4px');
-    r2.appendChild(key('fn', keys.fn));
-    r2.appendChild(key('⌃', keys.ctrl));
-    r2.appendChild(key('⌥', keys.opt));
-    r2.appendChild(key('⌘', keys.cmd));
-    wrap.appendChild(r1);
-    wrap.appendChild(r2);
-    return wrap;
+function buildKbd(keys, accent) {
+  accent = accent || '#5B5BD6';
+  function css(el, s) { el.setAttribute('style', s); }
+  function key(label, active, extraStyle) {
+    var el = document.createElement('div');
+    css(el,
+      'background:' + (active ? accent : '#fff') +
+      ';color:' + (active ? '#fff' : '#54545B') +
+      ';border:1px solid ' + (active ? accent : '#E5E5E8') +
+      ';border-bottom-width:2px;border-radius:6px' +
+      ';font-family:JetBrains Mono,monospace;font-size:11px;font-weight:500' +
+      ';display:flex;align-items:center;justify-content:center' +
+      ';padding:6px 4px;min-height:30px;flex:1' +
+      (extraStyle ? ';' + extraStyle : '')
+    );
+    el.textContent = label;
+    return el;
   }
+  var wrap = document.createElement('div');
+  css(wrap, 'background:#F4F4F5;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box');
 
-  var spoken = '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”';
+  // Reihe 1: ⇧ shift — immer sichtbar, bei Direkt hervorgehoben
+  var r1 = document.createElement('div');
+  css(r1, 'display:flex');
+  r1.appendChild(key('⇧  shift', !!keys.shift, 'width:100%'));
 
-  var modes = [
-    {
-      name: 'Direkt', color: '#374151', bg: '#D3D1C7',
-      keys: {fn:true, shift:true, ctrl:false, opt:false, cmd:false, x:false},
-      output: '„Ähm, ich wollte halt mal kurz ansprechen dass das Meeting gestern irgendwie nicht so gut gelaufen ist und wir da nochmal drüber reden sollten — ich fand das schon ein bisschen frustrierend.”'
-    },
-    {
-      name: 'Englisch', color: '#1D4ED8', bg: '#BFDBFE',
-      keys: {fn:true, shift:false, ctrl:true, opt:false, cmd:false, x:false},
-      output: '”I wanted to briefly mention that yesterday\'s meeting didn\'t go as well as expected. We should find time to discuss it — I found it quite frustrating, to be honest.”'
-    },
-    {
-      name: 'Klar', color: '#166534', bg: '#BBF7D0',
-      keys: {fn:true, shift:false, ctrl:false, opt:false, cmd:true, x:false},
-      output: '„Ich möchte ansprechen, dass das gestrige Meeting nicht gut verlaufen ist. Ich schlage vor, wir sprechen darüber und finden gemeinsam eine Lösung.”'
-    },
-    {
-      name: 'Immer Freundlich', color: '#92400E', bg: '#FDE68A',
-      keys: {fn:true, shift:false, ctrl:false, opt:true, cmd:false, x:false},
-      output: '„Ich würde gerne das gestrige Meeting kurz nachbesprechen. Ich sehe Potenzial, unsere Zusammenarbeit noch effektiver zu gestalten, und freue mich auf einen offenen Austausch.”'
-    },
-    {
-      name: 'Kundenindividuell', color: '#5038C0', bg: '#C4B5FD',
-      keys: {fn:true, shift:false, ctrl:false, opt:false, cmd:false, x:true},
-      output: 'Betreff: Nachbesprechung Meeting\n\nHallo zusammen,\n\nkurze Bitte um einen Termin zur Nachbesprechung. Ich möchte offene Punkte klären.\n\nViele Grüße\nMarcus'
-    }
-  ];
+  // Reihe 2: fn · ⌃ · ⌥ · ⌘ — immer dieselben Keys, Hervorhebung wechselt je Modus
+  var r2 = document.createElement('div');
+  css(r2, 'display:flex;gap:4px');
+  r2.appendChild(key('fn', !!keys.fn));
+  r2.appendChild(key('⌃',  !!keys.ctrl));
+  r2.appendChild(key('⌥',  !!keys.opt));
+  r2.appendChild(key('⌘',  !!keys.cmd));
 
-  var current = 0, progress = 0;
-  var timers = [];
+  wrap.appendChild(r1);
+  wrap.appendChild(r2);
+  return wrap;
+}
 
-  var kbdEl    = document.getElementById('mb-keyboard');
-  var modeEl   = document.getElementById('mb-mode-name');
-  var spokenEl = document.getElementById('mb-spoken');
-  var outputEl = document.getElementById('mb-output');
-  var progressEl = document.getElementById('mb-progress');
-  var dotsEl   = document.getElementById('mb-dots');
+function buildDots(total, active) {
+  var wrap = document.getElementById('vb-dots');
+  if (!wrap) return;
+  wrap.innerHTML = '';
+  for (var i = 0; i < total; i++) {
+    var d = document.createElement('div');
+    d.className = 'vb-dot' + (i === active ? ' active' : '');
+    wrap.appendChild(d);
+  }
+}
+
+function typewrite(el, text, cb) {
+  el.textContent = '';
+  var i = 0;
+  clearInterval(twTimer);
+  twTimer = setInterval(function() {
+    el.textContent = text.slice(0, i++);
+    if (i > text.length) { clearInterval(twTimer); if (cb) cb(); }
+  }, TW);
+}
+
+function startProgress(duration) {
+  var bar = document.getElementById('vb-progress');
+  if (!bar) return;
+  bar.style.transition = 'none';
+  bar.style.width = '0%';
+  setTimeout(function() {
+    bar.style.transition = 'width ' + (duration / 1000) + 's linear';
+    bar.style.width = '100%';
+  }, 50);
+}
+
+function resetPanels() {
+  ['vb-p1', 'vb-p2', 'vb-p3'].forEach(function(id) {
+    var p = document.getElementById(id);
+    if (p) p.classList.remove('step-active');
+  });
+}
+function activatePanel(n) {
+  var p = document.getElementById('vb-p' + n);
+  if (p) p.classList.add('step-active');
+}
+
+function showMode(idx) {
+  var m = MODES[idx];
+  var kbdEl    = document.getElementById('vb-keyboard');
+  var nameEl   = document.getElementById('vb-mode-name');
+  var spokenEl = document.getElementById('vb-spoken');
+  var outputEl = document.getElementById('vb-output');
+  var waveEl   = document.getElementById('vb-waveform');
   if (!kbdEl) return;
 
-  spokenEl.textContent = spoken;
+  // Farbe des Modus ins Banner-Element schreiben (Waveform + Dots + Badge + Progress)
+  var banner = document.querySelector('.v-banner');
+  if (banner) banner.style.setProperty('--mode-color', m.color);
+  // Waveform-Stäbe direkt umfärben
+  if (waveEl) {
+    Array.prototype.forEach.call(waveEl.querySelectorAll('span'), function(s) {
+      s.style.background = m.color;
+    });
+  }
 
-  var dotEls = modes.map(function(m, i) {
-    var d = document.createElement('button');
-    d.className = 'mb-dot';
-    d.setAttribute('aria-label', m.name);
-    d.onclick = function() { goTo(i); resetTimer(); };
-    dotsEl.appendChild(d);
-    return d;
+  kbdEl.innerHTML = '';
+  kbdEl.appendChild(buildKbd(m.keys, m.color));
+  nameEl.textContent = m.name;
+  buildDots(MODES.length, idx);
+
+  // Panels + Output zurücksetzen — Spoken-Text bleibt stehen
+  resetPanels();
+  outputEl.textContent = '';
+  if (waveEl) { waveEl.classList.remove('active'); }
+  startProgress(INTERVAL);
+
+  // Spoken-Text sofort sichtbar (bleibt dauerhaft stehen)
+  spokenEl.textContent = m.spoken;
+  spokenEl.style.opacity = '1';
+
+  // Schritt 1 leuchtet auf — bleibt hervorgehoben
+  activatePanel(1);
+
+  // Schritt 2 (nach 900ms) leuchtet auf — Waveform zeigt Sprechen
+  setTimeout(function() {
+    activatePanel(2);
+    if (waveEl) { waveEl.classList.add('active'); }
+  }, 900);
+
+  // Waveform ausblenden (nach 1,8s)
+  setTimeout(function() {
+    if (waveEl) { waveEl.classList.remove('active'); }
+  }, 1800);
+
+  // Schritt 3 (nach 2s) leuchtet auf — alle drei bleiben hervorgehoben
+  setTimeout(function() {
+    activatePanel(3);
+    typewrite(outputEl, m.output);
+  }, 2000);
+}
+
+function nextMode() {
+  cur = (cur + 1) % MODES.length;
+  showMode(cur);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  showMode(0);
+  setInterval(nextMode, INTERVAL);
+
+  /* Demo tabs */
+  document.querySelectorAll('.demo-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var idx = this.dataset.idx;
+      document.querySelectorAll('.demo-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.querySelectorAll('.demo-result').forEach(function(r) { r.classList.remove('active'); });
+      this.classList.add('active');
+      document.querySelector('.demo-result[data-idx="' + idx + '"]').classList.add('active');
+    });
   });
 
-  function clearTimers() {
-    timers.forEach(function(t) { clearInterval(t); clearTimeout(t); });
-    timers = [];
-  }
-
-  function typeEl(el, text, speed, delay) {
-    var t = setTimeout(function() {
-      el.textContent = '';
-      var i = 0;
-      var iv = setInterval(function() {
-        if (i < text.length) { el.textContent += text[i++]; }
-        else { clearInterval(iv); }
-      }, speed);
-      timers.push(iv);
-    }, delay || 0);
-    timers.push(t);
-  }
-
-  function slideUp(el) {
-    el.style.transition = 'none';
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(18px)';
-    requestAnimationFrame(function() { requestAnimationFrame(function() {
-      el.style.transition = 'opacity 0.36s ease, transform 0.36s cubic-bezier(0.22,1,0.36,1)';
-      el.style.opacity = '1';
-      el.style.transform = 'translateY(0)';
-    }); });
-  }
-
-  function goTo(i) {
-    clearTimers();
-    current = i;
-    var m = modes[i];
-
-    modeEl.style.background = m.bg;
-    modeEl.style.color = m.color;
-    modeEl.textContent = m.name;
-    progressEl.style.background = m.color;
-
-    dotEls.forEach(function(d, idx) {
-      d.style.background = idx === i ? m.color : '#E5E7EB';
-      d.className = 'mb-dot' + (idx === i ? ' active' : '');
-    });
-
-    kbdEl.innerHTML = '';
-    kbdEl.appendChild(buildKbd(m.keys, m.color));
-
-    // "Du sprichst" bleibt immer fest stehen
-
-    outputEl.textContent = '';
-    slideUp(outputEl);
-    typeEl(outputEl, m.output, TW_OUTPUT, 80);
-
-    progress = 0;
-    progressEl.style.width = '0%';
-  }
-
-  var mainTimer;
-  function resetTimer() {
-    clearInterval(mainTimer);
-    progress = 0;
-    mainTimer = setInterval(function() {
-      progress += TICK;
-      progressEl.style.width = Math.min((progress / INTERVAL) * 100, 100) + '%';
-      if (progress >= INTERVAL) {
-        current = (current + 1) % modes.length;
-        goTo(current);
-      }
-    }, TICK);
-  }
-
-  goTo(0);
-  resetTimer();
-
-  // Trial-Form: Submit → Success-State
-  var trialForm = document.getElementById('trial-form');
-  if (trialForm) {
-    trialForm.addEventListener('submit', function(e) {
+  /* Trial form */
+  var submitBtn = document.getElementById('trial-submit');
+  if (submitBtn) {
+    submitBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      // TODO: systeme.io API hier einbinden (siehe Notion Backlog)
+      var email = document.getElementById('trial-email').value;
+      if (!email || !email.includes('@')) { document.getElementById('trial-email').focus(); return; }
       document.getElementById('trial-form-wrap').style.display = 'none';
       document.getElementById('trial-success').style.display = 'block';
     });
   }
-
-  // Marquee-Duplikation für nahtlose Loop — Karten innerhalb desselben Tracks verdoppeln
-  var track = document.getElementById('marquee-track');
-  if (track) {
-    Array.from(track.children).forEach(function(card) {
-      var clone = card.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      track.appendChild(clone);
-    });
-  }
-
-  // Demo Tabs
-  document.querySelectorAll('.demo-tab').forEach(function(tab) {
-    tab.addEventListener('click', function() {
-      var idx = this.dataset.idx;
-      document.querySelectorAll('.demo-tab').forEach(function(t) { t.classList.remove('active'); });
-      document.querySelectorAll('.demo-output').forEach(function(o) { o.classList.remove('active'); });
-      this.classList.add('active');
-      var out = document.querySelector('.demo-output[data-idx="' + idx + '"]');
-      if (out) out.classList.add('active');
-    });
-  });
 });
 </script>
 
