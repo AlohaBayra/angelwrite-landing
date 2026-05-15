@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="currentColor">
+  <!--
+    AngelWrite wing logo — SVG approximation.
+    Replace with the original file by placing the real image at this path:
+    /Docs/landing-page/logo.svg  (or logo.png, then update src in HTML)
+  -->
+  <!-- Main wing body + feathers -->
+  <path d="
+    M 28 164
+    C 22 148 22 128 30 110
+    C 38 92 52 78 70 64
+    C 88 50 110 38 138 24
+    C 160 12 180 6 196 2
+    C 184 18 166 32 146 44
+    C 170 30 188 16 198 4
+    C 184 22 164 38 140 52
+    C 164 36 182 20 192 6
+    C 178 26 156 44 132 58
+    C 154 44 170 28 178 12
+    C 162 34 140 50 114 64
+    C 134 50 148 34 154 18
+    C 138 40 116 56 90 68
+    C 106 55 116 40 116 26
+    C 102 46 82 60 58 68
+    C 62 57 60 45 54 35
+    C 44 52 34 70 28 90
+    C 22 108 22 130 26 148
+    Z
+  "/>
+  <!-- Small lower feather curl -->
+  <path d="
+    M 28 164
+    C 24 172 26 180 34 184
+    C 44 188 58 184 70 176
+    C 58 178 46 174 38 166
+    Z
+  "/>
+</svg>
