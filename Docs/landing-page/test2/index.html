@@ -855,19 +855,20 @@
 
 <script>
 /* ── Velocity Modes Banner ── */
+var SPOKEN = '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."';
 var MODES = [
   { name: 'Direkt',           color: '#5B5BD6', keys: { fn: true, shift: true },
-    spoken:  '„Meeting morgen 10 Uhr — nicht vergessen."',
-    output:  '„Meeting morgen 10 Uhr — nicht vergessen."' },
-  { name: 'Englisch',         color: '#3838BC', keys: { fn: true, ctrl: true },
-    spoken:  '„Ich schicke dir gleich den überarbeiteten Entwurf."',
-    output:  '"I\'ll send you the revised draft shortly."' },
+    spoken:  SPOKEN,
+    output:  '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."' },
   { name: 'Klar',             color: '#7474E0', keys: { fn: true, cmd: true },
-    spoken:  '„Ähm ich find das irgendwie problematisch..."',
-    output:  '„Ich halte das für problematisch und schlage vor, wir klären das."' },
+    spoken:  SPOKEN,
+    output:  '„Ich möchte das ansprechen, was gestern passiert ist — ich halte es für problematisch und schlage vor, wir klären das gemeinsam."' },
   { name: 'Immer Freundlich', color: '#9292EA', keys: { fn: true, opt: true },
-    spoken:  '„Das ist total unnötig und nervt mich!"',
-    output:  '„Ich würde gerne gemeinsam eine Lösung finden."' }
+    spoken:  SPOKEN,
+    output:  '„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."' },
+  { name: 'Englisch',         color: '#3838BC', keys: { fn: true, ctrl: true },
+    spoken:  SPOKEN,
+    output:  '"I\'d like to address what happened yesterday — I think it\'s important that we discuss this openly and find a constructive way forward."' }
 ];
 var INTERVAL = 4000, TICK = 50, TW = 14;
 var cur = 0, twTimer = null, progTimer = null;
@@ -875,7 +876,7 @@ var cur = 0, twTimer = null, progTimer = null;
 function buildKbd(keys, accent) {
   accent = accent || '#5B5BD6';
   function css(el, s) { el.setAttribute('style', s); }
-  function key(label, active, wide) {
+  function key(label, active, extraStyle) {
     var el = document.createElement('div');
     css(el,
       'background:' + (active ? accent : '#fff') +
@@ -884,30 +885,30 @@ function buildKbd(keys, accent) {
       ';border-bottom-width:2px;border-radius:6px' +
       ';font-family:JetBrains Mono,monospace;font-size:11px;font-weight:500' +
       ';display:flex;align-items:center;justify-content:center' +
-      ';padding:6px 4px;min-height:30px' +
-      (wide ? ';width:100%' : ';flex:1')
+      ';padding:6px 4px;min-height:30px;flex:1' +
+      (extraStyle ? ';' + extraStyle : '')
     );
     el.textContent = label;
     return el;
   }
   var wrap = document.createElement('div');
   css(wrap, 'background:#F4F4F5;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box');
+
+  // Reihe 1: ⇧ shift — immer sichtbar, bei Direkt hervorgehoben
   var r1 = document.createElement('div');
   css(r1, 'display:flex');
-  if (keys.x) {
-    r1.appendChild(key('fn + x', true, true));
-  } else {
-    var lbl = keys.shift ? '⇧ shift' : keys.ctrl ? '⌃ control' : keys.opt ? '⌥ option' : '⌘ command';
-    r1.appendChild(key(lbl, true, true));
-  }
+  r1.appendChild(key('⇧  shift', !!keys.shift, 'width:100%'));
+
+  // Reihe 2: fn · ⌃ · ⌥ · ⌘ — immer dieselben Keys, Hervorhebung wechselt je Modus
   var r2 = document.createElement('div');
   css(r2, 'display:flex;gap:4px');
-  // Untere Reihe: nur fn markieren — die zweite Taste ist bereits oben groß hervorgehoben
-  r2.appendChild(key('fn', keys.fn));
-  r2.appendChild(key('⌃', false));
-  r2.appendChild(key('⌥', false));
-  r2.appendChild(key('⌘', false));
-  wrap.appendChild(r1); wrap.appendChild(r2);
+  r2.appendChild(key('fn', !!keys.fn));
+  r2.appendChild(key('⌃',  !!keys.ctrl));
+  r2.appendChild(key('⌥',  !!keys.opt));
+  r2.appendChild(key('⌘',  !!keys.cmd));
+
+  wrap.appendChild(r1);
+  wrap.appendChild(r2);
   return wrap;
 }
 
