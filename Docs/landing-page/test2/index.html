@@ -870,7 +870,7 @@ var MODES = [
     spoken:  SPOKEN,
     output:  '"I\'d like to address what happened yesterday — I think it\'s important that we discuss this openly and find a constructive way forward."' }
 ];
-var INTERVAL = 4000, TICK = 50, TW = 14;
+var INTERVAL = 6000, TICK = 50, TW = 14;
 var cur = 0, twTimer = null, progTimer = null;
 
 function buildKbd(keys, accent) {
@@ -944,11 +944,15 @@ function startProgress(duration) {
   }, 50);
 }
 
-function setActivePanel(n) {
-  ['vb-p1', 'vb-p2', 'vb-p3'].forEach(function(id, i) {
+function resetPanels() {
+  ['vb-p1', 'vb-p2', 'vb-p3'].forEach(function(id) {
     var p = document.getElementById(id);
-    if (p) p.classList.toggle('step-active', i + 1 === n);
+    if (p) p.classList.remove('step-active');
   });
+}
+function activatePanel(n) {
+  var p = document.getElementById('vb-p' + n);
+  if (p) p.classList.add('step-active');
 }
 
 function showMode(idx) {
@@ -975,22 +979,23 @@ function showMode(idx) {
   nameEl.textContent = m.name;
   buildDots(MODES.length, idx);
 
-  // Reset
-  spokenEl.textContent = '';
-  spokenEl.style.opacity = '0';
+  // Panels + Output zurücksetzen — Spoken-Text bleibt stehen
+  resetPanels();
   outputEl.textContent = '';
   if (waveEl) { waveEl.classList.remove('active'); }
   startProgress(INTERVAL);
 
-  // Schritt 1: Shortcut-Panel leuchtet auf (sofort)
-  setActivePanel(1);
+  // Spoken-Text sofort sichtbar (bleibt dauerhaft stehen)
+  spokenEl.textContent = m.spoken;
+  spokenEl.style.opacity = '1';
 
-  // Schritt 2 (nach 900ms): Du sprichst — Waveform + Text gleichzeitig
+  // Schritt 1 leuchtet auf — bleibt hervorgehoben
+  activatePanel(1);
+
+  // Schritt 2 (nach 900ms) leuchtet auf — Waveform zeigt Sprechen
   setTimeout(function() {
-    setActivePanel(2);
+    activatePanel(2);
     if (waveEl) { waveEl.classList.add('active'); }
-    spokenEl.textContent = m.spoken;
-    spokenEl.style.opacity = '1';
   }, 900);
 
   // Waveform ausblenden (nach 1,8s)
@@ -998,9 +1003,9 @@ function showMode(idx) {
     if (waveEl) { waveEl.classList.remove('active'); }
   }, 1800);
 
-  // Schritt 3 (nach 2s): AngelWrite schreibt — Output tippen
+  // Schritt 3 (nach 2s) leuchtet auf — alle drei bleiben hervorgehoben
   setTimeout(function() {
-    setActivePanel(3);
+    activatePanel(3);
     typewrite(outputEl, m.output);
   }, 2000);
 }
