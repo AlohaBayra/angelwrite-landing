@@ -165,7 +165,9 @@ section { padding: 96px 0; }
 /* PRICING */
 .pricing { background: var(--bg-2); border-top: 1px solid var(--line); }
 .price-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
-.price-card { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 32px 28px 28px; position: relative; }
+.price-card { background: var(--bg); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 32px 28px 28px; position: relative; display: flex; flex-direction: column; }
+.price-card .price-list { flex: 1; }
+.price-card .btn-block { margin-top: auto; }
 .price-card.featured { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: var(--shadow-lg); }
 .price-card.featured .price-name { color: #fff; }
 .price-card.featured .price-sub { color: rgba(255,255,255,0.55); }
