@@ -10,6 +10,55 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="velocity.css" />
+  <link rel="stylesheet" href="https://sibforms.com/forms/end-form/build/sib-styles.css" />
+  <style>
+    /* ── Brevo-Form Overrides ── */
+    .sib-form { background: transparent !important; padding: 0 !important; text-align: left !important; }
+    #sib-container {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+      max-width: 100% !important;
+      text-align: left !important;
+    }
+    .sib-form-block p { font-family: 'Inter', sans-serif !important; color: var(--ink) !important; }
+    .sib-form-block[style*="font-size:26px"] p {
+      font-size: 20px !important; font-weight: 700 !important;
+      letter-spacing: -0.02em !important; color: var(--ink) !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+    .sib-form-block[style*="font-size:16px"] p {
+      font-size: 14px !important; color: var(--ink-3) !important;
+      font-family: 'Inter', sans-serif !important;
+    }
+    #sib-container .input {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 14px !important;
+      border: 1px solid var(--line) !important;
+      border-radius: var(--r-sm) !important;
+      padding: 11px 14px !important;
+      color: var(--ink) !important;
+      background: #fff !important;
+      width: 100% !important;
+    }
+    #sib-container .input:focus { border-color: var(--accent) !important; outline: none !important; }
+    #sib-container .input::placeholder { color: var(--ink-4) !important; font-family: 'Inter', sans-serif !important; }
+    .sib-form-block__button {
+      font-family: 'Inter', sans-serif !important;
+      font-size: 15px !important; font-weight: 600 !important;
+      background: var(--accent) !important;
+      color: #fff !important;
+      border-radius: var(--r-sm) !important;
+      padding: 12px 22px !important;
+      border: none !important;
+      cursor: pointer !important;
+      letter-spacing: -0.01em !important;
+      transition: background .15s !important;
+    }
+    .sib-form-block__button:hover { background: #4a4abf !important; }
+    #sib-form-container { max-width: 100% !important; }
+  </style>
   <style>
     /* ── Velocity Banner (rotierendes Modus-Panel) ── */
     .v-banner {
@@ -757,16 +806,78 @@
         </ul>
       </div>
       <div style="display:flex; flex-direction:column; justify-content:center;">
-        <iframe width="540" height="390" src="https://1c5f2e32.sibforms.com/serve/MUIFAE8u1Nkj6f2mwTniN6kEuIuzS3U98gsuymTsulxJxHhQ3loeugNqUlgFr6EoDtJddoEJ_hpYbwtbsIZJWKWrDcFi4ODDSmSl96xgbdyzWXCkzjBpNJG9DhCiUmoGlZkY_SAO_5-8gwkqO63I-ryVtdrfmwS1uAsq5ZLi4TXpAKhWJ46tfPMAIQT9nu14bdu2NgGOE2D-hA-SJg==" frameborder="0" scrolling="no" allowfullscreen style="display: block; margin-left: auto; margin-right: auto; max-width: 100%; overflow: hidden;"></iframe>
+        <div class="sib-form">
+          <div id="sib-form-container" class="sib-form-container">
+            <div id="error-message" class="sib-form-message-panel" style="font-family:'Inter',sans-serif; font-size:14px; text-align:left; color:#661d1d; background-color:#ffeded; border-color:#ff4949; border-radius:8px; max-width:100%; margin-bottom:12px;">
+              <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+                <span class="sib-form-message-panel__inner-text">Deine Emailadresse konnte nicht gespeichert werden. Bitte versuche es erneut.</span>
+              </div>
+            </div>
+            <div id="success-message" class="sib-form-message-panel" style="font-family:'Inter',sans-serif; font-size:14px; text-align:left; color:#085229; background-color:#e7faf0; border-color:#13ce66; border-radius:8px; max-width:100%; margin-bottom:12px;">
+              <div class="sib-form-message-panel__text sib-form-message-panel__text--center">
+                <span class="sib-form-message-panel__inner-text">Deine Emailadresse wurde erfolgreich bestätigt.</span>
+              </div>
+            </div>
+            <div id="sib-container" class="sib-container--large sib-container--vertical" style="direction:ltr">
+              <form id="sib-form" method="POST" action="https://1c5f2e32.sibforms.com/serve/MUIFAE8u1Nkj6f2mwTniN6kEuIuzS3U98gsuymTsulxJxHhQ3loeugNqUlgFr6EoDtJddoEJ_hpYbwtbsIZJWKWrDcFi4ODDSmSl96xgbdyzWXCkzjBpNJG9DhCiUmoGlZkY_SAO_5-8gwkqO63I-ryVtdrfmwS1uAsq5ZLi4TXpAKhWJ46tfPMAIQT9nu14bdu2NgGOE2D-hA-SJg==" data-type="subscription">
+                <div style="padding: 6px 0;">
+                  <div class="sib-form-block" style="font-size:26px; font-weight:700; text-align:left;">
+                    <p>AngelWrite 7 Tage kostenlos testen</p>
+                  </div>
+                </div>
+                <div style="padding: 6px 0;">
+                  <div class="sib-form-block" style="font-size:16px; text-align:left;">
+                    <div class="sib-text-form-block">
+                      <p>Kein Risiko · Keine Kreditkarte · Endet automatisch</p>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding: 6px 0;">
+                  <div class="sib-input sib-form-block">
+                    <div class="form__entry entry_block">
+                      <div class="form__label-row">
+                        <div class="entry__field">
+                          <input class="input" maxlength="200" type="text" id="VORNAME" name="VORNAME" autocomplete="off" placeholder="Vorname" data-required="true" required />
+                        </div>
+                      </div>
+                      <label class="entry__error entry__error--primary" style="font-family:'Inter',sans-serif; font-size:13px; color:#661d1d; background-color:#ffeded; border-color:#ff4949; border-radius:6px;"></label>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding: 6px 0;">
+                  <div class="sib-input sib-form-block">
+                    <div class="form__entry entry_block">
+                      <div class="form__label-row">
+                        <div class="entry__field">
+                          <input class="input" type="text" id="EMAIL" name="EMAIL" autocomplete="off" value="" placeholder="E-Mail-Adresse" data-required="true" required />
+                        </div>
+                      </div>
+                      <label class="entry__error entry__error--primary" style="font-family:'Inter',sans-serif; font-size:13px; color:#661d1d; background-color:#ffeded; border-color:#ff4949; border-radius:6px;"></label>
+                    </div>
+                  </div>
+                </div>
+                <div style="padding: 8px 0 0;">
+                  <div class="sib-form-block" style="text-align: left">
+                    <button class="sib-form-block__button sib-form-block__button-with-loader" form="sib-form" type="submit">
+                      <svg class="icon clickable__icon progress-indicator__icon sib-hide-loader-icon" viewBox="0 0 512 512">
+                        <path d="M460.116 373.846l-20.823-12.022c-5.541-3.199-7.54-10.159-4.663-15.874 30.137-59.886 28.343-131.652-5.386-189.946-33.641-58.394-94.896-95.833-161.827-99.676C261.028 55.961 256 50.751 256 44.352V20.309c0-6.904 5.808-12.337 12.703-11.982 83.556 4.306 160.163 50.864 202.11 123.677 42.063 72.696 44.079 162.316 6.031 236.832-3.14 6.148-10.75 8.461-16.728 5.01z" />
+                      </svg>
+                      Jetzt kostenlos testen →
+                    </button>
+                  </div>
+                </div>
+                <input type="text" name="email_address_check" value="" class="input--hidden">
+                <input type="hidden" name="locale" value="de">
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Bereits Kunde -->
-    <div style="margin-top:28px; padding:20px 24px; background:var(--bg-2); border:1px solid var(--line); border-radius:var(--r-lg); text-align:center; max-width:480px; margin-left:auto; margin-right:auto;">
-      <div style="font-size:15px; font-weight:600; color:var(--ink); margin-bottom:4px;">Bereits Kunde?</div>
-      <div style="font-size:14px; color:var(--ink-3); margin-bottom:14px;">Den Download-Link findest du in deiner Kauf-E-Mail.</div>
-      <a class="btn btn-ghost" href="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip">AngelWrite herunterladen</a>
-      <div style="margin-top:10px; font-size:12px; color:var(--ink-4);">macOS 13 Ventura oder neuer · Apple Silicon &amp; Intel</div>
+    <div style="margin-top:28px; padding:16px 24px; border-top:1px solid var(--line); text-align:center; max-width:480px; margin-left:auto; margin-right:auto;">
+      <div style="font-size:14px; color:var(--ink-4);">Bereits Kunde? Den Download-Link findest du in deiner Kauf-E-Mail.</div>
     </div>
 
   </div>
@@ -1044,5 +1155,16 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
+
+<script>
+  window.REQUIRED_CODE_ERROR_MESSAGE = 'Wähle bitte einen Ländervorwahl aus.';
+  window.LOCALE = 'de';
+  window.EMAIL_INVALID_MESSAGE = window.SMS_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht gültig. Bitte überprüfe das Feldformat und versuche es erneut.";
+  window.REQUIRED_ERROR_MESSAGE = "Dieses Feld darf nicht leer sein.";
+  window.GENERIC_INVALID_MESSAGE = "Die eingegebenen Informationen sind nicht gültig. Bitte überprüfe das Feldformat und versuche es erneut.";
+  window.translation = { common: { selectedList: '{quantity} Liste ausgewählt', selectedLists: '{quantity} Listen ausgewählt', selectedOption: '{quantity} ausgewählt', selectedOptions: '{quantity} ausgewählt' } };
+  var AUTOHIDE = Boolean(0);
+</script>
+<script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 </body>
 </html>
