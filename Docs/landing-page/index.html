@@ -503,6 +503,13 @@
     .tier-features li:last-child { border-bottom: none; }
     .tier-features .check { color: #10B981; font-weight: 700; flex-shrink: 0; }
     .tier-features .minus { color: #D1D5DB; flex-shrink: 0; }
+    .tier-section-label {
+      display: block; list-style: none;
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.6px; color: var(--text-muted);
+      padding: 10px 0 6px; border-bottom: 1px solid var(--border);
+      margin-top: 4px;
+    }
     .tier-cta {
       display: block; width: 100%;
       background: var(--bg-soft); color: var(--text);
@@ -1255,7 +1262,7 @@
           <tr>
             <td class="row-label">🌍 Deutsch sprechen, Englisch schreiben</td>
             <td class="col-angel"><div class="cv">✅<span>Eingebaut</span></div></td>
-            <td><div class="cv">❌</div></td>
+            <td><div class="cv">⚠️<span>Nur Pro, per Befehl</span></div></td>
             <td><div class="cv">⚠️<span>Mit Setup</span></div></td>
             <td><div class="cv">❌</div></td>
           </tr>
@@ -1276,7 +1283,7 @@
           <tr>
             <td class="row-label">🔒 Audio wird nicht in die Cloud gesendet</td>
             <td class="col-angel"><div class="cv">⚠️<span>Im Lokal-Modus</span></div></td>
-            <td><div class="cv">❌<span>US-Server</span></div></td>
+            <td><div class="cv">❌<span>Cloud-only</span></div></td>
             <td><div class="cv">⚠️<span>Je nach Modus</span></div></td>
             <td><div class="cv">✅<span>Immer lokal</span></div></td>
           </tr>
@@ -1304,7 +1311,7 @@
     <!-- TRIAL CAPTURE -->
     <div class="trial-capture">
       <div class="trial-capture-header">
-        <h3>✦ 7 Tage kostenlos — voller Pro-Zugang</h3>
+        <h3>✦ 7 Tage kostenlos testen</h3>
         <div class="trial-pills">
           <span class="trial-pill">Keine Kreditkarte</span>
           <span class="trial-pill">Kein Abo</span>
@@ -1316,11 +1323,12 @@
           <div class="tp-price">0 €</div>
           <div class="tp-label">für 7 Tage · danach ab 19 €</div>
           <ul class="tp-features">
-            <li><span class="ck">✓</span> Alle 5 Modi freigeschaltet</li>
-            <li><span class="ck">✓</span> Cloud-Transkription via Whisper</li>
-            <li><span class="ck">✓</span> KI-Veredelung inklusive</li>
+            <li><span class="ck">✓</span> Lokale Transkription — kein Internet nötig</li>
+            <li><span class="ck">✓</span> Modus: Direkt — deine Worte, wörtlich</li>
+            <li><span class="ck">✓</span> DSGVO: Daten verlassen nie das Gerät</li>
             <li><span class="ck">✓</span> Text direkt am Cursor, in jeder App</li>
-            <li><span class="ck">✓</span> Kein Risiko — endet automatisch</li>
+            <li><span class="ck">✓</span> Endet automatisch — kein Risiko</li>
+            <li style="color:var(--text-muted);font-size:12px;padding-top:8px;border-bottom:none">→ Alle intelligenten Modi im Pro-Tier verfügbar</li>
           </ul>
         </div>
         <div class="trial-form-block">
@@ -1361,7 +1369,7 @@
         <div class="tier-tagline">Offline. Privat. Kein Abo.</div>
         <div class="tier-desc">Für alle, die ihre Daten auf dem Gerät behalten wollen — ohne Cloud, ohne laufende Kosten.</div>
         <ul class="tier-features">
-          <li><span class="check">✓</span> Lokale Transkription (Apple Silicon)</li>
+          <li><span class="check">✓</span> Lokale Transkription (lokales Modell)</li>
           <li><span class="check">✓</span> Kein Internet erforderlich</li>
           <li><span class="check">✓</span> Modus: Direkt — Wörtlich (Fn + ⇧)</li>
           <li><span class="check">✓</span> DSGVO: Daten verlassen nie das Gerät</li>
@@ -1380,15 +1388,15 @@
         <div class="tier-price"><sup>€</sup>99</div>
         <div class="tier-period">pro Jahr · jederzeit kündbar</div>
         <div class="tier-monthly">entspricht 8,25 € / Monat</div>
-        <div class="tier-tagline">Alle Modi. Volle Power. Sofort produktiv.</div>
-        <div class="tier-desc">Die Wahl der meisten AngelWrite-Nutzer — alle 5 Modi vom ersten Tag an, keine Einrichtung, kein API-Key nötig.</div>
+        <div class="tier-tagline">Lokal + alle intelligenten Modi.</div>
+        <div class="tier-desc">Kein eigener API-Key nötig — alle KI-Modi sind vom ersten Tag an fertig eingerichtet.</div>
         <ul class="tier-features">
-          <li><span class="check">✓</span> Alle 5 Modi (Direkt, Englisch, Immer Freundlich, Klar, Kundenindividuell)</li>
-          <li><span class="check">✓</span> Cloud-Transkription via Whisper API</li>
+          <li class="tier-section-label">Zusätzlich zu Lokal:</li>
+          <li><span class="check">✓</span> Alle intelligenten Modi (Englisch, Immer Freundlich, Klar, Kundenindividuell)</li>
+          <li><span class="check">✓</span> Cloud-Transkription inklusive</li>
           <li><span class="check">✓</span> KI-Veredelung inklusive</li>
           <li><span class="check">✓</span> Fair Use: 250 Anfragen / Woche</li>
           <li><span class="check">✓</span> Automatische Updates & neue Modi</li>
-          <li><span class="check">✓</span> macOS-Kompatibilität garantiert</li>
           <li><span class="check">✓</span> E-Mail-Support</li>
         </ul>
         <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Pro starten – 99 € / Jahr</a>
@@ -1401,14 +1409,13 @@
         <div class="tier-price"><sup>€</sup>149</div>
         <div class="tier-period">einmalig</div>
         <div class="tier-monthly">&nbsp;</div>
-        <div class="tier-tagline">Vollständige Freiheit. Deine Regeln.</div>
-        <div class="tier-desc">Für Power-User mit eigenem API-Key — keine Nutzungsgrenzen, eigene Prompts, AngelWrite komplett nach deinem Workflow.</div>
+        <div class="tier-tagline">Pro + eigener API-Key. Keine Grenzen.</div>
+        <div class="tier-desc">Für Power-User, die ihren eigenen Key mitbringen — unbegrenzte Nutzung auf eigene Rechnung, eigene Prompts.</div>
         <ul class="tier-features">
-          <li><span class="check">✓</span> Alle 5 Standard-Modi inklusive</li>
-          <li><span class="check">✓</span> Eigener API-Key (OpenAI oder Claude)</li>
-          <li><span class="check">✓</span> Keine Fair-Use-Grenzen — unbegrenzte Nutzung</li>
-          <li><span class="check">✓</span> Eigene Prompts pro Modus anpassbar</li>
-          <li><span class="check">✓</span> Benutzerdefinierte Modi erstellen (demnächst)</li>
+          <li class="tier-section-label">Zusätzlich zu Pro:</li>
+          <li><span class="check">✓</span> Eigener API-Key (OpenAI oder Claude) — BYOK</li>
+          <li><span class="check">✓</span> Kundenindividuell-Modus mit eigenem Prompt</li>
+          <li><span class="check">✓</span> Unbegrenzte Anfragen auf eigene Rechnung</li>
           <li><span class="check">✓</span> Einmalige Zahlung — keine laufenden Kosten</li>
         </ul>
         <a class="tier-cta" href="https://buy.stripe.com/6oUeVc34OaDk3DV3yA8bS00">Advanced kaufen – 149 €</a>
@@ -1442,7 +1449,7 @@
 
     <div class="faq-item">
       <div class="faq-q">Was beinhaltet die 7-Tage-Testphase?</div>
-      <div class="faq-a">Du erhältst vollen Zugang zum Pro-Tier — alle 5 Modi, Cloud-Transkription, KI-Veredelung. Keine Kreditkarte nötig, keine automatische Verlängerung. Nach 7 Tagen wählst du, ob und welches Modell du nutzen möchtest.</div>
+      <div class="faq-a">Du lädst AngelWrite herunter und testest es 7 Tage lang kostenlos — mit lokaler Transkription (kein Internet nötig) und dem Direkt-Modus. Keine Kreditkarte, keine automatische Verlängerung. Nach 7 Tagen entscheidest du, ob und welches Modell zu dir passt. Die intelligenten KI-Modi sind im Pro-Tier verfügbar.</div>
     </div>
 
     <div class="faq-item">
