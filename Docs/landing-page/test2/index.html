@@ -143,6 +143,12 @@
       .trial-v2 { grid-template-columns: 1fr; gap: 24px; }
     }
 
+    /* ── Modi-Reihen: individuelle Farbe pro Modus ── */
+    .mode-row { --row-color: var(--ink-4); }
+    .mode-num  { color: var(--row-color) !important; }
+    .mode-key  { border-color: var(--row-color) !important; color: var(--row-color) !important; }
+    .mode-body h3 { color: var(--row-color) !important; }
+
     /* ── Step-Badge (1 / 2 / 3) ── */
     .vb-step {
       display: inline-flex;
@@ -352,7 +358,7 @@
       <p>Von wörtlicher Transkription bis zum vollständig individuellen Workflow — je weiter, desto mächtiger.</p>
     </div>
     <div class="modes-grid">
-      <div class="mode-row">
+      <div class="mode-row" style="--row-color:#6B7280">
         <span class="mode-num">01</span>
         <div class="mode-meta"><span class="mode-key">fn ⇧</span></div>
         <div class="mode-body">
@@ -360,7 +366,7 @@
           <p>Wortgetreue Transkription — keine KI, kein Internet. Läuft vollständig auf deinem Mac. Ideal für Notizen und Memos.</p>
         </div>
       </div>
-      <div class="mode-row">
+      <div class="mode-row" style="--row-color:#5B7DC8">
         <span class="mode-num">02</span>
         <div class="mode-meta"><span class="mode-key">fn ⌃</span></div>
         <div class="mode-body">
@@ -368,18 +374,18 @@
           <p>Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Für internationale Teams ohne manuelles Übersetzen.</p>
         </div>
       </div>
-      <div class="mode-row featured">
+      <div class="mode-row featured" style="--row-color:#3D7A52">
         <span class="mode-num">03</span>
         <div class="mode-meta">
           <span class="mode-key">fn ⌘</span>
-          <span class="mode-pop">Beliebt</span>
+          <span class="mode-pop" style="background:#3D7A52">Beliebt</span>
         </div>
         <div class="mode-body">
           <h3>Klar</h3>
           <p>Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben vollständig erhalten.</p>
         </div>
       </div>
-      <div class="mode-row">
+      <div class="mode-row" style="--row-color:#A0652E">
         <span class="mode-num">04</span>
         <div class="mode-meta"><span class="mode-key">fn ⌥</span></div>
         <div class="mode-body">
@@ -387,7 +393,7 @@
           <p>Aus Frust wird eine sachliche, professionelle Nachricht. Die Botschaft bleibt, der Ton ändert sich.</p>
         </div>
       </div>
-      <div class="mode-row">
+      <div class="mode-row" style="--row-color:#7878D8">
         <span class="mode-num">05</span>
         <div class="mode-meta">
           <span class="mode-key">fn x</span>
@@ -857,16 +863,16 @@
 /* ── Velocity Modes Banner ── */
 var SPOKEN = '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."';
 var MODES = [
-  { name: 'Direkt',           color: '#374151', keys: { fn: true, shift: true },
+  { name: 'Direkt',           color: '#6B7280', keys: { fn: true, shift: true },
     spoken:  SPOKEN,
     output:  '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."' },
-  { name: 'Klar',             color: '#166534', keys: { fn: true, cmd: true },
+  { name: 'Klar',             color: '#3D7A52', keys: { fn: true, cmd: true },
     spoken:  SPOKEN,
     output:  '„Ich möchte das ansprechen, was gestern passiert ist — ich halte es für problematisch und schlage vor, wir klären das gemeinsam."' },
-  { name: 'Immer Freundlich', color: '#92400E', keys: { fn: true, opt: true },
+  { name: 'Immer Freundlich', color: '#A0652E', keys: { fn: true, opt: true },
     spoken:  SPOKEN,
     output:  '„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."' },
-  { name: 'Englisch',         color: '#1D4ED8', keys: { fn: true, ctrl: true },
+  { name: 'Englisch',         color: '#5B7DC8', keys: { fn: true, ctrl: true },
     spoken:  SPOKEN,
     output:  '"I\'d like to address what happened yesterday — I think it\'s important that we discuss this openly and find a constructive way forward."' }
 ];
