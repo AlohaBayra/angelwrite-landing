@@ -223,9 +223,17 @@
   .wf-card.wf-angel .wf-label { color: #C7D2FE !important; }
   .wf-card.wf-angel .wf-time { color: #A5B4FC !important; }
   .wf-card.wf-other .wf-label { color: rgba(255,255,255,0.55) !important; }
-  .wf-step, .wf-arrow, .wf-time { color: rgba(255,255,255,0.90) !important; }
-  .wf-card.wf-other .wf-step { color: rgba(255,255,255,0.70) !important; }
-  .wf-card.wf-other .wf-arrow { color: rgba(255,255,255,0.25) !important; }
+  /* Step-Boxen: heller Hintergrund (velocity.css), dunkler Text */
+  .wf-step { color: #1F1F23 !important; }
+  .wf-card.wf-angel .wf-step:last-child {
+    background: var(--accent) !important;
+    border-color: var(--accent) !important;
+    color: #fff !important;
+  }
+  .wf-card.wf-other .wf-step { color: #3A3A40 !important; opacity: 1 !important; }
+  .wf-arrow { color: rgba(255,255,255,0.40) !important; }
+  .wf-time { color: rgba(255,255,255,0.80) !important; }
+  .wf-card.wf-other .wf-arrow { color: rgba(255,255,255,0.20) !important; }
   .wf-card.wf-other .wf-time { color: rgba(255,255,255,0.45) !important; }
 
   /* ── COMPARE ── */
@@ -689,7 +697,7 @@
       </div>
       <div class="mode-row" style="--row-color:#A5B4FC">
         <span class="mode-num">05</span>
-        <div class="mode-meta"><span class="mode-key">fn x</span><span class="mode-pop muted">Advanced</span></div>
+        <div class="mode-meta"><span class="mode-key">fn x</span></div>
         <div class="mode-body"><h3>Kundenindividuell <span class="mode-tier">Advanced</span></h3><p>Dein Prompt, dein API-Key, deine Regeln. Vollständige Kontrolle über jeden Aspekt der Ausgabe.</p></div>
       </div>
     </div>
@@ -988,7 +996,7 @@ function buildKbd(keys, accent) {
   function css(el, s) { el.setAttribute('style', s); }
   function key(label, active, extraStyle) {
     var el = document.createElement('div');
-    css(el, 'background:' + (active ? accent : '#fff') + ';color:' + (active ? '#fff' : '#54545B') + ';border:1px solid ' + (active ? accent : '#E5E5E8') + ';border-bottom-width:2px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:6px 4px;min-height:30px;flex:1' + (extraStyle ? ';' + extraStyle : ''));
+    css(el, 'background:' + (active ? accent : '#fff') + ';color:' + (active ? '#fff' : '#54545B') + ';border:1px solid ' + (active ? 'rgba(0,0,0,0.28)' : '#E5E5E8') + ';border-bottom-width:2px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:6px 4px;min-height:30px;flex:1;box-shadow:' + (active ? '0 3px 0 rgba(0,0,0,0.20)' : '0 2px 0 #D1D1D6') + (extraStyle ? ';' + extraStyle : ''));
     el.textContent = label;
     return el;
   }
