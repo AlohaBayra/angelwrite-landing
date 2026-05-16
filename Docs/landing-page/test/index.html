@@ -60,7 +60,7 @@
   }
   .hero h1 {
     color: #fff;
-    font-size: 78px;
+    font-size: clamp(40px, 6.5vw, 78px);
   }
   .hi {
     background: linear-gradient(135deg, #A5B4FC, #818CF8, #C084FC);
@@ -147,23 +147,12 @@
     background-clip: text;
   }
 
-  /* ── MODES ── */
-  .modes-section-bg { background: var(--dark-bg) !important; }
-  .mode-row {
-    border: 1px solid rgba(255,255,255,0.06) !important;
-    background: rgba(255,255,255,0.02);
-    transition: background 0.2s;
-  }
-  .mode-row:hover { background: rgba(255,255,255,0.04); }
-  .mode-num { color: rgba(255,255,255,0.20) !important; }
-  .mode-key {
-    background: rgba(255,255,255,0.08) !important;
-    border-color: rgba(255,255,255,0.10) !important;
-    color: rgba(255,255,255,0.70) !important;
-  }
-  .mode-body p { color: rgba(255,255,255,0.50) !important; }
-  .sh-dark h2, .sh-dark p { color: rgba(255,255,255,0.85) !important; }
-  .sh-dark p { color: rgba(255,255,255,0.50) !important; }
+  /* ── MODES — wie Original (heller Hintergrund) ── */
+  .modes-section-bg { background: var(--bg) !important; }
+  .mode-row { --row-color: var(--ink-4); }
+  .mode-num  { color: var(--row-color) !important; }
+  .mode-key  { border-color: var(--row-color) !important; color: var(--row-color) !important; background: var(--bg) !important; }
+  .mode-body h3 { color: var(--row-color) !important; }
 
   /* ── BENEFITS — dunkel mit Accent-Icons ── */
   .benefits-dark {
@@ -205,19 +194,24 @@
     background: rgba(255,255,255,0.03);
     border-color: rgba(255,255,255,0.08) !important;
   }
+  .workflow-dark .sh h2 { color: #fff !important; }
+  .workflow-dark .sh p { color: rgba(255,255,255,0.55) !important; }
   .wf-label { color: #A5B4FC !important; }
-  .wf-card.wf-other .wf-label { color: rgba(255,255,255,0.40) !important; }
-  .wf-step, .wf-arrow, .wf-time { color: rgba(255,255,255,0.70) !important; }
-  .wf-card.wf-other .wf-step,
-  .wf-card.wf-other .wf-arrow,
-  .wf-card.wf-other .wf-time { color: rgba(255,255,255,0.35) !important; }
+  .wf-card.wf-other .wf-label { color: rgba(255,255,255,0.55) !important; }
+  .wf-step, .wf-arrow, .wf-time { color: rgba(255,255,255,0.85) !important; }
+  .wf-card.wf-other .wf-step { color: rgba(255,255,255,0.65) !important; }
+  .wf-card.wf-other .wf-arrow { color: rgba(255,255,255,0.30) !important; }
+  .wf-card.wf-other .wf-time { color: rgba(255,255,255,0.50) !important; }
 
   /* ── COMPARE ── */
   .compare-bg { background: #fff !important; }
-  .cmp thead tr {
+  /* Nicht-AngelWrite-Header: leicht eingefärbt, dunkler Text — gut lesbar */
+  .cmp thead th { background: var(--bg-3) !important; color: var(--ink) !important; }
+  /* AngelWrite-Header: Indigo-Gradient mit weißem Text */
+  .cmp thead th.cmp-us {
     background: linear-gradient(135deg, var(--accent), #8B5CF6) !important;
+    color: #fff !important;
   }
-  .cmp thead th { color: #fff !important; }
   .cmp-us { background: rgba(99,102,241,0.06) !important; }
 
   /* ── TESTIMONIALS ── */
@@ -281,7 +275,6 @@
     background: radial-gradient(800px 400px at 50% -100px, rgba(165,180,252,0.15), transparent 70%);
     pointer-events: none;
   }
-  .cta-section h2 { font-size: 64px; color: #fff; }
   .cta-section p { color: rgba(255,255,255,0.60); }
   .cta-section .btn-primary {
     background: #fff !important;
@@ -351,11 +344,12 @@
 
   /* Section Head */
   .sh { text-align: center; margin-bottom: 48px; }
-  .sh h2 { font-size: 46px; font-weight: 600; letter-spacing: -0.03em; margin: 16px 0 12px; line-height: 1.08; }
+  .sh h2 { font-size: clamp(32px, 4vw, 52px); font-weight: 600; letter-spacing: -0.035em; margin: 16px 0 12px; line-height: 1.08; }
   .sh p { font-size: 17px; color: var(--ink-3); max-width: 520px; margin: 0 auto; line-height: 1.55; }
 
   /* Benefits */
   .ben-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
   .ben-icon { font-size: 24px; margin-bottom: 12px; }
   .ben-item h4 { font-size: 16px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 8px; }
   .ben-item p { font-size: 14px; color: var(--ink-3); margin: 0; line-height: 1.6; }
@@ -521,6 +515,23 @@
   @keyframes waveBar { from { transform: scaleY(0.25); } to { transform: scaleY(1); } }
   .vb-spoken { transition: opacity 0.4s; }
 
+  /* ══ RESPONSIVE — ganz am Ende, überschreibt alle Grid-Definitionen ══ */
+  @media (max-width: 1024px) {
+    .hiw-grid,
+    .ben-grid,
+    .workflow-grid,
+    .testi-grid,
+    .price-grid,
+    .faq-grid { grid-template-columns: 1fr !important; }
+    .trial-v2 { grid-template-columns: 1fr !important; gap: 24px; }
+    .foot-inner { grid-template-columns: 1fr 1fr !important; gap: 24px; }
+  }
+  @media (max-width: 768px) {
+    .cmp-wrap { font-size: 12px; }
+    .cmp th, .cmp td { padding: 10px 8px; }
+    .foot-inner { grid-template-columns: 1fr !important; }
+  }
+
   </style>
 </head>
 <body>
@@ -622,31 +633,31 @@
   </div>
 </section>
 
-<!-- MODES — dark -->
-<section class="modes-section-bg" id="modi" style="padding: 96px 0; background: #09090F;">
+<!-- MODES -->
+<section class="modes-section-bg" id="modi" style="padding: 96px 0;">
   <div class="container">
-    <div class="sh sh-dark">
+    <div class="sh">
       <span class="eyebrow">Modi</span>
       <h2 style="color:#fff;">Ein Shortcut. Fünf Stimmen. Jede trifft.</h2>
       <p>Von wörtlicher Transkription bis zum vollständig individuellen Workflow — je weiter, desto mächtiger.</p>
     </div>
     <div class="modes-grid">
-      <div class="mode-row" style="--row-color:#9CA3AF">
+      <div class="mode-row" style="--row-color:#6B7280">
         <span class="mode-num">01</span>
         <div class="mode-meta"><span class="mode-key">fn ⇧</span></div>
         <div class="mode-body"><h3>Original</h3><p>Wortgetreue Transkription — keine KI, kein Internet. Läuft vollständig auf deinem Mac.</p></div>
       </div>
-      <div class="mode-row" style="--row-color:#818CF8">
+      <div class="mode-row" style="--row-color:#5B7DC8">
         <span class="mode-num">02</span>
         <div class="mode-meta"><span class="mode-key">fn ⌃</span></div>
         <div class="mode-body"><h3>Englisch</h3><p>Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Für internationale Teams.</p></div>
       </div>
-      <div class="mode-row featured" style="--row-color:#34D399">
+      <div class="mode-row featured" style="--row-color:#3D7A52">
         <span class="mode-num">03</span>
-        <div class="mode-meta"><span class="mode-key">fn ⌘</span><span class="mode-pop" style="background:#059669">Beliebt</span></div>
+        <div class="mode-meta"><span class="mode-key">fn ⌘</span><span class="mode-pop" style="background:#3D7A52">Beliebt</span></div>
         <div class="mode-body"><h3>Professionell</h3><p>Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben vollständig erhalten.</p></div>
       </div>
-      <div class="mode-row" style="--row-color:#FBBF24">
+      <div class="mode-row" style="--row-color:#A0652E">
         <span class="mode-num">04</span>
         <div class="mode-meta"><span class="mode-key">fn ⌥</span></div>
         <div class="mode-body"><h3>Immer Freundlich</h3><p>Aus Frust wird eine sachliche, professionelle Nachricht. Die Botschaft bleibt, der Ton ändert sich.</p></div>
@@ -723,7 +734,7 @@
 <!-- WORKFLOW — dark -->
 <section class="workflow-dark" style="padding: 96px 0; background: #0F0F1C; border-top: 1px solid rgba(255,255,255,0.06);">
   <div class="container">
-    <div class="sh sh-dark">
+    <div class="sh" style="color:#fff">
       <span class="eyebrow">Der Unterschied</span>
       <h2 style="color:#fff;">Taste halten. Sprechen. Text erscheint.</h2>
       <p>Direkt dort, wo dein Cursor steht — in jeder App. Kein Hochladen, kein Copy-Paste.</p>
@@ -758,7 +769,7 @@
   <div class="container">
     <div class="sh">
       <span class="eyebrow">Warum AngelWrite?</span>
-      <h2>Diktieren können viele.<br>Fertig formuliert — nur einer.</h2>
+      <h2>Diktieren können viele. Fertig formuliert — nur einer.</h2>
       <p>Was andere Diktat-Apps dir nicht sagen.</p>
     </div>
     <div class="cmp-wrap">
@@ -939,9 +950,9 @@
 <script>
 var SPOKEN = '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."';
 var MODES = [
-  { name: 'Original', color: '#9CA3AF', keys: { fn: true, shift: true }, spoken: SPOKEN, output: '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."' },
-  { name: 'Professionell', color: '#34D399', keys: { fn: true, cmd: true }, spoken: SPOKEN, output: '„Ich finde, was gestern passiert ist, problematisch — das müssen wir ansprechen."' },
-  { name: 'Immer Freundlich', color: '#FBBF24', keys: { fn: true, opt: true }, spoken: SPOKEN, output: '„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."' },
+  { name: 'Original', color: '#6B7280', keys: { fn: true, shift: true }, spoken: SPOKEN, output: '„Ähm also, ich find das halt irgendwie schon ein bisschen problematisch was da gestern passiert ist — das müssen wir echt mal ansprechen."' },
+  { name: 'Professionell', color: '#3D7A52', keys: { fn: true, cmd: true }, spoken: SPOKEN, output: '„Ich finde, was gestern passiert ist, problematisch — das müssen wir ansprechen."' },
+  { name: 'Immer Freundlich', color: '#A0652E', keys: { fn: true, opt: true }, spoken: SPOKEN, output: '„Ich würde gerne kurz auf das eingehen, was gestern passiert ist. Ich sehe hier Klärungsbedarf und bin überzeugt, dass wir gemeinsam eine konstruktive Lösung finden."' },
   { name: 'Englisch', color: '#818CF8', keys: { fn: true, ctrl: true }, spoken: SPOKEN, output: '"I\'d like to address what happened yesterday — I think it\'s important that we discuss this openly and find a constructive way forward."' }
 ];
 var INTERVAL = 6000, TICK = 14, TW = 14;
@@ -952,12 +963,12 @@ function buildKbd(keys, accent) {
   function css(el, s) { el.setAttribute('style', s); }
   function key(label, active, extraStyle) {
     var el = document.createElement('div');
-    css(el, 'background:' + (active ? accent : 'rgba(255,255,255,0.08)') + ';color:' + (active ? '#fff' : 'rgba(255,255,255,0.5)') + ';border:1px solid ' + (active ? accent : 'rgba(255,255,255,0.10)') + ';border-bottom-width:2px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:6px 4px;min-height:30px;flex:1' + (extraStyle ? ';' + extraStyle : ''));
+    css(el, 'background:' + (active ? accent : '#fff') + ';color:' + (active ? '#fff' : '#54545B') + ';border:1px solid ' + (active ? accent : '#E5E5E8') + ';border-bottom-width:2px;border-radius:6px;font-family:JetBrains Mono,monospace;font-size:11px;font-weight:500;display:flex;align-items:center;justify-content:center;padding:6px 4px;min-height:30px;flex:1' + (extraStyle ? ';' + extraStyle : ''));
     el.textContent = label;
     return el;
   }
   var wrap = document.createElement('div');
-  css(wrap, 'background:rgba(255,255,255,0.05);border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box');
+  css(wrap, 'background:#F4F4F5;border-radius:8px;padding:6px;display:flex;flex-direction:column;gap:4px;width:160px;box-sizing:border-box');
   var r1 = document.createElement('div'); css(r1, 'display:flex');
   r1.appendChild(key('⇧  shift', !!keys.shift, 'width:100%'));
   var r2 = document.createElement('div'); css(r2, 'display:flex;gap:4px');
