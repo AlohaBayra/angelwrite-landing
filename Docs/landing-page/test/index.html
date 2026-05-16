@@ -158,7 +158,16 @@
   }
   .mode-row:hover { background: rgba(255,255,255,0.05); }
   .mode-row.featured { background: rgba(255,255,255,0.05) !important; }
-  .mode-num  { color: rgba(255,255,255,0.25) !important; }
+  .mode-num  { color: rgba(255,255,255,0.25) !important; font-size: 15px !important; position: relative; }
+  .mode-num .mode-pop {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-18deg);
+    white-space: nowrap;
+    font-size: 9px !important;
+    padding: 2px 6px !important;
+  }
   .mode-key  {
     background: rgba(255,255,255,0.07) !important;
     border-color: var(--row-color) !important;
@@ -375,7 +384,7 @@
   .mode-row { display: grid; grid-template-columns: 52px 110px 1fr; gap: 0; align-items: center; padding: 18px 24px; border-bottom: 1px solid var(--line); }
   .mode-row:last-child { border-bottom: 0; }
   .mode-row.featured { background: var(--bg-tint); }
-  .mode-num { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 600; color: var(--ink-4); letter-spacing: 0.04em; }
+  .mode-num { font-family: 'JetBrains Mono', monospace; font-size: 15px; font-weight: 600; color: var(--ink-4); letter-spacing: 0.04em; position: relative; overflow: visible; }
   .mode-meta { display: flex; align-items: center; gap: 8px; }
   .mode-key { font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 500; background: var(--bg-3); border: 1px solid var(--line); border-radius: 6px; padding: 4px 8px; color: var(--ink-2); white-space: nowrap; }
   .mode-pop { font-size: 10px; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; color: #fff; padding: 2px 7px; border-radius: 999px; white-space: nowrap; }
@@ -669,8 +678,8 @@
         <div class="mode-body"><h3>Englisch <span class="mode-tier">Pro</span></h3><p>Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Für internationale Teams.</p></div>
       </div>
       <div class="mode-row featured" style="--row-color:#34D399">
-        <span class="mode-num">03</span>
-        <div class="mode-meta"><span class="mode-key">fn ⌘</span><span class="mode-pop" style="background:#059669">Beliebt</span></div>
+        <span class="mode-num">03<span class="mode-pop" style="background:#059669">Beliebt</span></span>
+        <div class="mode-meta"><span class="mode-key">fn ⌘</span></div>
         <div class="mode-body"><h3>Professionell <span class="mode-tier">Pro</span></h3><p>Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben vollständig erhalten.</p></div>
       </div>
       <div class="mode-row" style="--row-color:#FBBF24">
