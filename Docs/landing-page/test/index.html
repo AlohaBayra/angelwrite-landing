@@ -147,12 +147,25 @@
     background-clip: text;
   }
 
-  /* ── MODES — wie Original (heller Hintergrund) ── */
-  .modes-section-bg { background: var(--bg) !important; }
-  .mode-row { --row-color: var(--ink-4); }
-  .mode-num  { color: var(--row-color) !important; }
-  .mode-key  { border-color: var(--row-color) !important; color: var(--row-color) !important; background: var(--bg) !important; }
+  /* ── MODES — dunkler Hintergrund ── */
+  .modes-section-bg { background: var(--dark-bg) !important; }
+  .modes-section-bg .sh h2 { color: #fff !important; }
+  .modes-section-bg .sh p  { color: rgba(255,255,255,0.50) !important; }
+  .mode-row {
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    background: rgba(255,255,255,0.02);
+    transition: background 0.2s;
+  }
+  .mode-row:hover { background: rgba(255,255,255,0.05); }
+  .mode-row.featured { background: rgba(255,255,255,0.05) !important; }
+  .mode-num  { color: rgba(255,255,255,0.25) !important; }
+  .mode-key  {
+    background: rgba(255,255,255,0.07) !important;
+    border-color: var(--row-color) !important;
+    color: var(--row-color) !important;
+  }
   .mode-body h3 { color: var(--row-color) !important; }
+  .mode-body p  { color: rgba(255,255,255,0.50) !important; }
 
   /* ── BENEFITS — dunkel mit Accent-Icons ── */
   .benefits-dark {
@@ -633,8 +646,8 @@
   </div>
 </section>
 
-<!-- MODES -->
-<section class="modes-section-bg" id="modi" style="padding: 96px 0;">
+<!-- MODES — dark -->
+<section class="modes-section-bg" id="modi" style="padding: 96px 0; background: #09090F;">
   <div class="container">
     <div class="sh">
       <span class="eyebrow">Modi</span>
@@ -642,22 +655,22 @@
       <p>Von wörtlicher Transkription bis zum vollständig individuellen Workflow — je weiter, desto mächtiger.</p>
     </div>
     <div class="modes-grid">
-      <div class="mode-row" style="--row-color:#6B7280">
+      <div class="mode-row" style="--row-color:#9CA3AF">
         <span class="mode-num">01</span>
         <div class="mode-meta"><span class="mode-key">fn ⇧</span></div>
         <div class="mode-body"><h3>Original</h3><p>Wortgetreue Transkription — keine KI, kein Internet. Läuft vollständig auf deinem Mac.</p></div>
       </div>
-      <div class="mode-row" style="--row-color:#5B7DC8">
+      <div class="mode-row" style="--row-color:#818CF8">
         <span class="mode-num">02</span>
         <div class="mode-meta"><span class="mode-key">fn ⌃</span></div>
         <div class="mode-body"><h3>Englisch</h3><p>Sprich Deutsch — AngelWrite schreibt professionelles Englisch. Für internationale Teams.</p></div>
       </div>
-      <div class="mode-row featured" style="--row-color:#3D7A52">
+      <div class="mode-row featured" style="--row-color:#34D399">
         <span class="mode-num">03</span>
-        <div class="mode-meta"><span class="mode-key">fn ⌘</span><span class="mode-pop" style="background:#3D7A52">Beliebt</span></div>
+        <div class="mode-meta"><span class="mode-key">fn ⌘</span><span class="mode-pop" style="background:#059669">Beliebt</span></div>
         <div class="mode-body"><h3>Professionell</h3><p>Grammatik sauber, Füllwörter weg — deine Tonalität und Persönlichkeit bleiben vollständig erhalten.</p></div>
       </div>
-      <div class="mode-row" style="--row-color:#A0652E">
+      <div class="mode-row" style="--row-color:#FBBF24">
         <span class="mode-num">04</span>
         <div class="mode-meta"><span class="mode-key">fn ⌥</span></div>
         <div class="mode-body"><h3>Immer Freundlich</h3><p>Aus Frust wird eine sachliche, professionelle Nachricht. Die Botschaft bleibt, der Ton ändert sich.</p></div>
