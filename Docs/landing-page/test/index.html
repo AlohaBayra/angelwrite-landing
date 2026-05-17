@@ -246,6 +246,9 @@
     color: #fff !important;
   }
   .cmp-us { background: rgba(99,102,241,0.06) !important; }
+  /* ✗ Zellen: dezent rot eingefärbt */
+  .cmp td.cmp-no { color: #DC2626 !important; font-weight: 500; }
+  .cmp td:not(.cmp-us):not([class]) { color: var(--ink-2); }
 
   /* ── TESTIMONIALS ── */
   .testis-bg {
@@ -803,7 +806,7 @@
     <div class="sh">
       <span class="eyebrow">Warum AngelWrite?</span>
       <h2>Diktieren können viele. Fertig formuliert — nur einer.</h2>
-      <p>Was andere Diktat-Apps dir nicht sagen.</p>
+      <p>Ein ehrlicher Vergleich — auch dort, wo Mitbewerber gut sind.</p>
     </div>
     <div class="cmp-wrap">
       <table class="cmp">
@@ -817,17 +820,19 @@
           </tr>
         </thead>
         <tbody>
-          <tr><td>⚡ Sofort starten — kein Setup, kein API-Key</td><td class="cmp-us">✓</td><td>✓</td><td>API-Key nötig</td><td>✓</td></tr>
-          <tr><td>✨ KI verfeinert deinen Text automatisch</td><td class="cmp-us">✓<br/>5 Modi</td><td>Begrenzt</td><td>Nur mit eigenem Key</td><td>—</td></tr>
-          <tr><td>🌍 Deutsch sprechen, Englisch schreiben</td><td class="cmp-us">✓<br/>Eingebaut</td><td>Nur Pro, per Befehl</td><td>Mit Setup</td><td>—</td></tr>
-          <tr><td>🎛️ Prompt auf deinen Stil anpassen</td><td class="cmp-us">✓<br/>Kundenindividuell</td><td>—</td><td>—</td><td>—</td></tr>
+          <tr><td>⚡ Sofort starten — kein Setup, kein API-Key</td><td class="cmp-us">✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+          <tr><td>✨ KI verfeinert deinen Text automatisch</td><td class="cmp-us">✓<br/>5 Modi</td><td>Begrenzt</td><td>✓<br/>(Pro-Plan)</td><td>—</td></tr>
+          <tr><td>🌍 Deutsch sprechen, Englisch schreiben</td><td class="cmp-us">✓<br/>Eingebaut</td><td>Nur Pro, per Befehl</td><td>✓<br/>Eingebaut</td><td>—</td></tr>
+          <tr><td>🎛️ Prompt auf deinen Stil anpassen</td><td class="cmp-us">✓<br/>Kundenindividuell</td><td>—</td><td>✓<br/>(Advanced)</td><td>—</td></tr>
           <tr><td>📡 Ohne Internet nutzbar</td><td class="cmp-us">✓<br/>Lokal-Modus</td><td>— Nur Cloud</td><td>✓</td><td>✓</td></tr>
           <tr><td>🔒 Audio verlässt nicht das Gerät</td><td class="cmp-us">✓<br/>Im Lokal-Modus</td><td>— Cloud-only</td><td>Je nach Modus</td><td>✓<br/>Immer</td></tr>
-          <tr><td>💶 Preis</td><td class="cmp-us" style="font-size:15px">ab €8&nbsp;/&nbsp;Monat<br/><span style="font-size:12px;opacity:.6">einmalig €149</span></td><td>ab $16 / Monat</td><td>ab $8 / Monat</td><td>ab $8 / Monat</td></tr>
+          <tr><td>🇪🇺 Daten bleiben in der EU / auf deinem Mac</td><td class="cmp-us">✓<br/>Lokal oder DE-Server</td><td class="cmp-no">✗<br/>US-Cloud</td><td class="cmp-no">✗<br/>US-Cloud</td><td class="cmp-no">✗<br/>US-Cloud</td></tr>
+          <tr><td>🏷️ Einmalpreis möglich — kein Abo-Zwang</td><td class="cmp-us">✓<br/>ab €149 Lifetime</td><td class="cmp-no">✗<br/>Nur Abo</td><td>✓<br/>$249 Lifetime</td><td>✓<br/>$149 Lifetime</td></tr>
+          <tr><td>💶 Preis</td><td class="cmp-us" style="font-size:15px">ab €8&nbsp;/&nbsp;Monat<br/><span style="font-size:12px;opacity:.6">einmalig €149</span></td><td>ab $15 / Monat</td><td>ab $8 / Monat</td><td>ab $7 / Monat</td></tr>
         </tbody>
       </table>
     </div>
-    <p style="margin-top:16px; font-size:13px; color:var(--ink-4); text-align:center;">Preisangaben Mitbewerber in USD, Stand Mai 2026. AngelWrite Pro = €99/Jahr (€8,25/Monat).</p>
+    <p style="margin-top:16px; font-size:13px; color:var(--ink-4); text-align:center;">Preisangaben Mitbewerber in USD, Stand Mai 2026. AngelWrite Pro = €99/Jahr (€8,25/Monat). Angaben zu Mitbewerbern nach öffentlich verfügbaren Informationen geprüft.</p>
   </div>
 </section>
 
