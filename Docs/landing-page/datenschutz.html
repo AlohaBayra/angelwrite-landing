@@ -204,8 +204,8 @@
     <li><strong>Rechtsgrundlage:</strong> Einwilligung des Nutzers (Art. 6 Abs. 1 lit. a DSGVO).</li>
   </ul>
 
-  <h3>2.2 Übertragung an externe Transkriptions-API</h3>
-  <p>Audiodaten werden verschlüsselt (TLS) an den Transkriptionsdienst übertragen:</p>
+  <h3>2.2 Übertragung an externe Transkriptions- und KI-APIs</h3>
+  <p>Im Pro-Modus werden Audiodaten verschlüsselt (TLS) an externe Dienste übertragen. Im Lokal-Modus und im kostenlosen Testzeitraum verlässt kein Audio das Gerät.</p>
   <table>
     <thead>
       <tr><th>Anbieter</th><th>Zweck</th><th>Datenschutzerklärung</th></tr>
@@ -213,11 +213,22 @@
     <tbody>
       <tr>
         <td>OpenAI, Inc. (Whisper API)</td>
-        <td>Sprachtranskription</td>
+        <td>Sprachtranskription (Pro-Modus)</td>
         <td><a href="https://openai.com/privacy" target="_blank" rel="noopener">openai.com/privacy</a></td>
+      </tr>
+      <tr>
+        <td>Anthropic, PBC (Claude API) — optional</td>
+        <td>KI-Textveredelung (nur Advanced-Tier, eigener API-Key)</td>
+        <td><a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a></td>
+      </tr>
+      <tr>
+        <td>Eigene API-Endpunkte — optional</td>
+        <td>KI-Veredelung (Advanced-Tier, BYOK / Custom LLM)</td>
+        <td>Datenschutz des jeweiligen Anbieters</td>
       </tr>
     </tbody>
   </table>
+  <p>Im Advanced-Tier (BYOK) nutzen Nutzer ausschließlich ihre eigenen API-Keys. AngelWrite-Server werden in diesem Fall vollständig umgangen. Die Verantwortung für Drittanbieter liegt beim Nutzer.</p>
   <p>Die Übertragung erfolgt <strong>nur nach ausdrücklicher Einwilligung</strong>. Ohne Einwilligung findet keine Übertragung statt.</p>
 
   <h3>2.3 Transkriptionsergebnisse (Zwischenablage)</h3>

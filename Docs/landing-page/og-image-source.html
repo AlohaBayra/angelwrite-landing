@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      font-family: 'Inter', -apple-system, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .card {
+      width: 1200px;
+      height: 630px;
+      background:
+        radial-gradient(900px 500px at 60% -100px, rgba(99,102,241,0.28), transparent 65%),
+        radial-gradient(600px 600px at 10% 110%, rgba(180,100,255,0.10), transparent 65%),
+        #09090F;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 64px 72px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Subtle grid lines */
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    /* Top row */
+    .top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 22px;
+      font-weight: 700;
+      color: rgba(255,255,255,0.90);
+      letter-spacing: -0.02em;
+    }
+
+    .logo-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      color: #fff;
+      box-shadow: 0 0 24px rgba(99,102,241,0.40);
+    }
+
+    .badge {
+      background: rgba(99,102,241,0.18);
+      border: 1px solid rgba(99,102,241,0.35);
+      border-radius: 999px;
+      padding: 8px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      color: #A5B4FC;
+      letter-spacing: 0.01em;
+    }
+
+    /* Main content */
+    .main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      font-size: 15px;
+      font-weight: 600;
+      color: #6366F1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 68px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #fff;
+      line-height: 1.0;
+      margin-bottom: 22px;
+    }
+
+    h1 em {
+      font-style: normal;
+      background: linear-gradient(135deg, #A5B4FC, #818CF8, #C084FC);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .sub {
+      font-size: 22px;
+      color: rgba(255,255,255,0.52);
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      max-width: 560px;
+      line-height: 1.4;
+    }
+
+    /* Bottom row */
+    .bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pills {
+      display: flex;
+      gap: 10px;
+    }
+
+    .pill {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.60);
+    }
+
+    .cta {
+      background: #6366F1;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 14px 28px;
+      border-radius: 10px;
+      letter-spacing: -0.01em;
+      box-shadow: 0 0 32px rgba(99,102,241,0.40);
+    }
+
+    /* Decorative glow dot */
+    .glow-dot {
+      position: absolute;
+      right: 72px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 320px;
+      height: 320px;
+      background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    /* Step visualization */
+    .steps-visual {
+      position: absolute;
+      right: 72px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .sv-step {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 280px;
+    }
+
+    .sv-step.highlight {
+      background: rgba(99,102,241,0.18);
+      border-color: rgba(99,102,241,0.40);
+      box-shadow: 0 0 20px rgba(99,102,241,0.15);
+    }
+
+    .sv-num {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(99,102,241,0.30);
+      color: #A5B4FC;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-family: 'JetBrains Mono', monospace;
+    }
+
+    .sv-step.highlight .sv-num {
+      background: #6366F1;
+      color: #fff;
+    }
+
+    .sv-text {
+      font-size: 15px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      letter-spacing: -0.01em;
+    }
+
+    .sv-step.highlight .sv-text {
+      color: #fff;
+    }
+
+    .sv-arrow {
+      text-align: center;
+      color: rgba(255,255,255,0.20);
+      font-size: 16px;
+      margin-left: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+
+    <!-- Top -->
+    <div class="top">
+      <div class="logo">
+        <div class="logo-mark">✦</div>
+        AngelWrite
+      </div>
+      <div class="badge">Push-to-Talk für macOS</div>
+    </div>
+
+    <!-- Main -->
+    <div class="main">
+      <div class="eyebrow">Diktat · KI-Veredelung · macOS</div>
+      <h1>Du sprichst.<br/><em>AngelWrite schreibt.</em></h1>
+      <div class="sub">Taste halten, sprechen, loslassen — dein Text erscheint sofort, klar und fertig formuliert, direkt am Cursor.</div>
+    </div>
+
+    <!-- Bottom -->
+    <div class="bottom">
+      <div class="pills">
+        <div class="pill">🎙️ Dieselbe KI wie ChatGPT-Voice</div>
+        <div class="pill">🔒 Lokal oder Cloud</div>
+        <div class="pill">7 Tage gratis</div>
+      </div>
+      <div class="cta">angelwrite.app →</div>
+    </div>
+
+    <!-- Right side visual -->
+    <div class="steps-visual">
+      <div class="sv-step">
+        <div class="sv-num">1</div>
+        <div class="sv-text">Fn-Taste halten &amp; sprechen</div>
+      </div>
+      <div class="sv-arrow">↓</div>
+      <div class="sv-step highlight">
+        <div class="sv-num">2</div>
+        <div class="sv-text">KI veredelt automatisch</div>
+      </div>
+      <div class="sv-arrow">↓</div>
+      <div class="sv-step">
+        <div class="sv-num">3</div>
+        <div class="sv-text">Text steht am Cursor ✓</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
