@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# Interne Seiten — nicht indexieren
+Disallow: /bestaetigung.html
+Disallow: /willkommen.html
+Disallow: /og-image-source.html
+
+Sitemap: https://www.angelwrite.app/sitemap.xml
