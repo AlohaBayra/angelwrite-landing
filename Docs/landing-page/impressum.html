@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Impressum – AngelWrite</title>
+  <meta name="robots" content="noindex" />
+  <meta name="description" content="Impressum der AngelWrite macOS-App gemäß § 5 TMG." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --brand: #6366F1;
+      --brand-dark: #4F52D1;
+      --brand-light: #EEEEFF;
+      --text: #1A1A2E;
+      --text-muted: #6B7280;
+      --bg: #FFFFFF;
+      --bg-soft: #F8F7FF;
+      --border: #E5E7EB;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700; font-size: 18px; color: var(--text);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--brand); }
+    .nav-back {
+      color: var(--brand); font-weight: 600; font-size: 14px;
+      text-decoration: none; display: flex; align-items: center; gap: 6px;
+    }
+    .nav-back:hover { color: var(--brand-dark); }
+
+    .page-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 100px 24px 80px;
+    }
+
+    .page-header {
+      margin-bottom: 48px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+    }
+    .page-header h1 span { color: var(--brand); }
+    .page-meta { color: var(--text-muted); font-size: 14px; }
+
+    h2 { font-size: 20px; font-weight: 700; margin: 40px 0 16px; color: var(--text); }
+    p { margin-bottom: 16px; color: #374151; }
+
+    .address-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-size: 15px;
+      line-height: 2;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .address-box a { color: var(--brand); text-decoration: none; }
+    .address-box a:hover { text-decoration: underline; }
+
+    .info-row { display: flex; gap: 8px; margin-bottom: 10px; font-size: 15px; color: #374151; }
+    .info-label { font-weight: 600; color: var(--text); min-width: 180px; }
+
+    .highlight-box {
+      background: var(--brand-light);
+      border-left: 4px solid var(--brand);
+      border-radius: 0 10px 10px 0;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      color: var(--text);
+      font-size: 15px;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 32px 0;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+    footer a { color: var(--brand); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">Angel<span>Write</span></a>
+    <a href="index.html" class="nav-back">← Zurück zur Startseite</a>
+  </nav>
+
+  <div class="page-wrap">
+
+    <div class="page-header">
+      <h1>Impres<span>sum</span></h1>
+      <p class="page-meta">Angaben gemäß § 5 TMG · AngelWrite, betrieben von ValueLift – Marcus Eichler</p>
+    </div>
+
+    <h2>Anbieter</h2>
+    <div class="address-box">
+      <strong>Marcus Eichler – ValueLift</strong><br>
+      Arberstraße 19<br>
+      94428 Eichendorf<br>
+      Deutschland
+    </div>
+
+    <div class="info-row"><span class="info-label">E-Mail:</span><a href="mailto:info@valuelift.de">info@valuelift.de</a></div>
+    <div class="info-row"><span class="info-label">Website:</span><a href="https://www.angelwrite.app">https://www.angelwrite.app</a></div>
+
+    <h2>Rechtliche Angaben</h2>
+    <div class="info-row"><span class="info-label">Unternehmensform:</span>Einzelunternehmen</div>
+    <div class="info-row"><span class="info-label">Inhaber:</span>Marcus Eichler</div>
+    <div class="info-row"><span class="info-label">Umsatzsteuer-Identifikationsnummer (USt-IdNr.):</span>DE421934819</div>
+
+    <h2>Verantwortlich für den Inhalt</h2>
+    <p>Verantwortlich gemäß § 18 Abs. 2 MStV:<br>
+    Marcus Eichler, Arberstraße 19, 94428 Eichendorf</p>
+
+    <h2>Streitschlichtung</h2>
+    <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+    <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener" style="color:var(--brand);">https://ec.europa.eu/consumers/odr/</a></p>
+    <p>Wir sind nicht verpflichtet und nicht bereit, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+    <h2>Haftungsausschluss</h2>
+    <p>Trotz sorgfältiger inhaltlicher Kontrolle übernehmen wir keine Haftung für die Inhalte externer Links. Für den Inhalt der verlinkten Seiten sind ausschließlich deren Betreiber verantwortlich.</p>
+    <p>Struktur, Inhalt und Gestaltung dieser Website sind urheberrechtlich geschützt. Die Vervielfältigung, Änderung oder Verbreitung von Inhalten bedarf der vorherigen schriftlichen Zustimmung.</p>
+
+    <footer>
+      <p>
+        <a href="index.html">angelwrite.app</a> ·
+        <a href="datenschutz.html">Datenschutzerklärung</a> ·
+        <a href="agb.html">AGB</a> ·
+        Impressum Stand Mai 2026
+      </p>
+      <p style="margin-top: 8px;">© 2026 Marcus Eichler · ValueLift</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>
