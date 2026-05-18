@@ -77,6 +77,15 @@
     }
     .step-text { font-size: 14px; color: #1F1F23; line-height: 1.5; padding-top: 4px; }
     .step-text strong { color: #0A0A0B; }
+    .btn-download {
+      display: inline-block; width: 100%; font-size: 15px; font-weight: 600;
+      background: #6366F1; color: #fff; text-decoration: none;
+      padding: 14px 24px; border-radius: 12px; text-align: center;
+      margin-bottom: 20px; box-sizing: border-box;
+      transition: background 0.15s;
+    }
+    .btn-download:hover { background: #4F52D1; }
+    .btn-download.hidden { display: none; }
     .btn-back {
       display: inline-block; font-size: 14px; font-weight: 500;
       color: #6366F1; text-decoration: none;
@@ -125,13 +134,30 @@
       </div>
     </div>
 
+    <a id="btn-download" class="btn-download hidden" href="#">AngelWrite für macOS laden →</a>
     <a class="btn-back" href="index.html">← Zurück zur Startseite</a>
 
     <p class="hint">Keine E-Mail erhalten? Schreib uns: <a href="mailto:info@angelwrite.app">info@angelwrite.app</a></p>
   </div>
   <script>
-    const name = new URLSearchParams(window.location.search).get('name');
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const dlToken = params.get('dl');
+
     if (name) document.getElementById('js-vorname').textContent = name;
+
+    if (dlToken) {
+      fetch(`https://angelwrite-server-production.up.railway.app/api/download-link?token=${dlToken}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.url) {
+            const btn = document.getElementById('btn-download');
+            btn.href = data.url;
+            btn.classList.remove('hidden');
+          }
+        })
+        .catch(() => {}); // Kein Token oder abgelaufen → Button bleibt ausgeblendet
+    }
   </script>
 </body>
 </html>
