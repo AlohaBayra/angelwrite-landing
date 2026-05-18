@@ -99,7 +99,7 @@
 
     <div class="checkmark">✓</div>
     <h1>E-Mail bestätigt!</h1>
-    <p class="sub">Super, ${vorname}! Dein Download-Link ist auf dem Weg zu dir.</p>
+    <p class="sub">Super, <span id="js-vorname"></span>! Dein Download-Link ist auf dem Weg zu dir.</p>
 
     <div class="mail-box">
       <div class="mail-icon">📬</div>
@@ -129,5 +129,9 @@
 
     <p class="hint">Keine E-Mail erhalten? Schreib uns: <a href="mailto:info@angelwrite.app">info@angelwrite.app</a></p>
   </div>
+  <script>
+    const name = new URLSearchParams(window.location.search).get('name');
+    if (name) document.getElementById('js-vorname').textContent = name;
+  </script>
 </body>
 </html>
