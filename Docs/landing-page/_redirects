@@ -1,0 +1,2 @@
+/test    /404.html    404
+/test/*  /404.html    404
