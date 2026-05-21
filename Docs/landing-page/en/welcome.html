@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Email Confirmed — AngelWrite</title>
+  <meta name="robots" content="noindex" />
+  <link rel="alternate" hreflang="de" href="https://www.angelwrite.app/willkommen.html" />
+  <link rel="alternate" hreflang="en" href="https://www.angelwrite.app/en/welcome.html" />
+  <link rel="icon" type="image/svg+xml" href="../2.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #F8F7FF;
+      color: #0A0A0B;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #E5E5E8;
+      border-radius: 20px;
+      padding: 56px 48px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(99,102,241,0.10);
+    }
+    .logo {
+      font-size: 15px; font-weight: 700; letter-spacing: -0.02em;
+      color: #0A0A0B; margin-bottom: 32px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .logo img { height: 22px; width: auto; }
+    .checkmark {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 32px rgba(99,102,241,0.30);
+      font-size: 28px;
+    }
+    h1 {
+      font-size: 26px; font-weight: 700; letter-spacing: -0.025em;
+      color: #0A0A0B; margin-bottom: 12px; line-height: 1.2;
+    }
+    .sub {
+      font-size: 15px; color: #54545B; line-height: 1.6; margin-bottom: 32px;
+    }
+    .mail-box {
+      background: #F0EFFE;
+      border: 1px solid rgba(99,102,241,0.20);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      display: flex; align-items: flex-start; gap: 14px; text-align: left;
+    }
+    .mail-icon { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .mail-text { font-size: 14px; color: #3730A3; line-height: 1.5; font-weight: 500; }
+    .steps {
+      margin: 0 0 28px; text-align: left;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .step { display: flex; align-items: flex-start; gap: 14px; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #6366F1; color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-text { font-size: 14px; color: #1F1F23; line-height: 1.5; padding-top: 4px; }
+    .step-text strong { color: #0A0A0B; }
+    .btn-download {
+      display: inline-block; width: 100%; font-size: 15px; font-weight: 600;
+      background: #6366F1; color: #fff; text-decoration: none;
+      padding: 14px 24px; border-radius: 12px; text-align: center;
+      margin-bottom: 20px; box-sizing: border-box;
+      transition: background 0.15s;
+    }
+    .btn-download:hover { background: #4F52D1; }
+    .btn-download.hidden { display: none; }
+    .btn-back {
+      display: inline-block; font-size: 14px; font-weight: 500;
+      color: #6366F1; text-decoration: none;
+    }
+    .btn-back:hover { text-decoration: underline; }
+    .hint {
+      font-size: 13px; color: #8B8B92; margin-top: 24px;
+      padding-top: 24px; border-top: 1px solid #E5E5E8;
+    }
+    .hint a { color: #6366F1; text-decoration: none; }
+    .hint a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo">
+      <img src="../2.svg" alt="AngelWrite" />
+      AngelWrite
+    </div>
+
+    <div class="checkmark">✓</div>
+    <h1>Email confirmed!</h1>
+    <p class="sub">Great, <span id="js-vorname"></span>! Your download link is on its way.</p>
+
+    <div class="mail-box">
+      <div class="mail-icon">📬</div>
+      <div class="mail-text">We've just sent you an email with your personal download link. Please also check your spam folder.</div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>Open the email</strong> — click the download link</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Unzip the file</strong> — drag AngelWrite.app to your Applications folder</div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Launch the app</strong> — quick setup assistant, 2 minutes</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Hold key, speak, release</strong> — done ✓</div>
+      </div>
+    </div>
+
+    <a id="btn-download" class="btn-download hidden" href="#">Download AngelWrite for macOS →</a>
+    <a class="btn-back" href="https://www.angelwrite.app/en/">← Back to homepage</a>
+
+    <p class="hint">No email received? Write to us: <a href="mailto:info@angelwrite.app">info@angelwrite.app</a></p>
+  </div>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    const dlToken = params.get('dl');
+
+    if (name) document.getElementById('js-vorname').textContent = name;
+
+    if (dlToken) {
+      fetch(`https://angelwrite-server-production.up.railway.app/api/download-link?token=${dlToken}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.url) {
+            const btn = document.getElementById('btn-download');
+            btn.href = data.url;
+            btn.classList.remove('hidden');
+          }
+        })
+        .catch(() => {}); // No token or expired → button stays hidden
+    }
+  </script>
+</body>
+</html>
