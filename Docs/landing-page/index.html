@@ -904,6 +904,16 @@
       <div class="tq-av"></div>
       <div><p class="tq-quote">„Nach drei Tagen wusste ich: das wird mein teuerstes Gratis-Tool. Im besten Sinne."</p><p class="tq-name">— Early Adopter · Business Coach, München</p></div>
     </div>
+
+    <!-- Billing toggle -->
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px;">
+      <span id="lbl-month" style="font-size:14px;font-weight:500;color:var(--ink-3);transition:color 0.2s;">Monatlich</span>
+      <button id="billing-toggle" onclick="setBilling('year'===window._billing?'month':'year')" aria-label="Abonnement-Intervall umschalten" style="width:52px;height:28px;border-radius:999px;border:none;background:var(--accent);cursor:pointer;position:relative;padding:0;flex-shrink:0;transition:background 0.2s;">
+        <span id="toggle-knob" style="position:absolute;top:3px;left:27px;width:22px;height:22px;border-radius:50%;background:#fff;transition:transform 0.2s,left 0.2s;display:block;"></span>
+      </button>
+      <span id="lbl-year" style="font-size:14px;font-weight:700;color:var(--accent);transition:color 0.2s;">Jährlich <span style="background:rgba(99,102,241,0.12);color:var(--accent);font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;margin-left:2px;">−2 Monate gratis</span></span>
+    </div>
+
     <div class="price-grid">
       <div class="price-card">
         <div class="price-name">Lokal</div><div class="price-sub">einmalig · keine Updates</div>
@@ -916,13 +926,17 @@
       </div>
       <div class="price-card featured">
         <div class="price-tag">★ Empfohlen</div>
-        <div class="price-name">Pro</div><div class="price-sub">pro Jahr · jederzeit kündbar</div>
-        <div class="price-amount"><span class="cur">€</span>99<span class="per">/ Jahr</span></div>
+        <div class="price-name">Pro</div>
+        <div id="pro-sub" class="price-sub">pro Jahr · jederzeit kündbar</div>
+        <div id="pro-price" class="price-amount"><span class="cur">€</span>99<span class="per">/ Jahr</span></div>
         <ul class="price-list">
           <span class="price-section">Zusätzlich zu Lokal:</span>
           <li>Original-Modus — Cloud-verbessert</li><li>KI-Modi: Englisch, Immer Freundlich, Professionell</li><li>Cloud-Transkription inklusive</li><li>KI-Veredelung inklusive</li><li>Fair Use: 250 Anfragen / Woche</li><li>Automatische Updates &amp; neue Modi</li><li>E-Mail-Support</li>
         </ul>
-        <div class="price-card-bottom"><a class="btn btn-primary btn-block" href="https://buy.stripe.com/8x228qdJs3aS4HZb128bS02">Pro starten – 99 € / Jahr</a><p class="price-foot" style="color:rgba(255,255,255,0.4);">🔒 Sichere Zahlung via Stripe</p></div>
+        <div class="price-card-bottom">
+          <a id="pro-btn" class="btn btn-primary btn-block" href="https://buy.stripe.com/8x228qdJs3aS4HZb128bS02">Pro starten – 99 € / Jahr</a>
+          <p class="price-foot" style="color:rgba(255,255,255,0.4);">🔒 Sichere Zahlung via Stripe</p>
+        </div>
       </div>
       <div class="price-card">
         <div class="price-name">Advanced</div><div class="price-sub">einmalig · Eigene API-Keys</div>
@@ -1102,6 +1116,38 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+</script>
+
+<script>
+// ── Billing toggle (Monatlich / Jährlich) ──────────────────────────────────
+window._billing = 'year'; // default: jährlich
+
+function setBilling(mode) {
+  window._billing = mode;
+  var isYear = mode === 'year';
+
+  // Knob position
+  document.getElementById('toggle-knob').style.left = isYear ? '27px' : '3px';
+
+  // Labels
+  document.getElementById('lbl-year').style.color   = isYear ? 'var(--accent)' : 'var(--ink-3)';
+  document.getElementById('lbl-year').style.fontWeight = isYear ? '700' : '500';
+  document.getElementById('lbl-month').style.color  = isYear ? 'var(--ink-3)' : 'var(--accent)';
+  document.getElementById('lbl-month').style.fontWeight = isYear ? '500' : '700';
+
+  // Pro card content
+  if (isYear) {
+    document.getElementById('pro-sub').textContent   = 'pro Jahr · jederzeit kündbar';
+    document.getElementById('pro-price').innerHTML   = '<span class="cur">€</span>99<span class="per">/ Jahr</span>';
+    document.getElementById('pro-btn').textContent   = 'Pro starten – 99 € / Jahr';
+    document.getElementById('pro-btn').href          = 'https://buy.stripe.com/8x228qdJs3aS4HZb128bS02';
+  } else {
+    document.getElementById('pro-sub').textContent   = 'pro Monat · jederzeit kündbar';
+    document.getElementById('pro-price').innerHTML   = '<span class="cur">€</span>12<span class="per">/ Monat</span>';
+    document.getElementById('pro-btn').textContent   = 'Pro starten – 12 € / Monat';
+    document.getElementById('pro-btn').href          = 'https://buy.stripe.com/4gM7sK6h0aDkb6nglm8bS04';
+  }
+}
 </script>
 
 <script>
