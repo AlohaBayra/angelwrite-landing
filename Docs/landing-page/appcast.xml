@@ -8,24 +8,24 @@
     <language>de</language>
 
     <item>
-      <title>Version 1.1.8</title>
-      <pubDate>Mon, 25 May 2026 18:39:12 +0000</pubDate>
-      <sparkle:version>11</sparkle:version>
-      <sparkle:shortVersionString>1.1.8</sparkle:shortVersionString>
+      <title>Version 1.1.9</title>
+      <pubDate>Mon, 25 May 2026 19:32:36 +0000</pubDate>
+      <sparkle:version>12</sparkle:version>
+      <sparkle:shortVersionString>1.1.9</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <description><![CDATA[
-        <h3>Was ist neu in 1.1.8?</h3>
+        <h3>Was ist neu in 1.1.9?</h3>
         <ul>
-          <li>StatusItem wird nach dem Move-to-Applications-Dialog sofort versteckt — verhindert das Doppel-Icon während die Downloads-Instanz auf Beendigung wartet</li>
+          <li>Quarantine-Attribute werden nach dem Verschieben in den Programme-Ordner automatisch entfernt — verhindert App-Translocation bei Erstinstallation</li>
         </ul>
       ]]></description>
       <enclosure
         url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
-        sparkle:version="11"
-        sparkle:shortVersionString="1.1.8"
-        length="4258132"
+        sparkle:version="12"
+        sparkle:shortVersionString="1.1.9"
+        length="4258521"
         type="application/octet-stream"
-        sparkle:edSignature="d98MTc/OekBcUI3iLgk5AGttqkZkvQOxenyg6L8+6BOPIVoc2zENKT3F4khy2CCFB8MNsiSVaRqkmqf+u2feBg=="/>
+        sparkle:edSignature="pU7HiNWKqlj8VTBIoUpaKxkMl/bt5fHLySlKS75KmwHWyujKYFL9BQvQVD6iCJtKZDX1UZ5TIKlTLV0Ezv9sCA=="/>
     </item>
 
   </channel>
