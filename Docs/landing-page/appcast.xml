@@ -8,24 +8,24 @@
     <language>de</language>
 
     <item>
-      <title>Version 1.1.10</title>
-      <pubDate>Mon, 25 May 2026 19:46:55 +0000</pubDate>
-      <sparkle:version>13</sparkle:version>
-      <sparkle:shortVersionString>1.1.10</sparkle:shortVersionString>
+      <title>Version 1.1.11</title>
+      <pubDate>Mon, 25 May 2026 20:03:40 +0000</pubDate>
+      <sparkle:version>14</sparkle:version>
+      <sparkle:shortVersionString>1.1.11</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <description><![CDATA[
-        <h3>Was ist neu in 1.1.10?</h3>
+        <h3>Was ist neu in 1.1.11?</h3>
         <ul>
-          <li>App-Translocation nach Erstinstallation behoben — Quarantine-Attribut wird jetzt zuverlässig per POSIX-Call nach dem Verschieben entfernt</li>
+          <li>Menüleisten-Icon erscheint nach Erstinstallation korrekt — macOS-StatusItem-Sichtbarkeit wird beim Start explizit gesetzt</li>
         </ul>
       ]]></description>
       <enclosure
         url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
-        sparkle:version="13"
-        sparkle:shortVersionString="1.1.10"
-        length="4258272"
+        sparkle:version="14"
+        sparkle:shortVersionString="1.1.11"
+        length="4258390"
         type="application/octet-stream"
-        sparkle:edSignature="60TveMKr/iJr4xjRXYFp3kkbRyILWpOqhdG7sIkblDEwYPap1GwZSY0Ja+LPdLng4nBt2bt+KBfaX4xeCaXgBA=="/>
+        sparkle:edSignature="3VZyyGCm9cBEHOOF9cvGDpZAA9VXPe2kejexTO7z8NMDSAUzgEf0VAmEh6HKONszFJIrF6Z4tMSjmYro0SlTAQ=="/>
     </item>
 
   </channel>
