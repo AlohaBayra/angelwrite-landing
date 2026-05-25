@@ -8,25 +8,25 @@
     <language>de</language>
 
     <item>
-      <title>Version 1.1.4</title>
+      <title>Version 1.1.5</title>
       <pubDate>Mon, 25 May 2026 08:00:00 +0000</pubDate>
-      <sparkle:version>7</sparkle:version>
-      <sparkle:shortVersionString>1.1.4</sparkle:shortVersionString>
+      <sparkle:version>8</sparkle:version>
+      <sparkle:shortVersionString>1.1.5</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <description><![CDATA[
-        <h3>Was ist neu in 1.1.4?</h3>
+        <h3>Was ist neu in 1.1.5?</h3>
         <ul>
-          <li>Sparkle Auto-Update: AngelWrite prüft ab jetzt automatisch auf neue Versionen</li>
+          <li>Automatische Updates: AngelWrite prüft ab jetzt auf neue Versionen und installiert sie mit einem Klick</li>
           <li>Stabilitätsverbesserungen und kleinere Bugfixes</li>
         </ul>
       ]]></description>
       <enclosure
         url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
-        sparkle:version="7"
-        sparkle:shortVersionString="1.1.4"
-        length="0"
+        sparkle:version="8"
+        sparkle:shortVersionString="1.1.5"
+        length="4258212"
         type="application/octet-stream"
-        sparkle:edSignature="PLACEHOLDER_REPLACE_WITH_SIGNATURE"/>
+        sparkle:edSignature="W3rQyni/xxxmELrYOtdYnJ7w92QPCNf7UXzrNdwDpxg1xv/SyRgIpcJJ1ptijNf7fPd9XVddoVrV2VTuPDwwAA=="/>
     </item>
 
   </channel>
