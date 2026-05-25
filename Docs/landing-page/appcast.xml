@@ -8,25 +8,26 @@
     <language>de</language>
 
     <item>
-      <title>Version 1.1.5</title>
-      <pubDate>Mon, 25 May 2026 08:00:00 +0000</pubDate>
-      <sparkle:version>8</sparkle:version>
-      <sparkle:shortVersionString>1.1.5</sparkle:shortVersionString>
+      <title>Version 1.1.6</title>
+      <pubDate>Mon, 25 May 2026 17:14:44 +0000</pubDate>
+      <sparkle:version>9</sparkle:version>
+      <sparkle:shortVersionString>1.1.6</sparkle:shortVersionString>
       <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
       <description><![CDATA[
-        <h3>Was ist neu in 1.1.5?</h3>
+        <h3>Was ist neu in 1.1.6?</h3>
         <ul>
-          <li>Automatische Updates: AngelWrite prüft ab jetzt auf neue Versionen und installiert sie mit einem Klick</li>
-          <li>Stabilitätsverbesserungen und kleinere Bugfixes</li>
+          <li>Move-to-Applications-Dialog erscheint vor dem Menüleisten-Icon (kein Doppel-Icon mehr)</li>
+          <li>Leerzeichen wird nach Diktat automatisch eingefügt</li>
+          <li>Guard-1-Fix für die UserDefaults-basierte Single-Instance-Logik</li>
         </ul>
       ]]></description>
       <enclosure
         url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
-        sparkle:version="8"
-        sparkle:shortVersionString="1.1.5"
-        length="4258212"
+        sparkle:version="9"
+        sparkle:shortVersionString="1.1.6"
+        length="4258108"
         type="application/octet-stream"
-        sparkle:edSignature="W3rQyni/xxxmELrYOtdYnJ7w92QPCNf7UXzrNdwDpxg1xv/SyRgIpcJJ1ptijNf7fPd9XVddoVrV2VTuPDwwAA=="/>
+        sparkle:edSignature="X5tEPZmax93b08z1TiFRdJcLi0XlEpANdCiH9rpVxD34XrRGmvZSTSDkGbreJ86Dq63xiwf6KD5LPNtZRDivBA=="/>
     </item>
 
   </channel>
