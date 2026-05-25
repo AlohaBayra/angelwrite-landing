@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle"
+     xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <channel>
+    <title>AngelWrite</title>
+    <link>https://www.angelwrite.app/appcast.xml</link>
+    <description>AngelWrite Versionshistorie</description>
+    <language>de</language>
+
+    <item>
+      <title>Version 1.1.4</title>
+      <pubDate>Mon, 25 May 2026 08:00:00 +0000</pubDate>
+      <sparkle:version>7</sparkle:version>
+      <sparkle:shortVersionString>1.1.4</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.1.4?</h3>
+        <ul>
+          <li>Sparkle Auto-Update: AngelWrite prüft ab jetzt automatisch auf neue Versionen</li>
+          <li>Stabilitätsverbesserungen und kleinere Bugfixes</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="7"
+        sparkle:shortVersionString="1.1.4"
+        length="0"
+        type="application/octet-stream"
+        sparkle:edSignature="PLACEHOLDER_REPLACE_WITH_SIGNATURE"/>
+    </item>
+
+  </channel>
+</rss>
