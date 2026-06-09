@@ -99,6 +99,21 @@
     }
     .hint a { color: #6366F1; text-decoration: none; }
     .hint a:hover { text-decoration: underline; }
+    .hidden { display: none !important; }
+    .key-box {
+      background: #0B1528; border-radius: 12px; padding: 22px 24px;
+      margin: 0 0 16px; text-align: left;
+    }
+    .key-label {
+      font-size: 12px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: #F5A623; margin: 0 0 8px;
+    }
+    .key-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 20px; font-weight: 700; color: #fff; letter-spacing: .04em;
+      cursor: pointer; word-break: break-all; margin: 0;
+    }
+    .key-hint { font-size: 12px; color: #9ca3af; margin: 10px 0 0; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -115,9 +130,15 @@
 
     <div class="checkmark">✓</div>
     <h1>E-Mail bestätigt!</h1>
-    <p class="sub">Super, <span id="js-vorname"></span>! Dein Download-Link ist auf dem Weg zu dir.</p>
+    <p class="sub">Super, <span id="js-vorname"></span>! <span id="js-sub-default">Dein Download-Link ist auf dem Weg zu dir.</span><span id="js-sub-key" class="hidden">Hier ist dein kostenloser AngelWrite-Lizenzkey.</span></p>
 
-    <div class="mail-box">
+    <div id="license-box" class="key-box hidden">
+      <p class="key-label">Dein Lizenzkey · Basic (lokal, dauerhaft kostenlos)</p>
+      <p class="key-value" id="js-key" title="Zum Kopieren klicken"></p>
+      <p class="key-hint">App starten → Einstellungen → Lizenz → Key eintragen → Aktivieren. Läuft 100 % lokal auf deinem Mac, ohne Cloud.</p>
+    </div>
+
+    <div id="mail-box" class="mail-box">
       <div class="mail-icon">📬</div>
       <div class="mail-text">Wir haben dir soeben eine E-Mail mit deinem persönlichen Download-Link geschickt. Bitte schau auch im Spam-Ordner nach.</div>
     </div>
@@ -152,6 +173,23 @@
     const dlToken = params.get('dl');
 
     if (name) document.getElementById('js-vorname').textContent = name;
+
+    // Lead-Magnet: Lizenzkey nach bestätigtem DOI direkt auf der Seite zeigen
+    const licenseKey = params.get('key');
+    if (licenseKey) {
+      document.getElementById('js-key').textContent = licenseKey;
+      document.getElementById('license-box').classList.remove('hidden');
+      document.getElementById('mail-box').classList.add('hidden');
+      document.getElementById('js-sub-default').classList.add('hidden');
+      document.getElementById('js-sub-key').classList.remove('hidden');
+      document.getElementById('js-key').addEventListener('click', () => {
+        navigator.clipboard && navigator.clipboard.writeText(licenseKey);
+      });
+      // Direkter Download — der Gate war die DOI-Bestätigung, kein dl-Token nötig
+      const keyBtn = document.getElementById('btn-download');
+      keyBtn.href = 'https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip';
+      keyBtn.classList.remove('hidden');
+    }
 
     if (dlToken) {
       fetch(`https://angelwrite-server-production.up.railway.app/api/download-link?token=${dlToken}`)
