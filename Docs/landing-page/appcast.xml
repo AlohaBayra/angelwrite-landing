@@ -8,6 +8,28 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.2.0</title>
+      <pubDate>Thu, 18 Jun 2026 14:28:52 +0000</pubDate>
+      <sparkle:version>18</sparkle:version>
+      <sparkle:shortVersionString>1.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.2.0?</h3>
+        <ul>
+          <li><strong>Live-Vorschau beim Diktieren.</strong> Du siehst deine Worte jetzt in Echtzeit mit, während du sprichst — komplett on-device. Die Vorschau erscheint am Cursor bzw. am aktiven Fenster, zeigt den aktiven Modus samt Tastenkürzel und bleibt sichtbar, bis der fertige Text eingefügt ist; sie lässt sich per Drag an die Wunschstelle ziehen (pro App gemerkt).</li>
+          <li>Außerdem: schnellere Live-Erkennung und Detailverbesserungen.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="18"
+        sparkle:shortVersionString="1.2.0"
+        length="4346442"
+        type="application/octet-stream"
+        sparkle:edSignature="uJmDU2pfwpvk9ojxF+8Fz42WsnksvxaJqRziwYzKsm+Nq+sNqQtZ9F1CMaQpQhB4FCzf8AyaV3QxEUuCCvosDw=="/>
+    </item>
+
+    <item>
       <title>Version 1.1.11</title>
       <pubDate>Mon, 25 May 2026 20:03:40 +0000</pubDate>
       <sparkle:version>14</sparkle:version>
