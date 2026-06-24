@@ -8,6 +8,28 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.3.0</title>
+      <pubDate>Wed, 24 Jun 2026 17:39:12 +0000</pubDate>
+      <sparkle:version>19</sparkle:version>
+      <sparkle:shortVersionString>1.3.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.3.0?</h3>
+        <ul>
+          <li><strong>Deine Wortliste.</strong> Bring AngelWrite Eigennamen und Fachwörter bei, die oft falsch erkannt werden. Du pflegst eine einfache Wortliste — komplett lokal auf deinem Mac, kein Audio. Hinzufügen per Liste oder CSV-Import; auf Wunsch werden die Begriffe in den KI-Modi berücksichtigt (Pro).</li>
+          <li>Außerdem: diverse Detail- und Stabilitätsverbesserungen.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="19"
+        sparkle:shortVersionString="1.3.0"
+        length="4193891"
+        type="application/octet-stream"
+        sparkle:edSignature="555MjepSSRYKZ7qiLBPeWnG0THoESzWdZnJHSgpgjNamds6/vyqB4iFUeYW2AJcickJkUfgWIpTl5YsCFxQiAQ=="/>
+    </item>
+
+    <item>
       <title>Version 1.2.0</title>
       <pubDate>Thu, 18 Jun 2026 14:28:52 +0000</pubDate>
       <sparkle:version>18</sparkle:version>
