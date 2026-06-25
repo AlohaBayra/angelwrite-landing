@@ -1,0 +1,4 @@
+# Aktions-Steuerung immer frisch laden — verhindert veralteten Cache,
+# damit Änderungen an promo.js (neue Aktion, Datum, Name) sofort sichtbar sind.
+/promo.js
+  Cache-Control: public, max-age=0, must-revalidate
