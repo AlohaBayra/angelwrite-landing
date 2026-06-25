@@ -43,11 +43,20 @@
 
     var byId = function (id) { return document.getElementById(id); };
 
-    // Badge (Aktionsname + Datum)
+    // Badge (nur Aktionsname – kurz, damit nichts abgeschnitten wird)
     var badge = byId('lokal-badge');
     if (badge) {
-      badge.textContent = name + (isEn ? ' · until ' : ' · bis ') + dateLabel;
+      badge.textContent = name;
       badge.style.display = '';
+    }
+    // Aktions-Deadline als eigene Zeile unter dem Preis (wird nie abgeschnitten)
+    var deadline = byId('lokal-deadline');
+    if (deadline) {
+      var fullDate = isEn
+          ? end.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+          : ('0' + end.getDate()).slice(-2) + '.' + ('0' + (end.getMonth() + 1)).slice(-2) + '.' + end.getFullYear();
+      deadline.textContent = (isEn ? 'Only until ' : 'Nur noch bis ') + fullDate;
+      deadline.style.display = '';
     }
     // Preis: 19 € durchgestrichen + 0,99 €
     var amount = byId('lokal-price');
