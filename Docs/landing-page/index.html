@@ -986,14 +986,14 @@
 
     <div class="price-grid">
       <div class="price-card">
-        <div class="price-tag" style="background:#16A34A;">Sommer-Aktion · bis 31.07.</div>
+        <div class="price-tag" id="lokal-badge" style="background:#16A34A;display:none;"></div>
         <div class="price-name">Lokal</div><div class="price-sub">einmalig · App-Updates inklusive</div>
-        <div class="price-amount"><span style="font-size:26px;font-weight:600;color:var(--ink-4);text-decoration:line-through;margin-right:10px;">€19</span><span class="cur">€</span>0,99</div>
+        <div class="price-amount" id="lokal-price"><span class="cur">€</span>19</div>
         <ul class="price-list">
           <li>Lokale Transkription (lokales Modell)</li><li>Kein Internet erforderlich</li><li>Modus: Original — Wörtlich (fn + ⇧)</li><li>DSGVO: Daten verlassen nie das Gerät</li><li>Einmalige Zahlung</li><li>App-Updates &amp; Bugfixes inklusive</li>
           <li class="minus">Keine KI-Modi</li>
         </ul>
-        <div class="price-card-bottom"><a class="btn btn-ghost btn-block" href="https://buy.stripe.com/00w4gy5cW26OgqH4CE8bS01?prefilled_promo_code=SOMMER26">Lokal kaufen – 0,99 €</a><p class="price-foot">Einmalig. Für immer. Kein Abo. · 0,99 € ist der Einstieg, nicht der Wert.</p></div>
+        <div class="price-card-bottom"><a class="btn btn-ghost btn-block" id="lokal-buy" href="https://buy.stripe.com/00w4gy5cW26OgqH4CE8bS01">Lokal kaufen – <span id="lokal-buy-price">19 €</span></a><p class="price-foot">Einmalig. Für immer. Kein Abo.</p></div>
       </div>
       <div class="price-card featured">
         <div class="price-tag">★ Empfohlen</div>
@@ -1025,7 +1025,7 @@
         <h3>✦ Noch unsicher? 7 Tage Pro — gratis.</h3>
         <p>Lade die App, leg los — alle KI-Modi 7 Tage frei. Keine Kreditkarte, endet automatisch.</p>
         <div class="trial-v2-price">0 €</div>
-        <div class="trial-v2-sub">7 Tage volles Pro · danach Lokal 0,99 € oder Pro</div>
+        <div class="trial-v2-sub">7 Tage volles Pro · danach Lokal <span class="js-lokal-price">19 €</span> oder Pro</div>
         <ul class="trial-v2-features">
           <li>Alle KI-Modi frei: Englisch, Immer Freundlich, Professionell</li><li>Cloud-Transkription inklusive</li><li>Original-Modus — wörtlich, auch lokal &amp; offline</li><li>Text direkt am Cursor, in jeder App</li>
           <li class="hint">→ Endet automatisch nach 7 Tagen · danach Lokal (0,99 €) oder Pro</li>
@@ -1066,7 +1066,7 @@
         <details><summary>Was unterscheidet AngelWrite von der eingebauten Apple Diktierfunktion? <span class="faq-icon">+</span></summary><p>Apple Diktat stoppt nach 30–60 Sekunden, erkennt Deutsch schlechter als Englisch und verbessert den Text nicht. AngelWrite hat kein Zeitlimit, nutzt Whisper, veredelt Text durch KI-Modi und funktioniert per Tastenkürzel in jeder App — ohne Siri und ohne Cloud.</p></details>
         <details><summary>Funktioniert AngelWrite auch offline — im Zug, im Ausland, ohne WLAN? <span class="faq-icon">+</span></summary><p>Im Lokal-Modus (Original) läuft AngelWrite komplett offline — die Transkription passiert auf deinem Mac, keine Serververbindung nötig. Der 7-Tage-Pro-Test und der Pro-Modus nutzen Cloud-Transkription und KI-Verarbeitung und brauchen dafür eine Internetverbindung.</p></details>
         <details><summary>Wie viel schneller bin ich, wenn ich diktiere statt zu tippen? <span class="faq-icon">+</span></summary><p>Sprechen ist 3× schneller als Tippen. Durchschnittliche Tippgeschwindigkeit: 53 WPM. Sprechen: 161 WPM (Stanford HCI Lab). Bei zwei Stunden täglichem Schreiben = bis zu 90 Minuten zurückgewonnene Zeit pro Tag.</p></details>
-        <details><summary>Was ist der Unterschied zwischen Lokal, Pro und Advanced? <span class="faq-icon">+</span></summary><p>Lokal (0,99 € einmalig — Sommer-Aktion bis 31.07., statt 19 €) — offline, maximale Privatsphäre, App-Updates &amp; Bugfixes inklusive. Pro (99 € / Jahr) — alle KI-Modi, Cloud-Transkription, neue Features. Advanced (149 € einmalig) — eigener API-Key, eigene Prompts, unbegrenzte Anfragen.</p></details>
+        <details><summary>Was ist der Unterschied zwischen Lokal, Pro und Advanced? <span class="faq-icon">+</span></summary><p>Lokal (<span class="js-lokal-price">19 €</span> einmalig<span class="js-promo-note"></span>) — offline, maximale Privatsphäre, App-Updates &amp; Bugfixes inklusive. Pro (99 € / Jahr) — alle KI-Modi, Cloud-Transkription, neue Features. Advanced (149 € einmalig) — eigener API-Key, eigene Prompts, unbegrenzte Anfragen.</p></details>
         <details><summary>Für welche Berufe lohnt sich AngelWrite besonders? <span class="faq-icon">+</span></summary><p>Anwälte, Ärzte, Unternehmensberater, Autoren, Journalisten, Führungskräfte und Entwickler — alle, die täglich viel schreiben und schneller und klarer kommunizieren wollen.</p></details>
       </div>
     </div>
@@ -1230,6 +1230,7 @@ function setBilling(mode) {
   window.translation = { common: { selectedList: '{quantity} Liste ausgewählt', selectedLists: '{quantity} Listen ausgewählt', selectedOption: '{quantity} ausgewählt', selectedOptions: '{quantity} ausgewählt' } };
   var AUTOHIDE = Boolean(0);
 </script>
+<script src="promo.js"></script>
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
 <script>

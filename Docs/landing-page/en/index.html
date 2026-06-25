@@ -971,14 +971,14 @@
 
     <div class="price-grid">
       <div class="price-card">
-        <div class="price-tag" style="background:#16A34A;">Summer offer · until Jul 31</div>
+        <div class="price-tag" id="lokal-badge" style="background:#16A34A;display:none;"></div>
         <div class="price-name">Local</div><div class="price-sub">one-time · app updates included</div>
-        <div class="price-amount"><span style="font-size:26px;font-weight:600;color:var(--ink-4);text-decoration:line-through;margin-right:10px;">€19</span><span class="cur">€</span>0.99</div>
+        <div class="price-amount" id="lokal-price"><span class="cur">€</span>19</div>
         <ul class="price-list">
           <li>Local transcription (on-device model)</li><li>No internet required</li><li>Mode: Original — verbatim (fn + ⇧)</li><li>GDPR: data never leaves your device</li><li>One-time payment</li><li>App updates &amp; bug fixes included</li>
           <li class="minus">No AI modes</li>
         </ul>
-        <div class="price-card-bottom"><a class="btn btn-ghost btn-block" href="https://buy.stripe.com/00w4gy5cW26OgqH4CE8bS01?prefilled_promo_code=SOMMER26">Buy Local – €0.99</a><p class="price-foot">One-time. Forever. No subscription. · €0.99 is the entry, not the value.</p></div>
+        <div class="price-card-bottom"><a class="btn btn-ghost btn-block" id="lokal-buy" href="https://buy.stripe.com/00w4gy5cW26OgqH4CE8bS01">Buy Local – <span id="lokal-buy-price">€19</span></a><p class="price-foot">One-time. Forever. No subscription.</p></div>
       </div>
       <div class="price-card featured">
         <div class="price-tag">★ Recommended</div>
@@ -1010,7 +1010,7 @@
         <h3>✦ Still unsure? 7 days of Pro — free.</h3>
         <p>Download, start dictating — all AI modes free for 7 days. No credit card, ends automatically.</p>
         <div class="trial-v2-price">€0</div>
-        <div class="trial-v2-sub">7 days of full Pro · then Local €0.99 or Pro</div>
+        <div class="trial-v2-sub">7 days of full Pro · then Local <span class="js-lokal-price">€19</span> or Pro</div>
         <ul class="trial-v2-features">
           <li>All AI modes free: Translate, Always Friendly, Professional</li><li>Cloud transcription included</li><li>Original mode — verbatim, also local &amp; offline</li><li>Text directly at cursor, in every app</li>
           <li class="hint">→ Ends automatically after 7 days · then Local (€0.99) or Pro</li>
@@ -1051,7 +1051,7 @@
         <details><summary>What makes AngelWrite different from built-in Apple Dictation? <span class="faq-icon">+</span></summary><p>Apple Dictation stops after 30–60 seconds, handles non-English languages less accurately, and doesn't improve your text. AngelWrite has no time limit, uses Whisper, refines text through AI modes and works via keyboard shortcut in every app — without Siri and without the cloud.</p></details>
         <details><summary>Does AngelWrite work offline — on a train, abroad, without Wi-Fi? <span class="faq-icon">+</span></summary><p>In local mode (Original), AngelWrite runs completely offline — transcription happens on your Mac, no server connection needed. The 7-day Pro trial and Pro mode use cloud transcription and AI processing and require an internet connection.</p></details>
         <details><summary>How much faster am I when I dictate instead of type? <span class="faq-icon">+</span></summary><p>Speaking is 3× faster than typing. Average typing speed: 53 WPM. Speaking: 161 WPM (Stanford HCI Lab). With two hours of daily writing = up to 90 minutes of recovered time per day.</p></details>
-        <details><summary>What is the difference between Local, Pro and Advanced? <span class="faq-icon">+</span></summary><p>Local (€0.99 one-time — summer offer until Jul 31, reg. €19) — offline, maximum privacy, app updates &amp; bug fixes included. Pro (€99 / year) — all AI modes, cloud transcription, new features. Advanced (€149 one-time) — own API key, custom prompts, unlimited requests.</p></details>
+        <details><summary>What is the difference between Local, Pro and Advanced? <span class="faq-icon">+</span></summary><p>Local (<span class="js-lokal-price">€19</span> one-time<span class="js-promo-note"></span>) — offline, maximum privacy, app updates &amp; bug fixes included. Pro (€99 / year) — all AI modes, cloud transcription, new features. Advanced (€149 one-time) — own API key, custom prompts, unlimited requests.</p></details>
         <details><summary>Which professions benefit most from AngelWrite? <span class="faq-icon">+</span></summary><p>Lawyers, doctors, management consultants, authors, journalists, executives and developers — anyone who writes a lot every day and wants to communicate faster and more clearly.</p></details>
       </div>
     </div>
@@ -1215,6 +1215,7 @@ function setBilling(mode) {
   window.translation = { common: { selectedList: '{quantity} list selected', selectedLists: '{quantity} lists selected', selectedOption: '{quantity} selected', selectedOptions: '{quantity} selected' } };
   var AUTOHIDE = Boolean(0);
 </script>
+<script src="../promo.js"></script>
 <script defer src="https://sibforms.com/forms/end-form/build/main.js"></script>
 
 <script>
