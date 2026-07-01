@@ -8,6 +8,29 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.5.0</title>
+      <pubDate>Wed, 01 Jul 2026 06:44:50 +0000</pubDate>
+      <sparkle:version>27</sparkle:version>
+      <sparkle:shortVersionString>1.5.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.5.0?</h3>
+        <ul>
+          <li><strong>Frei belegbare Shortcuts.</strong> Leg jeden der fünf Fn-Shortcuts frei mit einem Modus deiner Wahl — per Dropdown oder Drag &amp; Drop; bereits belegte Modi werden direkt getauscht.</li>
+          <li><strong>Eigene Stil-Bibliothek (Advanced).</strong> Erstelle beliebig viele eigene KI-Stile mit eigenem Prompt und weise sie deinen Shortcuts zu.</li>
+          <li>Außerdem: klarere Tarif-Kennzeichnung der Modi, ein neuer Engine-Umschalter (Cloud/Lokal), Live-Aktualisierung des Menüleisten-Menüs und kleinere Detailverbesserungen.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="27"
+        sparkle:shortVersionString="1.5.0"
+        length="4872183"
+        type="application/octet-stream"
+        sparkle:edSignature="dqMGlyCREyMxStatLhICy2R4agAJyoq+hx2JZui8aQfbgJ5ThezdqGTzMd/WP07Js2vDlF0b8+eSYE9CkCXNAQ=="/>
+    </item>
+
+    <item>
       <title>Version 1.4.0</title>
       <pubDate>Thu, 25 Jun 2026 12:29:45 +0000</pubDate>
       <sparkle:version>20</sparkle:version>
