@@ -8,6 +8,29 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.5.1</title>
+      <pubDate>Thu, 02 Jul 2026 08:49:39 +0000</pubDate>
+      <sparkle:version>28</sparkle:version>
+      <sparkle:shortVersionString>1.5.1</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.5.1?</h3>
+        <ul>
+          <li><strong>Wortliste überarbeitet.</strong> Neue Spalte „Wird ersetzt" zeigt je Eintrag die automatisch korrigierten Varianten; Einträge sind direkt bearbeitbar (Stift, Kontextmenü, Doppelklick), mit klareren Beschriftungen und stabilem Bearbeiten-Popover.</li>
+          <li><strong>Einheitlicher Import.</strong> Format über „=" („falsch1, falsch2 = richtig"), robuster CSV-Import (CR/CRLF-Zeilenenden, Semikolon-/Excel-Leerspalten) und eine CSV-Vorlage zum Download.</li>
+          <li><strong>Onboarding.</strong> Neuer Schritt hilft, Apples Diktat auf der 🌐-/Fn-Taste zu deaktivieren.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="28"
+        sparkle:shortVersionString="1.5.1"
+        length="4924033"
+        type="application/octet-stream"
+        sparkle:edSignature="1Wj50DG9mWlRjTszKg8HWjH4WAGIdAwNKCLFFLETh/x+a4VBL4rGQjAPCTUL3s9d4rsSqWchSFmmFfREpSUVAw=="/>
+    </item>
+
+    <item>
       <title>Version 1.5.0</title>
       <pubDate>Wed, 01 Jul 2026 06:44:50 +0000</pubDate>
       <sparkle:version>27</sparkle:version>
