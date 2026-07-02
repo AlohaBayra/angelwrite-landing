@@ -4,8 +4,10 @@
    Für eine neue Aktion NUR diese Felder im Block PROMO ändern:
      active   true = Aktion möglich, false = sofort aus (immer 19 €)
      code     Stripe-Promo-Code (muss in Stripe mit gleichem Enddatum existieren)
-     start    Startzeitpunkt (ISO, lokale Zeit)
-     end      Endzeitpunkt   (ISO, lokale Zeit) – danach automatisch wieder 19 €
+     start    Startzeitpunkt (ISO MIT Zeitzonen-Offset — Deutschland: +02:00 Sommer,
+              +01:00 Winter). So beginnt/endet die Aktion für ALLE Besucher zum
+              gleichen realen Zeitpunkt, unabhängig von deren Zeitzone.
+     end      Endzeitpunkt   (ISO mit Offset) – danach automatisch wieder 19 €
      nameDe   Anzeigename Aktion (Deutsch)
      nameEn   Anzeigename Aktion (Englisch)
      buyBase  Stripe-Payment-Link (ohne Parameter)
@@ -17,8 +19,8 @@
   var PROMO = {
     active:  true,
     code:    'SOMMER26',
-    start:   '2026-06-25T00:00:00',
-    end:     '2026-07-31T23:59:59',
+    start:   '2026-06-25T00:00:00+02:00',
+    end:     '2026-07-31T23:59:59+02:00',
     nameDe:  'Sommer-Aktion',
     nameEn:  'Summer offer',
     buyBase: 'https://buy.stripe.com/00w4gy5cW26OgqH4CE8bS01'

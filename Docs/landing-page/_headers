@@ -1,3 +1,13 @@
+# Security-Header für alle Seiten (Audit-Modul 11).
+# CSP bewusst (noch) nicht gesetzt — die Seiten nutzen Inline-Styles/-Skripte;
+# eine CSP erst nach deren Prüfung, um nichts zu brechen.
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
+
 # Aktions-Steuerung immer frisch laden — verhindert veralteten Cache,
 # damit Änderungen an promo.js (neue Aktion, Datum, Name) sofort sichtbar sind.
 /promo.js
