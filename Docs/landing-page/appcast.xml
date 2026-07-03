@@ -8,6 +8,27 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.5.2</title>
+      <pubDate>Fri, 03 Jul 2026 07:30:44 +0000</pubDate>
+      <sparkle:version>29</sparkle:version>
+      <sparkle:shortVersionString>1.5.2</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.5.2?</h3>
+        <ul>
+          <li><strong>Übersetzen-Modus.</strong> Heißt nicht mehr fix „Englisch", sondern „Übersetzen" bzw. „Übersetzen → <Zielsprache>" — passend zur eingestellten Ausgabesprache, sichtbar in Menüleiste, Slot-Zeilen und Live-Vorschau.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="29"
+        sparkle:shortVersionString="1.5.2"
+        length="4927755"
+        type="application/octet-stream"
+        sparkle:edSignature="XhXbK8FQUWqZ9yKSx5omeVO7iiPt7MYCc58sM944WzhrhSvMjStEJkQX3FVqPA6Mmzv0C001GQLGgwybVoO5DQ=="/>
+    </item>
+
+    <item>
       <title>Version 1.5.1</title>
       <pubDate>Thu, 02 Jul 2026 08:49:39 +0000</pubDate>
       <sparkle:version>28</sparkle:version>
