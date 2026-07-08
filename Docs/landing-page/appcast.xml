@@ -8,6 +8,29 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.6.0</title>
+      <pubDate>Wed, 08 Jul 2026 16:01:13 +0000</pubDate>
+      <sparkle:version>30</sparkle:version>
+      <sparkle:shortVersionString>1.6.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.6.0?</h3>
+        <ul>
+          <li><strong>Diktat-Kollision erkennen.</strong> AngelWrite prüft jetzt, ob Apples Diktat die Fn-/🌐-Taste belegt, zeigt den Status im Berechtigungen-Tab und bietet einen „Kürzel testen“-Test plus Zwei-Wege-Anleitung.</li>
+          <li><strong>Freihändig-Modus.</strong> Optional statt Halten: einmal antippen zum Starten, nochmal antippen zum Stoppen — praktisch für längere Texte. Esc bricht ab.</li>
+          <li><strong>Verbessertes Onboarding.</strong> Sichtbarer Diktat-Check statt stillem Überspringen und eine Erklärung des Freihändig-Modus.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip"
+        sparkle:version="30"
+        sparkle:shortVersionString="1.6.0"
+        length="4984607"
+        type="application/octet-stream"
+        sparkle:edSignature="GTuviCbMEMv6mdSbdvGLywpaoazasafMg/dCLbRaPe1VkjQfWAoY0yA6FQXL6Vp3ljO9Z9kxaud/CSXcLoWzCQ=="/>
+    </item>
+
+    <item>
       <title>Version 1.5.2</title>
       <pubDate>Fri, 03 Jul 2026 07:30:44 +0000</pubDate>
       <sparkle:version>29</sparkle:version>
