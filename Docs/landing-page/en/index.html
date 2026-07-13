@@ -1122,6 +1122,10 @@
           <input type="email" id="tf-email" placeholder="Email address" autocomplete="email" maxlength="200" required />
           <button class="trial-form-btn" type="submit" id="tf-btn">Start for free now →</button>
           <div class="trial-form-msg" id="tf-msg"></div>
+          <p class="trial-form-legal" style="font-size:11px;color:var(--ink-4);line-height:1.5;margin-top:10px;">
+            Double opt-in: we'll send you a confirmation email. After you click, you'll receive your 7-day Pro key and occasional product updates. You can unsubscribe at any time.
+            See our <a href="/datenschutz.html" style="color:inherit;text-decoration:underline;">privacy policy</a> for details.
+          </p>
         </form>
       </div>
     </div>
@@ -1333,7 +1337,7 @@ async function submitTrial(e) {
   msg.textContent = '';
 
   try {
-    const res = await fetch('https://angelwrite-server-production.up.railway.app/api/waitlist', {
+    const res = await fetch('https://angelwrite-server-production.up.railway.app/trial/signup', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ vorname, email })
@@ -1342,10 +1346,10 @@ async function submitTrial(e) {
 
     if (res.ok && data.ok) {
       msg.className = 'trial-form-msg success';
-      if (data.status === 'already_confirmed') {
-        msg.textContent = '✓ You already have a download link — check your inbox!';
+      if (data.status === 'already_issued') {
+        msg.textContent = '✓ You already have a Pro trial — we\'ve re-sent your key to your inbox.';
       } else {
-        msg.textContent = '✓ Almost there! We\'ve sent you a confirmation email.';
+        msg.textContent = '✓ Almost there — confirm your email and you\'ll get your 7-day Pro key.';
       }
       document.getElementById('trial-form').reset();
     } else {
