@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pro-Test aktiv — AngelWrite</title>
+  <meta name="robots" content="noindex" />
+  <link rel="icon" type="image/svg+xml" href="2.svg" />
+  <link rel="alternate" hreflang="de" href="https://www.angelwrite.app/trial-aktiv.html" />
+  <link rel="alternate" hreflang="en" href="https://www.angelwrite.app/en/trial-aktiv.html" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #F8F7FF;
+      color: #0A0A0B;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #E5E5E8;
+      border-radius: 20px;
+      padding: 56px 48px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 40px rgba(99,102,241,0.10);
+    }
+    .logo {
+      font-size: 15px; font-weight: 700; letter-spacing: -0.02em;
+      color: #0A0A0B; margin-bottom: 24px;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .logo img { height: 22px; width: auto; }
+    .lang {
+      display: flex; justify-content: center; gap: 8px;
+      font-size: 13px; font-weight: 600; margin-bottom: 24px;
+    }
+    .lang a { text-decoration: none; }
+    .checkmark {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: linear-gradient(135deg, #6366F1, #8B5CF6);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 24px;
+      box-shadow: 0 0 32px rgba(99,102,241,0.30);
+      font-size: 28px;
+    }
+    .checkmark.warn {
+      background: linear-gradient(135deg, #F59E0B, #F5A623);
+      box-shadow: 0 0 32px rgba(245,158,11,0.30);
+    }
+    h1 {
+      font-size: 26px; font-weight: 700; letter-spacing: -0.025em;
+      color: #0A0A0B; margin-bottom: 12px; line-height: 1.25;
+    }
+    .sub { font-size: 15px; color: #54545B; line-height: 1.6; margin-bottom: 28px; }
+
+    /* Lizenzkey */
+    .key-box {
+      background: #0B1528; border-radius: 12px; padding: 22px 24px;
+      margin: 0 0 12px; text-align: left;
+    }
+    .key-label {
+      font-size: 12px; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: #F5A623; margin: 0 0 10px;
+    }
+    .key-value {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 22px; font-weight: 700; color: #fff; letter-spacing: .04em;
+      word-break: break-all; margin: 0 0 16px; line-height: 1.35;
+    }
+    .btn-copy {
+      display: block; width: 100%; font-family: inherit;
+      font-size: 14px; font-weight: 600;
+      background: #6366F1; color: #fff; border: 0; cursor: pointer;
+      padding: 12px 20px; border-radius: 10px;
+      transition: background 0.15s;
+    }
+    .btn-copy:hover { background: #4F52D1; }
+    .btn-copy.done { background: #13CE66; }
+    .key-hint { font-size: 12px; color: #8B8B92; margin: 0 0 28px; line-height: 1.5; }
+
+    /* Schritte */
+    .steps { margin: 0 0 24px; text-align: left; display: flex; flex-direction: column; gap: 14px; }
+    .steps-title {
+      font-size: 13px; font-weight: 600; color: #374151;
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 2px;
+    }
+    .step { display: flex; align-items: flex-start; gap: 14px; }
+    .step-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: #6366F1; color: #fff;
+      font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .step-text { font-size: 14px; color: #1F1F23; line-height: 1.5; padding-top: 4px; }
+    .step-text strong { color: #0A0A0B; }
+
+    .install-box {
+      background: #F8F7FF; border: 1px solid #E5E5E8; border-radius: 12px;
+      padding: 18px 20px; margin-bottom: 24px; text-align: left;
+    }
+    .install-text { font-size: 13px; color: #54545B; line-height: 1.5; margin-bottom: 12px; }
+    .btn-download {
+      display: inline-block; width: 100%; font-size: 15px; font-weight: 600;
+      background: #6366F1; color: #fff; text-decoration: none;
+      padding: 13px 24px; border-radius: 10px; text-align: center;
+      transition: background 0.15s;
+    }
+    .btn-download:hover { background: #4F52D1; }
+    .btn-download.ghost {
+      background: #fff; color: #6366F1; border: 1px solid #C7C9F5;
+      padding: 11px 24px; font-size: 14px;
+    }
+    .btn-download.ghost:hover { background: #F0EFFE; }
+    .btn-back { display: inline-block; font-size: 14px; font-weight: 500; color: #6366F1; text-decoration: none; }
+    .btn-back:hover { text-decoration: underline; }
+    .hint {
+      font-size: 13px; color: #8B8B92; margin-top: 24px;
+      padding-top: 24px; border-top: 1px solid #E5E5E8; line-height: 1.6;
+    }
+    .hint a { color: #6366F1; text-decoration: none; }
+    .hint a:hover { text-decoration: underline; }
+    .footer { margin-top: 20px; font-size: 12px; color: #9CA3AF; }
+    .footer a { color: #6366F1; text-decoration: none; }
+    .hidden { display: none !important; }
+  </style>
+</head>
+<body>
+<div class="card">
+  <div class="logo">
+    <img src="2.svg" alt="AngelWrite" />
+    AngelWrite
+  </div>
+  <div class="lang">
+    <a href="/trial-aktiv.html" style="color:#0A0A0B;">DE</a>
+    <span style="color:#d1d5db;">|</span>
+    <a href="/en/trial-aktiv.html" style="color:#9ca3af;">EN</a>
+  </div>
+
+  <!-- ── Erfolgsfall: Pro-Test aktiv ─────────────────────────────────────── -->
+  <div id="view-ok" class="hidden">
+    <div class="checkmark">✓</div>
+    <h1 id="js-headline">Dein Pro-Test ist aktiv 🎉</h1>
+    <p class="sub">7 Tage AngelWrite Pro — voller Funktionsumfang, endet automatisch. Keine Kündigung nötig.</p>
+
+    <div class="key-box">
+      <p class="key-label">Dein Pro-Test-Key · 7 Tage</p>
+      <p class="key-value" id="js-key"></p>
+      <button class="btn-copy" id="btn-copy" type="button">Kopieren</button>
+    </div>
+    <p class="key-hint">Wir haben dir den Key zusätzlich per E-Mail geschickt — du kannst ihn also nicht verlieren.</p>
+
+    <div class="steps">
+      <div class="steps-title">So aktivierst du ihn</div>
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-text"><strong>AngelWrite öffnen</strong> — Symbol in der Menüleiste anklicken</div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-text"><strong>Einstellungen</strong> → Reiter <strong>Lizenz</strong></div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-text"><strong>Key eintragen</strong> — am besten oben kopieren und einfügen</div>
+      </div>
+      <div class="step">
+        <div class="step-num">4</div>
+        <div class="step-text"><strong>Aktivieren</strong> klicken — fertig ✓</div>
+      </div>
+    </div>
+
+    <div class="install-box">
+      <p class="install-text">AngelWrite noch nicht installiert? Lade die App und zieh sie in den Programme-Ordner.</p>
+      <a class="btn-download ghost" href="https://github.com/AlohaBayra/angelwrite-landing/releases/latest/download/AngelWrite.zip">AngelWrite für macOS laden ↓</a>
+    </div>
+  </div>
+
+  <!-- ── Fehlerfall: DOI abgelaufen / ungültig ───────────────────────────── -->
+  <div id="view-error" class="hidden">
+    <div class="checkmark warn">!</div>
+    <h1>Bestätigung abgelaufen</h1>
+    <p class="sub">Dieser Bestätigungslink ist nicht mehr gültig — das passiert, wenn er zu alt ist oder schon einmal ersetzt wurde. Kein Problem: Fordere den Pro-Test einfach neu an, es dauert 30 Sekunden.</p>
+    <a class="btn-download" href="/#trial-form">Pro-Test erneut anfordern →</a>
+  </div>
+
+  <!-- ── Direktaufruf ohne Parameter ─────────────────────────────────────── -->
+  <div id="view-plain" class="hidden">
+    <div class="checkmark warn">?</div>
+    <h1>Kein Pro-Test-Key gefunden</h1>
+    <p class="sub">Diese Seite zeigt deinen Pro-Test-Key nach der Bestätigung per E-Mail. Öffne dazu den Link in unserer Bestätigungs-Mail — oder fordere den Pro-Test neu an.</p>
+    <a class="btn-download" href="/#trial-form">Pro-Test anfordern →</a>
+  </div>
+
+  <p class="hint">
+    Key funktioniert nicht oder keine E-Mail bekommen?<br />
+    Schreib uns: <a href="mailto:info@angelwrite.app">info@angelwrite.app</a>
+  </p>
+  <a class="btn-back" href="/">← Zurück zur Startseite</a>
+
+  <div class="footer">
+    AngelWrite · ValueLift · Marcus Eichler
+  </div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const name = (params.get('name') || '').trim();
+  const key  = (params.get('key')  || '').trim();
+  const doi  = params.get('doi');
+
+  const show = (id) => document.getElementById(id).classList.remove('hidden');
+
+  if (doi === 'error' || doi === 'invalid') {
+    // Server konnte den DOI-Token nicht einlösen (abgelaufen, unbekannt, Serverfehler).
+    show('view-error');
+  } else if (key) {
+    // Der Server hängt bei leerem Vornamen name= leer an → Headline ohne Anrede.
+    document.getElementById('js-headline').textContent =
+      name ? `Dein Pro-Test ist aktiv, ${name} 🎉` : 'Dein Pro-Test ist aktiv 🎉';
+    document.getElementById('js-key').textContent = key;
+    show('view-ok');
+
+    const btn = document.getElementById('btn-copy');
+    btn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(key);
+      } catch (e) {
+        // Ohne Clipboard-API (älterer Browser, kein HTTPS): Key markieren, damit
+        // der Nutzer selbst mit ⌘C kopieren kann.
+        const range = document.createRange();
+        range.selectNodeContents(document.getElementById('js-key'));
+        const sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        return;
+      }
+      btn.textContent = 'Kopiert ✓';
+      btn.classList.add('done');
+      setTimeout(() => {
+        btn.textContent = 'Kopieren';
+        btn.classList.remove('done');
+      }, 2000);
+    });
+  } else {
+    show('view-plain');
+  }
+</script>
+</body>
+</html>
