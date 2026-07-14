@@ -8,6 +8,29 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.7.0</title>
+      <pubDate>Tue, 14 Jul 2026 10:21:14 +0000</pubDate>
+      <sparkle:version>31</sparkle:version>
+      <sparkle:shortVersionString>1.7.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.7.0?</h3>
+        <ul>
+          <li><strong>7-Tage-Pro-Test per E-Mail.</strong> Der Pro-Test kommt jetzt als persönlicher Lizenzkey per E-Mail — einfach eintragen und loslegen.</li>
+          <li><strong>Klarer Hinweis statt stiller Sperre.</strong> Läuft deine Testlizenz oder dein Abo ab, erklärt ein Fenster, was zu tun ist: Lizenzkey eintragen oder direkt bestellen. Kein Rätselraten mehr, warum das Diktat nicht startet.</li>
+          <li><strong>Lizenz-Prüfung ohne Neustart.</strong> Ein neu eingetragener Key wird sofort erkannt — die App muss nicht mehr neu gestartet werden.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/download/v1.7.0/AngelWrite.zip"
+        sparkle:version="31"
+        sparkle:shortVersionString="1.7.0"
+        length="5015047"
+        type="application/octet-stream"
+        sparkle:edSignature="oHM03DlCbsqUSXEEieTMipsrGGvxg6q/nUm+fpIJ139eZxAU9ChFkK8cwzw+2LF5YQ2vesp/R0u0oIPbvtINAg=="/>
+    </item>
+
+    <item>
       <title>Version 1.6.0</title>
       <pubDate>Wed, 08 Jul 2026 16:01:13 +0000</pubDate>
       <sparkle:version>30</sparkle:version>
