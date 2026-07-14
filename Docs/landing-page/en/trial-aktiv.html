@@ -221,6 +221,14 @@
 
   const show = (id) => document.getElementById(id).classList.remove('hidden');
 
+  // Switching language must not drop ?name/?key — otherwise the user lands on the
+  // other language in the "no key found" state.
+  if (window.location.search) {
+    document.querySelectorAll('.lang a').forEach((a) => {
+      a.href = a.getAttribute('href').split('?')[0] + window.location.search;
+    });
+  }
+
   if (doi === 'error' || doi === 'invalid') {
     // The server could not redeem the DOI token (expired, unknown, server error).
     show('view-error');

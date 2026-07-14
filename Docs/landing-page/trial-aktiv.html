@@ -221,6 +221,14 @@
 
   const show = (id) => document.getElementById(id).classList.remove('hidden');
 
+  // Sprachwechsel darf ?name/?key nicht verschlucken — sonst landet der Nutzer
+  // auf der anderen Sprache im „kein Key gefunden"-Zustand.
+  if (window.location.search) {
+    document.querySelectorAll('.lang a').forEach((a) => {
+      a.href = a.getAttribute('href').split('?')[0] + window.location.search;
+    });
+  }
+
   if (doi === 'error' || doi === 'invalid') {
     // Server konnte den DOI-Token nicht einlösen (abgelaufen, unbekannt, Serverfehler).
     show('view-error');
