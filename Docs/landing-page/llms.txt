@@ -1,0 +1,27 @@
+# AngelWrite
+
+> AngelWrite ist eine macOS-Menüleisten-App für Push-to-Talk-Diktat. Taste halten, sprechen, loslassen — der Text erscheint sofort an der Cursor-Position, in jeder App (Mail, Slack, Word, Notion, Browser). KI-Modi veredeln den Text optional; ein Lokal-Modus transkribiert vollständig offline auf dem Gerät (DSGVO-freundlich).
+
+AngelWrite is a macOS menu bar app for push-to-talk dictation. Hold a key, speak, release — the text appears instantly at the cursor in any app. Optional AI modes refine the text; a local mode transcribes fully offline on-device.
+
+Kernfakten / Key facts:
+- Plattform: macOS (Apple Silicon empfohlen)
+- Bedienung: Push-to-Talk per Tastenkürzel, alternativ Freihändig-Modus (antippen startet/stoppt)
+- 5 KI-Modi: Original, Übersetzen, Professionell, Immer Freundlich, Kundenindividuell
+- Eigene Wortliste für Namen, Marken und Fachbegriffe
+- Lokal-Modus: Transkription komplett offline, kein Audio verlässt das Gerät
+- 7 Tage kostenlos testen, kein Zeitlimit beim Diktieren
+- Moderne Alternative zu Dragon Dictate (für Mac eingestellt) und zum eingebauten Apple-Diktat
+
+## Seiten / Pages
+
+- [Startseite (Deutsch)](https://www.angelwrite.app/): Produktübersicht, Funktionen, Preise, FAQ
+- [Homepage (English)](https://www.angelwrite.app/en/): Product overview, features, pricing, FAQ
+- [Datenschutzerklärung](https://www.angelwrite.app/datenschutz.html): DSGVO-Informationen zur Datenverarbeitung
+- [AGB](https://www.angelwrite.app/agb.html): Nutzungsbedingungen, Kündigung, Erstattung
+- [Impressum](https://www.angelwrite.app/impressum.html): Anbieterkennzeichnung
+
+## Presse / Press
+
+- [iTopnews.de: App-Geheimtipp AngelWrite (2026-06-22)](https://www.itopnews.de/2026/06/app-geheimtipp-angelwrite/)
+- [Sevens App Blog: AngelWrite – Test (2026-06-27)](https://sevens-app-blog.de/angelwrite)
