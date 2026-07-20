@@ -8,6 +8,30 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.8.0</title>
+      <pubDate>Mon, 20 Jul 2026 14:58:41 +0000</pubDate>
+      <sparkle:version>32</sparkle:version>
+      <sparkle:shortVersionString>1.8.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.8.0?</h3>
+        <ul>
+          <li><strong>Du wählst deine Auslösetaste jetzt selbst — pro Tastatur.</strong> Statt eines fest vorgegebenen Fn drückst du in den Einstellungen einfach die Taste, mit der du diktieren möchtest (z.&nbsp;B. die RECHTE Ctrl- oder die RECHTE Command-Taste). Jede angeschlossene Tastatur bekommt ihre eigene Wahl — praktisch, wenn du zwischen MacBook-Tastatur und externer Tastatur wechselst. Auf Wunsch kannst du sogar Zahlentasten als zweite Taste belegen. Deine bisherigen Zuordnungen werden dabei übernommen.</li>
+          <li><strong>Die App sagt dir jetzt, wenn etwas nicht funktioniert.</strong> Der neue Berechtigungs- und Systemcheck zeigt in einer klaren Liste, ob Mikrofon, Bedienungshilfen, Eingabeüberwachung, deine Auslösetaste und der Server bereit sind — und was zu tun ist, wenn eine Zeile rot ist. Kein stilles „es passiert nichts" mehr: Wenn deine Taste keine Tastendrücke empfängt, siehst du es sofort.</li>
+          <li><strong>Deine Modi an einem Ort.</strong> Der neue Reiter „Modi" bündelt alle Diktat-Modi (Original, Übersetzen, Immer Freundlich, Professionell und eigene Stile): einzeln aktivieren, jeder Taste zuordnen, und über das Menüleisten-Menü schnell einen anderen Modus fürs nächste Diktat wählen.</li>
+          <li><strong>Anzeigefehler bei „Eingabeüberwachung" behoben.</strong> Die Zeile „Eingabeüberwachung" zeigte in Wahrheit den Status der Bedienungshilfen und konnte dadurch fälschlich grün sein. Wenn bei dir bisher kein Diktat ankam, schau nach dem Update einmal in den Berechtigungen-Tab — dort steht jetzt, woran es liegt.</li>
+          <li><strong>Rundum aufgeräumt.</strong> Übersichtlicherer Shortcuts-Bereich mit klaren Tastenkappen, verständliche Hinweise, wenn eine Taste nicht als Auslöser taugt, und viele kleine Verbesserungen unter der Haube.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/download/v1.8.0/AngelWrite.zip"
+        sparkle:version="32"
+        sparkle:shortVersionString="1.8.0"
+        length="5190828"
+        type="application/octet-stream"
+        sparkle:edSignature="8UW5J3k66PGwtkPu5KrM4Z38EEHaDB0XAsG1TvH13cdEF/ndwHBmCBjLEtmIKLRrYkIPJIdUHpLD5dX5H4YoBw=="/>
+    </item>
+    <item>
       <title>Version 1.7.0</title>
       <pubDate>Tue, 14 Jul 2026 10:21:14 +0000</pubDate>
       <sparkle:version>31</sparkle:version>
