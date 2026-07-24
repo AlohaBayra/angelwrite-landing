@@ -23,7 +23,7 @@
     "@type": "SoftwareApplication",
     "name": "AngelWrite",
     "applicationCategory": "UtilitiesApplication",
-    "operatingSystem": "macOS",
+    "operatingSystem": "macOS 13.0",
     "url": "https://www.angelwrite.app/en/",
     "featureList": [
       "Push-to-talk dictation (hold a key and speak)",
@@ -86,7 +86,7 @@
       {
         "@type": "Question",
         "name": "What is the best replacement for Dragon Dictate on Mac?",
-        "acceptedAnswer": { "@type": "Answer", "text": "AngelWrite is the most modern alternative to Dragon Dictate for macOS. Dragon for Mac was discontinued. AngelWrite takes over: local AI transcription based on OpenAI Whisper, one-time purchase without subscription, no internet required." }
+        "acceptedAnswer": { "@type": "Answer", "text": "AngelWrite is the most modern alternative to Dragon Dictate for macOS. Dragon for Mac was discontinued. AngelWrite takes over: local AI transcription based on OpenAI Whisper, one-time purchase without subscription. After a one-time download of the local model, transcription works without an internet connection." }
       },
       {
         "@type": "Question",
@@ -101,7 +101,7 @@
       {
         "@type": "Question",
         "name": "Does AngelWrite work offline, on a train, abroad, without Wi-Fi?",
-        "acceptedAnswer": { "@type": "Answer", "text": "In local mode (Original), AngelWrite runs completely offline. Transcription happens on your Mac, no server connection needed. The 7-day Pro trial and Pro mode use cloud transcription and AI processing and require an internet connection." }
+        "acceptedAnswer": { "@type": "Answer", "text": "In local mode (Original), AngelWrite runs offline – after a one-time download of the local model, transcription happens entirely on your Mac, without any server connection. The 7-day Pro trial and Pro mode use cloud transcription and AI processing and require an internet connection." }
       },
       {
         "@type": "Question",
@@ -117,6 +117,16 @@
         "@type": "Question",
         "name": "Which professions benefit most from AngelWrite?",
         "acceptedAnswer": { "@type": "Answer", "text": "Lawyers, doctors, management consultants, authors, journalists, executives and developers: anyone who writes a lot every day and wants to communicate faster and more clearly." }
+      },
+      {
+        "@type": "Question",
+        "name": "What are the system requirements for AngelWrite? Which Macs does it run on?",
+        "acceptedAnswer": { "@type": "Answer", "text": "AngelWrite runs on macOS 13 (Ventura) or later. A Mac with Apple Silicon (M1 or newer) is recommended: there, local speech recognition is especially fast thanks to the Neural Engine. Intel Macs are supported as well. Three one-time system permissions are required (microphone, accessibility, input monitoring) – the app guides you through setup." }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I use AngelWrite fully locally with my own specialist vocabulary?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Yes. In the Local plan, transcription runs entirely on your Mac – no audio ever leaves your device. You add your own specialist vocabulary (names, brands, technical terms) to the word list, also locally and without audio, via single entries or CSV import. On first launch, AngelWrite downloads a compact speech recognition model once; after that, local mode works offline." }
       }
     ]
   }
@@ -1154,13 +1164,15 @@
         <details><summary>Do I have to hold the key down the whole time while dictating? <span class="faq-icon">+</span></summary><p>No, hold and release is the default; alternatively hands-free: tap once to start, tap again to stop, Esc cancels.</p></details>
         <details><summary>Can I add my own technical terms and proper names? <span class="faq-icon">+</span></summary><p>Yes. Using the vocabulary list, you add names, brands and technical terms; AngelWrite writes them correctly. Local, no audio, on every plan (including Local).</p></details>
         <details><summary>Is AngelWrite GDPR-compliant? Are my voice recordings sent to the cloud? <span class="faq-icon">+</span></summary><p>In local mode, no audio ever leaves your device, fully offline, ideal for lawyers, doctors and consultants. In Pro mode, audio is encrypted and transmitted to our server and OpenAI Whisper. GDPR-compliant in both modes. Details in the <a class="link-inline" href="/datenschutz.html">Privacy Policy</a>.</p></details>
-        <details><summary>What is the best replacement for Dragon Dictate on Mac? <span class="faq-icon">+</span></summary><p>AngelWrite is the most modern alternative to Dragon Dictate for macOS. Dragon for Mac was discontinued. AngelWrite takes over: local AI transcription based on OpenAI Whisper, one-time purchase without subscription, no internet required.</p></details>
+        <details><summary>What is the best replacement for Dragon Dictate on Mac? <span class="faq-icon">+</span></summary><p>AngelWrite is the most modern alternative to Dragon Dictate for macOS. Dragon for Mac was discontinued. AngelWrite takes over: local AI transcription based on OpenAI Whisper, one-time purchase without subscription. After a one-time download of the local model, transcription works without an internet connection.</p></details>
         <details><summary>What makes AngelWrite different from built-in Apple Dictation? <span class="faq-icon">+</span></summary><p>Apple Dictation stops after 30–60 seconds, handles non-English languages less accurately, and doesn't improve your text. AngelWrite has no time limit, uses Whisper, refines text through AI modes and works via keyboard shortcut in every app, without Siri and without the cloud. You can use both in parallel: during setup, AngelWrite guides you to a shortcut that doesn't conflict with macOS Dictation.</p></details>
         <details><summary>Does AngelWrite conflict with Apple/Fn Dictation on the Mac? <span class="faq-icon">+</span></summary><p>No. During setup, AngelWrite detects whether your shortcut conflicts with macOS Dictation, tests it with you and suggests a free shortcut if needed. You can keep your Apple Dictation in parallel.</p></details>
-        <details><summary>Does AngelWrite work offline, on a train, abroad, without Wi-Fi? <span class="faq-icon">+</span></summary><p>In local mode (Original), AngelWrite runs completely offline. Transcription happens on your Mac, no server connection needed. The 7-day Pro trial and Pro mode use cloud transcription and AI processing and require an internet connection.</p></details>
+        <details><summary>Does AngelWrite work offline, on a train, abroad, without Wi-Fi? <span class="faq-icon">+</span></summary><p>In local mode (Original), AngelWrite runs offline – after a one-time download of the local model, transcription happens entirely on your Mac, without any server connection. The 7-day Pro trial and Pro mode use cloud transcription and AI processing and require an internet connection.</p></details>
         <details><summary>How much faster am I when I dictate instead of type? <span class="faq-icon">+</span></summary><p>Speaking is 3× faster than typing. Average typing speed: 53 WPM. Speaking: 161 WPM (Stanford HCI Lab). With two hours of daily writing = up to 90 minutes of recovered time per day.</p></details>
         <details><summary>What is the difference between Local, Pro and Advanced? <span class="faq-icon">+</span></summary><p>Local (<span class="js-lokal-price">€19</span> one-time<span class="js-promo-note"></span>): offline, maximum privacy, app updates &amp; bug fixes included. Pro (€99 / year): all AI modes, cloud transcription, new features. Advanced (€149 one-time): own API key, custom prompts, unlimited requests.</p></details>
         <details><summary>Which professions benefit most from AngelWrite? <span class="faq-icon">+</span></summary><p>Lawyers, doctors, management consultants, authors, journalists, executives and developers: anyone who writes a lot every day and wants to communicate faster and more clearly.</p></details>
+        <details><summary>What are the system requirements for AngelWrite? Which Macs does it run on? <span class="faq-icon">+</span></summary><p>AngelWrite runs on macOS 13 (Ventura) or later. A Mac with Apple Silicon (M1 or newer) is recommended: there, local speech recognition is especially fast thanks to the Neural Engine. Intel Macs are supported as well. Three one-time system permissions are required (microphone, accessibility, input monitoring) – the app guides you through setup. Not sure whether your Mac qualifies? Try AngelWrite free for 7 days and test it directly on your device.</p></details>
+        <details><summary>Can I use AngelWrite fully locally with my own specialist vocabulary? <span class="faq-icon">+</span></summary><p>Yes. In the Local plan, transcription runs entirely on your Mac – no audio ever leaves your device. You add your own specialist vocabulary (names, brands, technical terms) to the word list, also locally and without audio, via single entries or CSV import. On first launch, AngelWrite downloads a compact speech recognition model once; after that, local mode works offline.</p></details>
       </div>
     </div>
   </div>
