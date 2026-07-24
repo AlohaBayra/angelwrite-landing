@@ -8,6 +8,30 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.9.0</title>
+      <pubDate>Fr., 24 Juli 2026 14:01:52 +0000</pubDate>
+      <sparkle:version>33</sparkle:version>
+      <sparkle:shortVersionString>1.9.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>Was ist neu in 1.9.0?</h3>
+        <ul>
+          <li><strong>Dein Diktat ist Text, keine Anweisung.</strong> Alle KI-Modi (Übersetzen, Professionell, Immer Freundlich, eigene Stile) behandeln das Gesprochene jetzt strikt als Material: Sätze wie „schreib das als Liste" mitten im Diktat werden verschriftlicht statt ausgeführt. Ergebnisse werden dadurch deutlich vorhersehbarer.</li>
+          <li><strong>Advanced: Wahlschalter Lokal ↔ Eigene Cloud.</strong> Im Advanced-Tarif entscheidest du, ob die Verarbeitung komplett auf dem Mac bleibt oder über deine eigenen API-Schlüssel läuft. Im Lokal-Modus blockiert die App jeden Netzwerkzugriff für Diktate technisch — nichts verlässt den Rechner.</li>
+          <li><strong>Kein Tageslimit mehr.</strong> Die KI-Nutzung wird nur noch pro Woche und Monat begrenzt — ein produktiver Tag stoppt dich nicht mehr mittendrin.</li>
+          <li><strong>Vorschau: „Rewrite per Sprache".</strong> In den Einstellungen findest du einen neuen Schalter, um markierten Text per gesprochener Anweisung umzuformulieren. Das Feature wird schrittweise freigeschaltet; bis dahin steht es auf „In Vorbereitung".</li>
+          <li><strong>Stabilität &amp; Feinschliff.</strong> Sehr lange Diktate werden zuverlässiger verarbeitet und melden sich mit klaren Hinweisen statt stiller Abbrüche — dazu viele kleine Verbesserungen unter der Haube.</li>
+        </ul>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/download/v1.9.0/AngelWrite.zip"
+        sparkle:version="33"
+        sparkle:shortVersionString="1.9.0"
+        length="5512493"
+        type="application/octet-stream"
+        sparkle:edSignature="UFcjqJyunqZeKrk/xeDd/rz5Ldg63uaIDL6jeQSXX0qOUkRkyossdXtukoERtADTilkIaIhAslGv9srPbaPJCg=="/>
+    </item>
+    <item>
       <title>Version 1.8.0</title>
       <pubDate>Mon, 20 Jul 2026 14:58:41 +0000</pubDate>
       <sparkle:version>32</sparkle:version>
