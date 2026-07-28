@@ -1,2 +1,2 @@
-/test    /404.html    404
-/test/*  /404.html    404
+# /test/ ist die (noindex) Test-Kopie der Startseite für neue Sektionen —
+# die frühere 404-Sperre (Commit 3e4b900) wurde dafür am 2026-07-28 aufgehoben.
