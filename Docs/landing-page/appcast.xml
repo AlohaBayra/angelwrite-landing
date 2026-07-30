@@ -8,6 +8,34 @@
     <language>de</language>
 
     <item>
+      <title>Version 1.10.0</title>
+      <pubDate>Wed, 29 Jul 2026 13:08:08 +0000</pubDate>
+      <sparkle:version>34</sparkle:version>
+      <sparkle:shortVersionString>1.10.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>13.0</sparkle:minimumSystemVersion>
+      <description><![CDATA[
+        <h3>1.10.0 — Der Text steht. Jetzt stimmt auch der Ton.</h3>
+        <p>Der Absatz ist fertig, aber er passt nicht: zu lang für den Mandanten, zu schroff für die Mail nach oben, auf Deutsch statt auf Englisch. Bisher hieß das: neu tippen. Jetzt sagst du es — Taste halten, „höflicher und auf die Hälfte kürzen“, ⌘V.</p>
+        <ul>
+          <li><strong>Sagen statt tippen — das Ergebnis liegt in der Zwischenablage.</strong> Markieren, Anweisung sprechen, mit ⌘V dort einsetzen, wo du es brauchst. Dein Original bleibt stehen, bis du selbst ersetzt.</li>
+          <li><strong>Der Alltag als fertiger Modus, der Rest frei gesprochen.</strong> Kürzen, höflicher, übersetzen — oder deine eigene Anweisung, wenn dein Fall in kein Menü passt (freie Anweisung ab Pro).</li>
+          <li><strong>Auch ganze Seiten.</strong> Rund zwei Seiten Text in einem Durchgang, das Ergebnis scrollt vollständig im Panel.</li>
+          <li><strong>Was zurückkommt, ist einsetzbar.</strong> Kein Dazuerfinden, keine Erklärtexte, keine halben Sätze — du siehst das Ergebnis und entscheidest.</li>
+          <li><strong>Feinschliff:</strong> Anweisungstaste jetzt QWERTZ-korrekt, Panel bleibt an seiner Position, ✕ und Esc schließen in jedem Zustand, fn+W hängt nicht mehr.</li>
+        </ul>
+        <p><strong>Gleich ausprobieren:</strong> Markiere die letzte Mail, die du an einen Kunden geschrieben hast, halte die Anweisungstaste und sag „kürzer und freundlicher“. Dann ⌘V.</p>
+        <p>Rewrite per Sprache wird stufenweise freigeschaltet. Steht in den Einstellungen noch „In Vorbereitung“, kommt die Freischaltung automatisch — ohne Neuinstallation.</p>
+      ]]></description>
+      <enclosure
+        url="https://github.com/AlohaBayra/angelwrite-landing/releases/download/v1.10.0/AngelWrite.zip"
+        sparkle:version="34"
+        sparkle:shortVersionString="1.10.0"
+        length="5533598"
+        type="application/octet-stream"
+        sparkle:edSignature="16HEov/Wp2itHxxyEJt8s6QNj6n41vHd/r7Qegf1XhO8ASFGor2WXkAqFyEgupShQoEHfQ0ralUlLaAu0079AA=="/>
+    </item>
+
+    <item>
       <title>Version 1.9.0</title>
       <pubDate>Fri, 24 Jul 2026 14:01:52 +0000</pubDate>
       <sparkle:version>33</sparkle:version>
